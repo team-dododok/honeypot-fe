@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["vite/client", "vite-plugin-svgr/client"],
+    "types": [
+      "vite/client",
+      "vite-plugin-svgr/client",
+      "@emotion/react/types/css-prop"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "useDefineForClassFields": true,
@@ -20,7 +24,8 @@
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true
   },
-  "include": ["src", ".eslintrc.mjs"]
+  "include": ["src", ".storybook", ".eslintrc.js", "declarations.d.ts"]
 }
