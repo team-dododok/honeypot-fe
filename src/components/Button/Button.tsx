@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <StyledButton text={text} variant={variant} height={height} {...props}>
-      {icon && <span style={{ marginRight: '8px' }}>{icon}</span>}
+      {icon && <IconContainer>{icon}</IconContainer>}
       {text}
     </StyledButton>
   );
@@ -67,4 +67,11 @@ const StyledButton = styled.button<ButtonProps>`
     background-color: ${theme.colors.gray30};
     border: none;
   }
+`;
+
+const IconContainer = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
 `;
