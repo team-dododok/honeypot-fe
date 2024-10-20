@@ -7,7 +7,7 @@ import { ButtonProps } from '@/types/common/ButtonProps';
 const Button: React.FC<ButtonProps> = ({
   text,
   icon,
-  variant = 'normal',
+  variant,
   height = '54px',
   ...props
 }) => {
@@ -25,14 +25,16 @@ const StyledButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${(props) => props.width || 'auto'};
+  width: ${(props) => props.width || '100%'};
   height: ${(props) => props.height};
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: ${(props) => props.borderRadius || '16px'};
 
   background-color: ${(props) =>
+    props.background ||
     variantStyles[props.variant || 'normal']?.backgroundColor(props.theme)};
   color: ${(props) =>
+    props.color ||
     variantStyles[props.variant || 'normal']?.color(props.theme)};
   border: ${(props) =>
     variantStyles[props.variant || 'normal']?.border || 'none'};
@@ -57,7 +59,7 @@ const StyledButton = styled.button<ButtonProps>`
         case 'warning':
           return props.theme.colors.warning20;
         default:
-          return props.theme.colors.gray30;
+          return;
       }
     }};
   }
