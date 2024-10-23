@@ -1,18 +1,12 @@
 import Button from '@/components/Button/Button';
 import { BottomWrapper, CenterLayout } from '@/features/Signup';
-import { OutletContext } from '@/layouts/SignupLayout';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpCompletePage = () => {
   const navigate = useNavigate();
-  const { setPreviousPath } = useOutletContext<OutletContext>();
-
-  useEffect(() => {
-    setPreviousPath('/signup/profile');
-  }, [setPreviousPath]);
 
   const handleButtonClick = () => {
     navigate('/');

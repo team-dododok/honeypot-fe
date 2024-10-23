@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
@@ -9,16 +9,14 @@ export interface OutletContext {
 }
 
 const SignupLayout: React.FC = () => {
-  const [previousPath, setPreviousPath] = useState('');
-
   return (
     <Container>
       <Header>
-        <BackButton to={previousPath} />
+        <BackButton />
         <Title>회원가입</Title>
       </Header>
       <Content>
-        <Outlet context={{ setPreviousPath }} />
+        <Outlet />
       </Content>
     </Container>
   );

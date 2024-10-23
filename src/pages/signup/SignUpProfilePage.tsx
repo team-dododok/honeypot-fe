@@ -2,19 +2,13 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
-import { OutletContext } from '@/layouts/SignupLayout';
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const { setPreviousPath } = useOutletContext<OutletContext>();
   const [profileIdx, setProfileIdx] = useState<number | null>(null);
-
-  useEffect(() => {
-    setPreviousPath('/signup/email');
-  }, [setPreviousPath]);
 
   const handleProfileImageClick = (index: number) => {
     setProfileIdx(index);

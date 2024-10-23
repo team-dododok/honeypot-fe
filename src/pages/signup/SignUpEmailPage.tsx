@@ -3,17 +3,15 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { EMAIL_REGEX } from '@/constants/regEx';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
-import { OutletContext } from '@/layouts/SignupLayout';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import { formatTime } from '@/utils/format';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpEmailPage = () => {
   const navigate = useNavigate();
-  const { setPreviousPath } = useOutletContext<OutletContext>();
   const showToast = useToast((state) => state.showToast);
 
   const [email, setEmail] = useState<string>('');
@@ -23,10 +21,6 @@ const SignUpEmailPage = () => {
   const [errorEmailAuth, setErrorEmailAuth] = useState<string>('');
   const [isSend, setIsSend] = useState<boolean>(false);
   const [leftTime, setLeftTime] = useState<number>(300);
-
-  useEffect(() => {
-    setPreviousPath('/signup/name');
-  }, [setPreviousPath]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
