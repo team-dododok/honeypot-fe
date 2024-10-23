@@ -1,7 +1,7 @@
 import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
-import { emailRegEx } from '@/constants/regEx';
+import { EMAIL_REGEX } from '@/constants/regEx';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import { OutletContext } from '@/layouts/SignupLayout';
 import { useToast } from '@/store/useToast';
@@ -30,7 +30,7 @@ const SignUpEmailPage = () => {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    if (emailRegEx.test(email) || e.target.value.length === 0) {
+    if (EMAIL_REGEX.test(email) || e.target.value.length === 0) {
       setErrorEmail('');
     } else {
       setErrorEmail('올바른 이메일 형식으로 입력해주세요.');
