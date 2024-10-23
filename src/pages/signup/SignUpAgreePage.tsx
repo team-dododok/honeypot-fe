@@ -2,25 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import Button from '@/components/Button/Button';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Check from '@/components/Check/Check';
 import { TERMS } from '@/constants/terms';
-import { OutletContext } from '@/layouts/SignupLayout';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
+import WarningModal from '@/components/Modal/WarningModal';
+import { history } from '@/utils/history';
 
 const SignUpAgreePage = () => {
   const navigate = useNavigate();
-  const { setPreviousPath } = useOutletContext<OutletContext>();
+  const { pathname } = useLocation();
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false);
   const [isCheckedTerms, setIsCheckedTerms] = useState({
     0: false,
     1: false,
     2: false,
   });
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
-    setPreviousPath('/login');
-  }, [setPreviousPath]);
+    const unlistenHistoryEvent = history.listen(({ action }) => {
+      if (action !== 'POP') return;
+      setShowModal(true);
+      history.push(pathname);
+    });
+    return unlistenHistoryEvent;
+  }, []);
 
   const handleCheckAll = () => {
     const newCheckedState = !isCheckedAll;
@@ -91,6 +98,21 @@ const SignUpAgreePage = () => {
           disabled={!isNextButtonActive}
         />
       </BottomWrapper>
+      {showModal && (
+        <WarningModal
+          title="해당 페이지를 나가시겠어요?"
+          description="지금 나가면 작성한 내용은 저장되지 않아요."
+          cancelText="나가기"
+          confirmText="계속 작성하기"
+          onCancel={() => {
+            setShowModal(false);
+            navigate('/login');
+          }}
+          onConfirm={() => {
+            setShowModal(false);
+          }}
+        />
+      )}
     </CommonLayout>
   );
 };
