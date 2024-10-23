@@ -4,4 +4,11 @@ export interface InputProps {
   clear?: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  successMsg?: string;
+  errorMsg?: string;
+}
+
+export interface MessageProps {
+  successMsg?: string;
+  errorMsg?: string;
 }

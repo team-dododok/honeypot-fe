@@ -1,8 +1,7 @@
 import { theme } from '@/styles/theme';
-import { InputProps } from '@/types/common/InputProps';
+import { InputProps, MessageProps } from '@/types/common/InputProps';
 import styled from '@emotion/styled';
 import React from 'react';
-// import { EraseIcon } from '../../../public/assets/index';
 
 const Input: React.FC<InputProps> = ({
   width,
@@ -10,6 +9,8 @@ const Input: React.FC<InputProps> = ({
   clear = false,
   value,
   onChange,
+  successMsg,
+  errorMsg,
 }) => {
   const handleClear = () => {
     onChange({
@@ -28,8 +29,16 @@ const Input: React.FC<InputProps> = ({
       />
       {clear && (
         <ClearIconContainer onClick={handleClear} hasValue={!!value}>
-          <img src="/assets/icons/erase.svg" alt="Clear" />
+          <img
+            src={`/assets/icons/erase${value.length === 0 ? '-disable' : ''}.svg`}
+            alt="Clear"
+          />
         </ClearIconContainer>
+      )}
+      {(successMsg || errorMsg) && (
+        <Message successMsg={successMsg} errorMsg={errorMsg}>
+          {successMsg || errorMsg}
+        </Message>
       )}
     </InputContainer>
   );
@@ -76,4 +85,12 @@ const ClearIconContainer = styled.div<{ hasValue: boolean }>`
     fill: ${({ hasValue, theme }) =>
       hasValue ? theme.colors.gray60 : theme.colors.gray30};
   }
+`;
+
+const Message = styled.div<MessageProps>`
+  color: ${({ successMsg, theme }) =>
+    successMsg ? theme.colors.success90 : theme.colors.error60};
+  ${theme.typography.body4};
+  text-align: left;
+  margin-top: 12px;
 `;
