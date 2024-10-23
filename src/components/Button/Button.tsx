@@ -40,6 +40,7 @@ const StyledButton = styled.button<ButtonProps>`
     variantStyles[props.variant || 'normal']?.border || 'none'};
 
   ${theme.typography.body3};
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.3s;
 
