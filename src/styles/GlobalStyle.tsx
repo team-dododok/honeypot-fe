@@ -1,6 +1,5 @@
 import React from 'react';
 import { Global, css } from '@emotion/react';
-import { theme } from './theme';
 
 const GlobalStyle = () => (
   <Global
@@ -11,16 +10,21 @@ const GlobalStyle = () => (
         margin: 0;
       }
 
-      html,
-      body {
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        font-family: 'Pretendard';
-        background-color: ${theme.colors.gray00};
-        max-width: 360px;
+      html {
+        width: 100%;
+        height: 100%;
+        max-width: 480px;
+        min-height: 100%;
         margin: 0 auto;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 0px 64px 0px rgba(30, 41, 59, 0.1);
+      }
+
+      body {
+        width: 100%;
+        height: 100%;
+        max-width: 480px;
+        font-family: 'Pretendard';
+        white-space: pre-line;
       }
 
       a {
@@ -59,6 +63,12 @@ const GlobalStyle = () => (
       input:focus,
       textarea:focus {
         outline: none;
+      }
+
+      @font-face {
+        font-family: 'Pretendard';
+        src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+          format('woff');
       }
     `}
   />
