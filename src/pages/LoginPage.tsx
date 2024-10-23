@@ -19,7 +19,7 @@ const LoginPage = () => {
         함께한 팀원들에게 따뜻한 칭찬을 전하며
         <br /> 서로 응원해보는 건 어떠세요?
       </Title>
-      <TeamImage src="/assets/images/team-image.svg" alt="team" />
+      <Image src="/assets/images/login/img-login-01.svg" alt="team" />
       <BottomWrapper>
         <Bubble>⚡️ 3초만에 가입하고 칭찬 보내기 ⚡️</Bubble>
         <Button
@@ -59,7 +59,7 @@ const Title = styled.h1`
   ${theme.typography.body3};
 `;
 
-const TeamImage = styled.img`
+const Image = styled.img`
   width: 100%;
   height: 280px;
   margin-bottom: 48px;
