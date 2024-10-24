@@ -1,6 +1,5 @@
 import "@emotion/react";
 
-
 type Colors = keyof typeof colors;
 type Typography = keyof typeof typography;
 
