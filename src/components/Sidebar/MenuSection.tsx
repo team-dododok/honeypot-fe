@@ -1,4 +1,4 @@
-import useAnimatedMenu from '@/hooks/useAnimation';
+import useAnimation from '@/hooks/useAnimation';
 import { theme } from '@/styles/theme';
 import { MenuItem } from '@/types/constants/MenuItem';
 import styled from '@emotion/styled';
@@ -12,6 +12,7 @@ interface MenuSectionProps {
 
 const MenuSection = ({ menu, onClose }: MenuSectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const useAnimatedMenu = useAnimation;
   const { isVisible } = useAnimatedMenu(isOpen, 100);
 
   const handleMenuClick = () => {
