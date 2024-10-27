@@ -1,5 +1,5 @@
 import { theme } from '@/styles/theme';
-import { InputProps, MessageProps } from '@/types/common/InputProps';
+import { InputProps, MessageProps } from '@/types/components/InputProps';
 import styled from '@emotion/styled';
 import React from 'react';
 

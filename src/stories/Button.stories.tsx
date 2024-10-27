@@ -3,7 +3,7 @@ import { StoryFn, Meta } from '@storybook/react';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from '@/styles/theme';
 import Button from '@/components/Button/Button';
-import { ButtonProps } from '@/types/common/ButtonProps';
+import { ButtonProps } from '@/types/components/ButtonProps';
 
 export default {
   title: 'Components/Button',

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import { variantStyles } from '@/styles/varientStyles';
-import { ButtonProps } from '@/types/common/ButtonProps';
+import { ButtonProps } from '@/types/components/ButtonProps';
 
 const Button: React.FC<ButtonProps> = ({
   text,
