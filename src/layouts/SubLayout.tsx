@@ -4,16 +4,15 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import BackButton from '@/components/Button/BackButton';
 
-export interface OutletContext {
-  setPreviousPath: (path: string) => void;
+interface SubLayoutProps {
+  title: string;
 }
-
-const SignupLayout: React.FC = () => {
+const SubLayout: React.FC<SubLayoutProps> = ({ title }) => {
   return (
     <Container>
       <Header>
         <BackButton />
-        <Title>회원가입</Title>
+        <Title>{title}</Title>
       </Header>
       <Content>
         <Outlet />
@@ -22,7 +21,7 @@ const SignupLayout: React.FC = () => {
   );
 };
 
-export default SignupLayout;
+export default SubLayout;
 
 const Container = styled.div`
   display: flex;
