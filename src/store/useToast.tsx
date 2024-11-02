@@ -30,7 +30,7 @@ export const useToast = create<ToastState>((set) => ({
   isMove: false,
   duration: 3000,
   top: undefined,
-  bottom: undefined,
+  bottom: '24px',
   left: '50%',
   right: undefined,
   showToast: (message, duration = 3000, position = {}) => {

@@ -1,6 +1,7 @@
 import BackButton from '@/components/Button/BackButton';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -43,6 +45,7 @@ const ProfileUpdatePage = () => {
   };
 
   const handleSaveButtonClick = () => {
+    showToast('변경된 내용을 저장했어요');
     navigate('/');
   };
 
