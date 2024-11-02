@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import GroupPage from '@/pages/GroupPage';
-import ProfilePage from '@/pages/ProfilePage';
 import GroupDetailPage from '@/pages/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
@@ -17,6 +16,7 @@ import ComplimentSendTargetPage from '@/pages/compliment/send/ComplimentSendTarg
 import ComplimentSendContentPage from '@/pages/compliment/send/ComplimentSendContentPage';
 import ComplimentSendCompletePage from '@/pages/compliment/send/ComplimentSendCompletePage';
 import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceivePage';
+import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 
 const router = createBrowserRouter([
   {
@@ -31,10 +31,6 @@ const router = createBrowserRouter([
       {
         path: 'group/:id',
         element: <GroupDetailPage />,
-      },
-      {
-        path: 'profile',
-        element: <ProfilePage />,
       },
     ],
   },
@@ -69,6 +65,16 @@ const router = createBrowserRouter([
       {
         path: 'complete',
         element: <SignUpCompletePage />,
+      },
+    ],
+  },
+  {
+    path: 'profile',
+    element: <SubLayout title="프로필 수정" />,
+    children: [
+      {
+        path: 'update',
+        element: <ProfileUpdatePage />,
       },
     ],
   },
