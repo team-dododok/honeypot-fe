@@ -13,7 +13,7 @@ const GroupListBox = (props: GroupListBox) => {
   const { id, groupName, selected, onClick } = props;
 
   const handleSelectedGroupBox = (id: number) => {
-    if (id) {
+    if (id !== null) {
       onClick(id);
     }
   };
