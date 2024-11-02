@@ -3,12 +3,17 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileUpdatePage = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [nameError, setNameError] = useState('');
+  const [isButtonActive, setIsButtonActive] = useState(false);
+
   const profileImages = Array.from(
     { length: 6 },
     (_, i) => `/assets/images/profile/img-profile-${i + 1}-120.svg`
@@ -17,12 +22,33 @@ const ProfileUpdatePage = () => {
   const handleImageClick = (index: number) => {
     setSelectedImage(index);
   };
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    const newName = e.target.value;
+    if (newName.length <= 8) {
+      setName(newName);
+    }
+
+    if (newName === '') {
+      setNameError('이름을 입력해주세요.');
+    } else if (newName.length > 8) {
+      setNameError('8자 이내로 입력해 주세요.');
+    } else {
+      setNameError('');
+    }
   };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+
+  const handleSaveButtonClick = () => {
+    navigate('/');
+  };
+
+  useEffect(() => {
+    setIsButtonActive(!!name && !!email && selectedImage !== null);
+  }, [name, email, selectedImage]);
 
   return (
     <>
@@ -55,7 +81,12 @@ const ProfileUpdatePage = () => {
 
         <div>
           <SubTitle>이름 수정</SubTitle>
-          <Input clear={true} value={name} onChange={handleNameChange} />
+          <Input
+            clear={true}
+            value={name}
+            onChange={handleNameChange}
+            errorMsg={nameError}
+          />
         </div>
 
         <div>
@@ -63,7 +94,11 @@ const ProfileUpdatePage = () => {
           <Input clear={true} value={email} onChange={handleEmailChange} />
         </div>
 
-        <Button variant="deactivate" text={'저장하기'} />
+        <Button
+          variant={isButtonActive ? 'activate' : 'deactivate'}
+          text={'저장하기'}
+          onClick={handleSaveButtonClick}
+        />
       </Container>
     </>
   );
@@ -76,6 +111,7 @@ const Header = styled.header`
   align-items: center;
   gap: 12px;
   width: 100%;
+  margin-bottom: 16px;
 `;
 
 const Title = styled.h1`
@@ -86,7 +122,7 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   color: ${theme.colors.gray80};
   ${theme.typography.body3};
-  margin: 16px 0;
+  margin-bottom: 16px;
 `;
 
 const ProfileImageGrid = styled.div`
@@ -119,5 +155,5 @@ const ProfileImage = styled.img`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 36px;
 `;

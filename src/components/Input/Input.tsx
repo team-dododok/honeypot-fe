@@ -92,5 +92,5 @@ const Message = styled.div<MessageProps>`
     successMsg ? theme.colors.success90 : theme.colors.error60};
   ${theme.typography.body4};
   text-align: left;
-  margin-top: 12px;
+  margin-top: 4px;
 `;
