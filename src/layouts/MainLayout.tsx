@@ -29,7 +29,6 @@ export default MainLayout;
 const Container = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 40px;
   width: 100%;
   padding: 0 20px;
 `;

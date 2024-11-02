@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import GroupPage from '@/pages/GroupPage';
-import ProfilePage from '@/pages/ProfilePage';
+import ProfilePage from '@/pages/profile/ProfilePage';
 import GroupDetailPage from '@/pages/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
@@ -13,6 +13,7 @@ import SignupLayout from '@/layouts/SignupLayout';
 import SignUpCompletePage from '@/pages/signup/SignUpCompletePage';
 import GuidePage from '@/pages/GuidePage';
 import MainLayout from '@/layouts/MainLayout';
+import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <ProfilePage />,
+      },
+      {
+        path: 'profile/update',
+        element: <ProfileUpdatePage />,
       },
     ],
   },
