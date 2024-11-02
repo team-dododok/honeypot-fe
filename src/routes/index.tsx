@@ -32,6 +32,17 @@ const router = createBrowserRouter([
         path: 'group/:id',
         element: <GroupDetailPage />,
       },
+
+      {
+        path: 'profile',
+        element: <SubLayout title="프로필 수정" padding="0px" />,
+        children: [
+          {
+            path: 'update',
+            element: <ProfileUpdatePage />,
+          },
+        ],
+      },
     ],
   },
   {
@@ -65,16 +76,6 @@ const router = createBrowserRouter([
       {
         path: 'complete',
         element: <SignUpCompletePage />,
-      },
-    ],
-  },
-  {
-    path: 'profile',
-    element: <SubLayout title="프로필 수정" />,
-    children: [
-      {
-        path: 'update',
-        element: <ProfileUpdatePage />,
       },
     ],
   },

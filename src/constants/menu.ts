@@ -7,7 +7,7 @@ export const MENU: MenuItem[] = [
     tab: [
       { id: 0, subTitle: '나의 꿀단지 Main', path: '/' },
       { id: 1, subTitle: '그룹 관리', path: '/group' },
-      { id: 2, subTitle: '프로필 수정', path: '/profile' },
+      { id: 2, subTitle: '프로필 수정', path: '/profile/update' },
     ],
   },
   {

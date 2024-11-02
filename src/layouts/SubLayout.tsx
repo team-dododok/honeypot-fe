@@ -6,10 +6,11 @@ import BackButton from '@/components/Button/BackButton';
 
 interface SubLayoutProps {
   title: string;
+  padding?: string;
 }
-const SubLayout: React.FC<SubLayoutProps> = ({ title }) => {
+const SubLayout: React.FC<SubLayoutProps> = ({ title, padding = '26px' }) => {
   return (
-    <Container>
+    <Container $padding={padding}>
       <Header>
         <BackButton />
         <Title>{title}</Title>
@@ -23,12 +24,12 @@ const SubLayout: React.FC<SubLayoutProps> = ({ title }) => {
 
 export default SubLayout;
 
-const Container = styled.div`
+const Container = styled.div<{ $padding: string }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 26px;
+  padding: ${({ $padding }) => $padding || '26px'};
   width: 100%;
   height: 100vh;
 `;

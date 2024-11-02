@@ -1,27 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import BackButton from '@/components/Button/BackButton';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import WarningModal from '@/components/Modal/WarningModal';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
+import { history } from '@/utils/history';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { showToast } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const profileImages = Array.from(
     { length: 6 },
     (_, i) => `/assets/images/profile/img-profile-${i + 1}-120.svg`
   );
+
+  useEffect(() => {
+    const unlistenHistoryEvent = history.listen(({ action }) => {
+      if (action !== 'POP') return;
+      if (name || email || selectedImage !== null) {
+        setShowModal(true);
+        history.push(pathname);
+      }
+    });
+    return unlistenHistoryEvent;
+  }, [name, email, selectedImage]);
 
   const handleImageClick = (index: number) => {
     setSelectedImage(index);
@@ -51,17 +64,9 @@ const ProfileUpdatePage = () => {
     navigate('/');
   };
 
-  const handleBackButtonClick = () => {
-    if (name || email || selectedImage !== null) {
-      setShowModal(true);
-    } else {
-      navigate(-1);
-    }
-  };
-
   const handleModalCancel = () => {
     setShowModal(false);
-    navigate(-1);
+    navigate('/');
   };
 
   useEffect(() => {
@@ -70,11 +75,6 @@ const ProfileUpdatePage = () => {
 
   return (
     <>
-      <Header>
-        <BackButton onClick={handleBackButtonClick} />
-        <Title>프로필 수정</Title>
-      </Header>
-
       <Container>
         <div>
           <SubTitle>프로필 이미지 수정</SubTitle>
@@ -135,19 +135,6 @@ const ProfileUpdatePage = () => {
 
 export default ProfileUpdatePage;
 
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 16px;
-`;
-
-const Title = styled.h1`
-  color: ${theme.colors.gray80};
-  ${theme.typography.body2};
-`;
-
 const SubTitle = styled.h2`
   color: ${theme.colors.gray80};
   ${theme.typography.body3};
@@ -161,27 +148,22 @@ const ProfileImageGrid = styled.div`
   gap: 24px;
   margin: 0 auto;
   width: 100%;
-  height: 100%;
 `;
 
 const ProfileImageBox = styled.div`
   width: 100%;
-  padding-top: 100%;
-  position: relative;
-  overflow: hidden;
 `;
 
 const ProfileImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 120px;
+  height: 120px;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   cursor: pointer;
 `;
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 36px;
