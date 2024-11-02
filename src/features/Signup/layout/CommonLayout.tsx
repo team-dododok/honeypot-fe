@@ -51,8 +51,8 @@ const BottomWrapper = styled.div`
   width: 100%;
   max-width: 480px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 16px;
   position: fixed;
   bottom: 13px;
   left: 50%;

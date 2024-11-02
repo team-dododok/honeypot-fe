@@ -20,6 +20,7 @@ const colors = {
   gray00: '#FFFFFF',
   gray05: '#FBFAF9',
   gray10: '#EEEEEE',
+  gray20: '#DBDCE1',
   gray30: '#CFCECD',
   gray50: '#8E8B89',
   gray60: '#66625D',
@@ -40,6 +41,8 @@ const colors = {
   success40: '#B5C5FE',
   success60: '#8BA4FE',
   success90: '#5378FB',
+
+  black: '#000000',
 
   gradient01: 'linear-gradient(122deg, #FFEEC6 9.54%, #FFDA82 89.25%)',
 } as const;
