@@ -1,11 +1,12 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BackButton from '@/components/Button/BackButton';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import WarningModal from '@/components/Modal/WarningModal';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const ProfileUpdatePage = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const profileImages = Array.from(
     { length: 6 },
@@ -49,6 +51,19 @@ const ProfileUpdatePage = () => {
     navigate('/');
   };
 
+  const handleBackButtonClick = () => {
+    if (name || email || selectedImage !== null) {
+      setShowModal(true);
+    } else {
+      navigate(-1);
+    }
+  };
+
+  const handleModalCancel = () => {
+    setShowModal(false);
+    navigate(-1);
+  };
+
   useEffect(() => {
     setIsButtonActive(!!name && !!email && selectedImage !== null);
   }, [name, email, selectedImage]);
@@ -56,7 +71,7 @@ const ProfileUpdatePage = () => {
   return (
     <>
       <Header>
-        <BackButton />
+        <BackButton onClick={handleBackButtonClick} />
         <Title>프로필 수정</Title>
       </Header>
 
@@ -103,6 +118,17 @@ const ProfileUpdatePage = () => {
           onClick={handleSaveButtonClick}
         />
       </Container>
+
+      {showModal && (
+        <WarningModal
+          title="정말 나가시겠어요?"
+          description="지금 나가면 변경된 내용은 저장되지 않아요."
+          cancelText="나가기"
+          confirmText="계속 작성하기"
+          onCancel={handleModalCancel}
+          onConfirm={() => setShowModal(false)}
+        />
+      )}
     </>
   );
 };
