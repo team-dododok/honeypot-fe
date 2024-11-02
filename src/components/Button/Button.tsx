@@ -9,10 +9,17 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   variant,
   height = '54px',
+  disabledColor,
   ...props
 }) => {
   return (
-    <StyledButton text={text} variant={variant} height={height} {...props}>
+    <StyledButton
+      text={text}
+      variant={variant}
+      height={height}
+      disabledColor={disabledColor}
+      {...props}
+    >
       {icon && <IconContainer>{icon}</IconContainer>}
       {text}
     </StyledButton>
@@ -67,7 +74,8 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:disabled {
     color: ${theme.colors.gray80};
-    background-color: ${theme.colors.gray30};
+    background-color: ${({ disabledColor }) =>
+      disabledColor ? disabledColor : theme.colors.gray30};
     border: none;
   }
 `;
