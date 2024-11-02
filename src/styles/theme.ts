@@ -40,6 +40,8 @@ const colors = {
   success40: '#B5C5FE',
   success60: '#8BA4FE',
   success90: '#5378FB',
+
+  gradient01: 'linear-gradient(122deg, #FFEEC6 9.54%, #FFDA82 89.25%)',
 } as const;
 
 interface Font {
