@@ -4,6 +4,7 @@ import { theme } from '@/styles/theme';
 interface LabelProps {
   marginTop?: string;
   marginBottom?: string;
+  typography?: keyof typeof theme.typography;
 }
 
 const CommonLayout = styled.div`
@@ -11,6 +12,14 @@ const CommonLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+const ProgressBarWrapper = styled.div<{ marginBottom?: string }>`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: ${(props) => props.marginBottom || '28px'};
 `;
 
 const CenterLayout = styled.div`
@@ -22,11 +31,18 @@ const CenterLayout = styled.div`
   padding: 20px;
 `;
 
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+`;
+
 const Label = styled.div<LabelProps>`
   width: 100%;
   text-align: left;
   color: ${theme.colors.gray90};
-  ${theme.typography.body1};
+  ${(props) => theme.typography[props.typography || 'body1']};
   margin-top: ${(props) => props.marginTop || '0'};
   margin-bottom: ${(props) => props.marginBottom || '0'};
 `;
@@ -44,4 +60,11 @@ const BottomWrapper = styled.div`
   padding: 0 25px;
 `;
 
-export { CommonLayout, CenterLayout, Label, BottomWrapper };
+export {
+  CommonLayout,
+  ProgressBarWrapper,
+  CenterLayout,
+  Container,
+  Label,
+  BottomWrapper,
+};

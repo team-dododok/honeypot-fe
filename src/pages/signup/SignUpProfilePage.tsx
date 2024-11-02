@@ -2,6 +2,7 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
+import { ProgressBarWrapper } from '@/features/Signup/layout/CommonLayout';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -56,13 +57,6 @@ const SignUpProfilePage = () => {
 };
 
 export default SignUpProfilePage;
-
-const ProgressBarWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 28px;
-`;
 
 const ProfileGridWrapper = styled.div`
   display: flex;

@@ -3,6 +3,10 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { EMAIL_REGEX } from '@/constants/regEx';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
+import {
+  Container,
+  ProgressBarWrapper,
+} from '@/features/Signup/layout/CommonLayout';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import { formatTime } from '@/utils/format';
@@ -139,21 +143,6 @@ const SignUpEmailPage = () => {
 };
 
 export default SignUpEmailPage;
-
-const ProgressBarWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 28px;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-`;
 
 const LabelWrapper = styled.div`
   width: 100%;
