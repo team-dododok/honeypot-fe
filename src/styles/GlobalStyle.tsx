@@ -1,5 +1,6 @@
 import React from 'react';
 import { Global, css } from '@emotion/react';
+import { theme } from './theme';
 
 const GlobalStyle = () => (
   <Global
@@ -17,6 +18,7 @@ const GlobalStyle = () => (
         min-height: 100%;
         margin: 0 auto;
         box-shadow: 0px 0px 64px 0px rgba(30, 41, 59, 0.1);
+        background-color: ${theme.colors.gray05};
       }
 
       body {
@@ -25,6 +27,7 @@ const GlobalStyle = () => (
         max-width: 480px;
         font-family: 'Pretendard';
         white-space: pre-line;
+        background-color: ${theme.colors.gray05};
       }
 
       a {
@@ -58,6 +61,9 @@ const GlobalStyle = () => (
         line-height: inherit;
         border-radius: 4px;
         padding: 8px;
+        border: none;
+        resize: none;
+        outline: none;
       }
 
       input:focus,
