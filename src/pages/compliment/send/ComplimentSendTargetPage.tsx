@@ -2,9 +2,8 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Check from '@/components/Check/Check';
 import Input from '@/components/Input/Input';
-import BottomModal from '@/components/Modal/BottomModal';
 import { CHECK_COMPLIMENT_OPTIONS } from '@/constants/check';
-import GroupListBox from '@/features/Group/components/GroupListBox';
+import GroupModal from '@/features/Group/components/Modal/GroupModal';
 import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
 import { CommonLayout } from '@/features/Signup';
 import {
@@ -115,40 +114,13 @@ const ComplimentSendTargetPage = () => {
           disabled={!name || !group || state === null}
         />
       </BottomWrapper>
-      {showGroupModal && (
-        <BottomModal
-          height="516px"
-          title="그룹 추가 및 선택"
-          onCancel={() => {
-            setShowGroupModal(false);
-          }}
-          onConfirm={handleSelectedGroup}
-          confirmDisabled={selectedGroup === null}
-        >
-          <Input
-            width="100%"
-            placeholder="추가할 그룹명을 입력해 주세요."
-            clear={true}
-            value={group}
-            onChange={handleGroupChange}
-          />
-          {GROUP_LIST_DUMMY.map((group) => (
-            <GroupListBox
-              key={group.id}
-              id={group.id}
-              groupName={group.groupName}
-              selected={group.id === selectedGroup}
-              onClick={() => {
-                if (selectedGroup === group.id) {
-                  setSelectedGroup(null);
-                } else {
-                  setSelectedGroup(group.id);
-                }
-              }}
-            />
-          ))}
-        </BottomModal>
-      )}
+      <GroupModal
+        isVisible={showGroupModal}
+        onClose={() => setShowGroupModal(false)}
+        onConfirm={handleSelectedGroup}
+        selectedGroup={selectedGroup}
+        setSelectedGroup={setSelectedGroup}
+      />
     </CommonLayout>
   );
 };

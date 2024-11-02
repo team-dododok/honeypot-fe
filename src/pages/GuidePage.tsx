@@ -9,6 +9,8 @@ import CenterModal from '@/components/Modal/CenterModal';
 import WarningModal from '@/components/Modal/WarningModal';
 import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
+import GroupModal from '@/features/Group/components/Modal/GroupModal';
+import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
 import StampLabel from '@/features/Stamp/components/StampLabel';
 import { useToast } from '@/store/useToast';
@@ -24,6 +26,9 @@ const GuidePage = () => {
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
+  const [group, setGroup] = useState<string>('');
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+  const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [stampType, setStampType] = useState<number | null>(null);
   const [showSelectedStampModal, setShowSelectedStampModal] =
@@ -56,6 +61,21 @@ const GuidePage = () => {
 
   const handleModalImage = () => {
     setShowModalImage(true);
+  };
+
+  const handleShowGroup = () => {
+    setShowGroupModal(true);
+  };
+
+  const handleSelectedGroup = () => {
+    setShowGroupModal(false);
+    console.log(group);
+    const selectedGroupName = GROUP_LIST_DUMMY.find(
+      (group) => group.id === selectedGroup
+    )?.groupName;
+    if (selectedGroupName) {
+      setGroup(selectedGroupName);
+    }
   };
 
   const handleShowInfo = () => {
@@ -200,6 +220,7 @@ const GuidePage = () => {
               setShowBottomModal(false);
             }}
             confirmDisabled={false}
+            isVisible={true}
           >
             <Input
               width="100%"
@@ -259,10 +280,18 @@ const GuidePage = () => {
       </Elements>
       <Elements>
         <h3>Modal Examples</h3>
+        <Button text="show Group Modal" onClick={handleShowGroup} />
         <Button text="show Info Modal" onClick={handleShowInfo} />
         <Button text="show Stamp Modal" onClick={handleShowSelectedStamp} />
         <Button text="show Preview Modal" onClick={handleShowPreview} />
         <InfoModal showModal={showInfoModal} onClose={handleShowInfo} />
+        <GroupModal
+          isVisible={showGroupModal}
+          onClose={() => setShowGroupModal(false)}
+          onConfirm={handleSelectedGroup}
+          selectedGroup={selectedGroup}
+          setSelectedGroup={setSelectedGroup}
+        />
         <StampModal
           showModal={showSelectedStampModal}
           onClose={handleShowSelectedStamp}

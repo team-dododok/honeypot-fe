@@ -13,6 +13,7 @@ interface BottomModal {
   onCancel: () => void;
   onConfirm: () => void;
   confirmDisabled?: boolean;
+  isVisible: boolean;
 }
 const BottomModal = (props: BottomModal) => {
   const {
@@ -25,7 +26,10 @@ const BottomModal = (props: BottomModal) => {
     onCancel,
     onConfirm,
     confirmDisabled = false,
+    isVisible,
   } = props;
+  if (!isVisible) return null;
+
   return (
     <ModalOverlay>
       <ModalContainer width={width} height={height}>
