@@ -53,7 +53,7 @@ const ComplimentSendTargetPage = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/compliment/send/stamp');
+    navigate('/compliment/send/content');
   };
 
   return (

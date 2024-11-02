@@ -14,8 +14,8 @@ import GuidePage from '@/pages/GuidePage';
 import MainLayout from '@/layouts/MainLayout';
 import SubLayout from '@/layouts/SubLayout';
 import ComplimentSendTargetPage from '@/pages/compliment/send/ComplimentSendTargetPage';
-import ComplimentSendStampPage from '@/pages/compliment/send/ComplimentSendStampPage';
 import ComplimentSendContentPage from '@/pages/compliment/send/ComplimentSendContentPage';
+import ComplimentSendCompletePage from '@/pages/compliment/send/ComplimentSendCompletePage';
 import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceivePage';
 
 const router = createBrowserRouter([
@@ -84,12 +84,12 @@ const router = createBrowserRouter([
             element: <ComplimentSendTargetPage />,
           },
           {
-            path: 'stamp',
-            element: <ComplimentSendStampPage />,
-          },
-          {
             path: 'content',
             element: <ComplimentSendContentPage />,
+          },
+          {
+            path: 'complete',
+            element: <ComplimentSendCompletePage />,
           },
         ],
       },
