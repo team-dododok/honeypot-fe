@@ -23,11 +23,13 @@ const SignUpAgreePage = () => {
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
       if (action !== 'POP') return;
-      setShowModal(true);
-      history.push(pathname);
+      if (Object.values(isCheckedTerms).some((value) => value)) {
+        setShowModal(true);
+        history.push(pathname);
+      }
     });
     return unlistenHistoryEvent;
-  }, []);
+  }, [isCheckedTerms]);
 
   const handleCheckAll = () => {
     const newCheckedState = !isCheckedAll;
@@ -82,7 +84,7 @@ const SignUpAgreePage = () => {
             />
             <button
               onClick={() => {
-                alert(term.content);
+                window.open(term.url, '_blank');
               }}
             >
               <img src="/assets/icons/more.svg" />
