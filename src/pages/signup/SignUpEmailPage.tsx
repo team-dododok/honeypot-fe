@@ -2,11 +2,13 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { EMAIL_REGEX } from '@/constants/regEx';
-import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import {
+  BottomWrapper,
+  CommonLayout,
+  Label,
   Container,
   ProgressBarWrapper,
-} from '@/features/Signup/layout/CommonLayout';
+} from '@/layouts/FormLayoutStyles';
 import { useSignUpStore } from '@/store/useSignupStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
