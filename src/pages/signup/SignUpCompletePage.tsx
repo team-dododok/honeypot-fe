@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import { BottomWrapper, CenterLayout } from '@/features/Signup';
+import { BottomWrapper, CenterLayout } from '@/layouts/FormLayoutStyles';
 import { useSignUpStore } from '@/store/useSignupStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';

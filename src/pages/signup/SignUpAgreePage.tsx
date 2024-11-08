@@ -5,10 +5,10 @@ import Button from '@/components/Button/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Check from '@/components/Check/Check';
 import { TERMS } from '@/constants/terms';
-import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import WarningModal from '@/components/Modal/WarningModal';
 import { history } from '@/utils/history';
 import { useSignUpStore } from '@/store/useSignupStore';
+import { BottomWrapper, CommonLayout, Label } from '@/layouts/FormLayoutStyles';
 
 const SignUpAgreePage = () => {
   const navigate = useNavigate();
