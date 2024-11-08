@@ -7,6 +7,7 @@ import {
   Container,
   ProgressBarWrapper,
 } from '@/features/Signup/layout/CommonLayout';
+import { useSignUpStore } from '@/store/useSignupStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import { formatTime } from '@/utils/format';
@@ -18,20 +19,31 @@ const SignUpEmailPage = () => {
   const navigate = useNavigate();
   const showToast = useToast((state) => state.showToast);
 
-  const [email, setEmail] = useState<string>('');
-  const [emailAuth, setEmailAuth] = useState<string>('');
+  const { email, setEmail } = useSignUpStore();
+  const { emailAuth, setEmailAuth } = useSignUpStore();
+  /* 인증 완료 (인증코드 input, 인증되었어요 성공 메세지) */
+  const { isAuthCompleted, setIsAuthCompleted } = useSignUpStore();
+
   /* 에러 메세지 */
   const [errorEmail, setErrorEmail] = useState<string>('');
   const [successEmailAuth, setSuccessEmailAuth] = useState<string>('');
   const [errorEmailAuth, setErrorEmailAuth] = useState<string>('');
 
   const [isShowAuthInput, setIsShowAuthInput] = useState<boolean>(false);
+  /* 인증 메일 전송 완료 (타이머, 재전송과 인증번호 버튼 텍스트 결정) */
   const [isSend, setIsSend] = useState<boolean>(false);
   const [leftTime, setLeftTime] = useState<number>(300);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isAuthCompleted, setIsAuthCompleted] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isAuthCompleted) {
+      setIsShowAuthInput(true);
+      setSuccessEmailAuth('인증되었어요.');
+    }
+  }, [isAuthCompleted]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    /* 인증 메일 전송 시 인증 상태 초기화 */
     if (isSend) {
       setIsAuthCompleted(false);
       setIsSend(false);
@@ -48,6 +60,11 @@ const SignUpEmailPage = () => {
   };
 
   const handleEmailAuthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    /* 인증 완료 상태에서 인증번호 변경 시 인증 상태 초기화 */
+    if (isAuthCompleted) {
+      setIsAuthCompleted(false);
+      setSuccessEmailAuth('');
+    }
     setEmailAuth(e.target.value);
   };
 
@@ -57,6 +74,8 @@ const SignUpEmailPage = () => {
       /* 인증 번호 전송 API */
       setIsLoading(false);
       setEmailAuth('');
+      setSuccessEmailAuth('');
+      setErrorEmailAuth('');
       showToast('인증번호가 전송되었어요.', 3000, {
         bottom: '81px',
       });
@@ -82,6 +101,7 @@ const SignUpEmailPage = () => {
     navigate('/signup/profile');
   };
 
+  /* 타이머 */
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
     if (isSend && leftTime > 0) {
@@ -139,10 +159,10 @@ const SignUpEmailPage = () => {
               />
               <Button
                 width="120px"
-                text="인증하기"
+                text={isAuthCompleted ? '인증 완료' : '인증하기'}
                 variant="activate"
                 onClick={handleAuthButtonClick}
-                disabled={!emailAuth}
+                disabled={!emailAuth || isAuthCompleted}
               />
             </InputWrapper>
             {isSend && <Timer>{formatTime(leftTime)}</Timer>}

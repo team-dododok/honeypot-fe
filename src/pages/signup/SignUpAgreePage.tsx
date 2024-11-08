@@ -8,16 +8,14 @@ import { TERMS } from '@/constants/terms';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import WarningModal from '@/components/Modal/WarningModal';
 import { history } from '@/utils/history';
+import { useSignUpStore } from '@/store/useSignupStore';
 
 const SignUpAgreePage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false);
-  const [isCheckedTerms, setIsCheckedTerms] = useState({
-    0: false,
-    1: false,
-    2: false,
-  });
+  const { isCheckedTerms, setIsCheckedTerms, setIsCheckedTerm } =
+    useSignUpStore();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,11 +40,7 @@ const SignUpAgreePage = () => {
   };
 
   const handleCheck = (id: 0 | 1 | 2) => {
-    setIsCheckedTerms((prev) => {
-      const newState = { ...prev, [id]: !prev[id] };
-      setIsCheckedAll(newState[0] && newState[1] && newState[2]);
-      return newState;
-    });
+    setIsCheckedTerm(id, !isCheckedTerms[id]);
   };
 
   const isNextButtonActive = isCheckedTerms[0] && isCheckedTerms[1];

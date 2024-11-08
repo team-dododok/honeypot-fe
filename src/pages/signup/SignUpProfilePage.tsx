@@ -3,13 +3,14 @@ import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import { ProgressBarWrapper } from '@/features/Signup/layout/CommonLayout';
+import { useSignUpStore } from '@/store/useSignupStore';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const [profileIdx, setProfileIdx] = useState<number | null>(null);
+  const { profileIdx, setProfileIdx } = useSignUpStore();
 
   const handleProfileImageClick = (index: number) => {
     setProfileIdx(index);

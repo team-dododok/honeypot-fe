@@ -1,12 +1,18 @@
 import styled from '@emotion/styled';
 import Button from '@/components/Button/Button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { theme } from '@/styles/theme';
 import { floatAnimation } from '@/styles/Animation';
 import { useNavigate } from 'react-router-dom';
+import { useSignUpStore } from '@/store/useSignupStore';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { clearState } = useSignUpStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
 
   const handleButtonClick = () => {
     navigate('/signup/agree');
