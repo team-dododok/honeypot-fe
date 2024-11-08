@@ -20,13 +20,23 @@ const SignUpEmailPage = () => {
 
   const [email, setEmail] = useState<string>('');
   const [emailAuth, setEmailAuth] = useState<string>('');
+  /* 에러 메세지 */
   const [errorEmail, setErrorEmail] = useState<string>('');
   const [successEmailAuth, setSuccessEmailAuth] = useState<string>('');
   const [errorEmailAuth, setErrorEmailAuth] = useState<string>('');
+
+  const [isShowAuthInput, setIsShowAuthInput] = useState<boolean>(false);
   const [isSend, setIsSend] = useState<boolean>(false);
   const [leftTime, setLeftTime] = useState<number>(300);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isSend) {
+      setIsSend(false);
+      setEmailAuth('');
+      setSuccessEmailAuth('');
+      setErrorEmailAuth('');
+    }
     setEmail(e.target.value);
     if (EMAIL_REGEX.test(email) || e.target.value.length === 0) {
       setErrorEmail('');
@@ -40,12 +50,18 @@ const SignUpEmailPage = () => {
   };
 
   const handleSendButtonClick = () => {
-    /* 인증 번호 전송 API */
-    showToast('인증번호가 전송되었어요.', 3000, {
-      bottom: '81px',
-    });
-    setIsSend(true);
-    setLeftTime(300);
+    if (!isLoading) {
+      setIsLoading(true);
+      /* 인증 번호 전송 API */
+      setIsLoading(false);
+      setEmailAuth('');
+      showToast('인증번호가 전송되었어요.', 3000, {
+        bottom: '81px',
+      });
+      setIsSend(true);
+      setIsShowAuthInput(true);
+      setLeftTime(300);
+    }
   };
 
   const handleAuthButtonClick = () => {
@@ -101,10 +117,11 @@ const SignUpEmailPage = () => {
               variant="activate"
               onClick={handleSendButtonClick}
               disabled={!email || errorEmail !== ''}
+              loading={isLoading}
             />
           </InputWrapper>
         </LabelWrapper>
-        {isSend && (
+        {isShowAuthInput && (
           <LabelWrapper>
             <SLabel>인증번호를 입력해주세요.</SLabel>
             <InputWrapper>
@@ -124,7 +141,7 @@ const SignUpEmailPage = () => {
                 disabled={!emailAuth}
               />
             </InputWrapper>
-            <Timer>{formatTime(leftTime)}</Timer>
+            {isSend && <Timer>{formatTime(leftTime)}</Timer>}
           </LabelWrapper>
         )}
       </Container>
