@@ -1,22 +1,16 @@
 import styled from '@emotion/styled';
-import Button from '@/components/Button/Button';
 import React, { useEffect } from 'react';
 import { theme } from '@/styles/theme';
 import { floatAnimation } from '@/styles/Animation';
-import { useNavigate } from 'react-router-dom';
 import { useSignUpStore } from '@/store/useSignupStore';
+import KakaoButton from '@/features/Login/components/KakaoButton';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const { clearState } = useSignUpStore();
 
   useEffect(() => {
     clearState();
   }, []);
-
-  const handleButtonClick = () => {
-    navigate('/signup/agree');
-  };
 
   return (
     <PageContainer>
@@ -28,13 +22,7 @@ const LoginPage = () => {
       <Image src="/assets/images/login/img-login-01.svg" alt="team" />
       <BottomWrapper>
         <Bubble>⚡️ 3초만에 가입하고 칭찬 보내기 ⚡️</Bubble>
-        <Button
-          text="카카오톡으로 로그인"
-          icon={<img src="/assets/icons/kakao.svg" alt="kakao" />}
-          background="#FEE500"
-          color="#4A4642"
-          onClick={handleButtonClick}
-        />
+        <KakaoButton />
       </BottomWrapper>
     </PageContainer>
   );
