@@ -29,16 +29,18 @@ const SignUpEmailPage = () => {
   const [isSend, setIsSend] = useState<boolean>(false);
   const [leftTime, setLeftTime] = useState<number>(300);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAuthCompleted, setIsAuthCompleted] = useState<boolean>(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isSend) {
+      setIsAuthCompleted(false);
       setIsSend(false);
       setEmailAuth('');
       setSuccessEmailAuth('');
       setErrorEmailAuth('');
     }
     setEmail(e.target.value);
-    if (EMAIL_REGEX.test(email) || e.target.value.length === 0) {
+    if (EMAIL_REGEX.test(e.target.value) || e.target.value.length === 0) {
       setErrorEmail('');
     } else {
       setErrorEmail('올바른 이메일 형식으로 입력해주세요.');
@@ -68,10 +70,12 @@ const SignUpEmailPage = () => {
     /* 인증 번호 검증 API */
     // 성공 시
     setSuccessEmailAuth('인증되었어요.');
+    setIsAuthCompleted(true);
     setErrorEmailAuth('');
     // 실패 시
     // setSuccessEmailAuth('');
     // setErrorEmailAuth('인증번호가 일치하지 않아요.');
+    // setErrorEmailAuth('유효시간이 만료되었어요.');
   };
 
   const handleNextButtonClick = () => {
@@ -151,7 +155,11 @@ const SignUpEmailPage = () => {
           variant="activate"
           onClick={handleNextButtonClick}
           disabled={
-            !email || !emailAuth || errorEmail !== '' || errorEmailAuth !== ''
+            !isAuthCompleted ||
+            !email ||
+            !emailAuth ||
+            errorEmail !== '' ||
+            errorEmailAuth !== ''
           }
         />
       </BottomWrapper>
