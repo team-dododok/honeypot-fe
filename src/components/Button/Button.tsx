@@ -8,7 +8,6 @@ const Button: React.FC<ButtonProps> = ({
   text,
   icon,
   variant,
-  height = '54px',
   disabledColor,
   loading,
   ...props
@@ -17,13 +16,11 @@ const Button: React.FC<ButtonProps> = ({
     <StyledButton
       text={text}
       variant={variant}
-      height={height}
       disabledColor={disabledColor}
       loading={loading}
       {...props}
     >
-      {icon && <IconContainer>{icon}</IconContainer>}
-      {text}
+      {icon && <IconContainer $isText={!!text}>{icon}</IconContainer>}
     </StyledButton>
   );
 };
@@ -35,8 +32,8 @@ const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: ${(props) => props.width || '100%'};
-  height: ${(props) => props.height};
-  padding: 10px 20px;
+  height: ${(props) => props.height || '54px'};
+  padding: ${(props) => props.padding || '10px 20px'};
   border-radius: ${(props) => props.borderRadius || '16px'};
 
   background-color: ${(props) =>
@@ -48,8 +45,11 @@ const StyledButton = styled.button<ButtonProps>`
   border: ${(props) =>
     variantStyles[props.variant || 'normal']?.border || 'none'};
 
-  ${theme.typography.body3};
-  white-space: nowrap;
+  ${(props) =>
+    props.typography
+      ? theme.typography[props.typography]
+      : theme.typography.body3};
+  white-space: pre-line;
   cursor: pointer;
   transition: background-color 0.3s;
 
@@ -84,9 +84,9 @@ const StyledButton = styled.button<ButtonProps>`
   opacity: ${({ loading }) => (loading ? 0.5 : 1)};
 `;
 
-const IconContainer = styled.span`
+const IconContainer = styled.span<{ $isText: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
+  margin-right: ${({ $isText }) => ($isText ? '8px' : '0px')};
 `;
