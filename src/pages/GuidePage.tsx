@@ -16,6 +16,9 @@ import StampModal from '@/features/Stamp/components/Modal/StampModal';
 import StampCard from '@/features/Stamp/components/StampCard';
 import StampLabel from '@/features/Stamp/components/StampLabel';
 import StampList from '@/features/Stamp/components/StampList';
+import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
+import TabToggle from '@/components/Toggle/TabToggle';
+import { HONEY_TOGGLE } from '@/constants/toggle';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -38,6 +41,11 @@ const GuidePage = () => {
     useState<boolean>(false);
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
   const [isHoneyStamp, setIsHoneyStamp] = useState<number | null>(null);
+  const [selectedTabToggle, setSelectedTabToggle] = useState<number>(0);
+  const [selectedGroupToggle, setSelectedGroupToggle] =
+    useState<ToggleType>('card');
+  const [selectedStampToggle, setSelectedStampToggle] =
+    useState<ToggleType>('honey');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -111,6 +119,32 @@ const GuidePage = () => {
         <Button text="Warning" variant="warning" />
       </Elements>
       <Elements>
+        <h3>Floating Button</h3>
+        <Button
+          text=""
+          icon={
+            <img
+              src="/assets/icons/download.svg"
+              width={20}
+              height={20}
+              alt="Download"
+            />
+          }
+          width="32px"
+          height="32px"
+          padding="0px"
+          borderRadius="50%"
+        />
+        <Button
+          text={`수정\n예정`}
+          width="56px"
+          height="56px"
+          padding="9px 17px"
+          borderRadius="24px"
+          typography="body5"
+        />
+      </Elements>
+      <Elements>
         <h3>Back Button</h3>
         <BackButton to={'/'} />
       </Elements>
@@ -161,6 +195,46 @@ const GuidePage = () => {
       <Elements>
         <h3>Progress Bar</h3>
         <ProgressBar current={1} total={4} />
+      </Elements>
+      <Elements>
+        <h3>Toggle</h3>
+        <Elements>
+          <h4>TabToggle</h4>
+          <TabToggle
+            tabs={HONEY_TOGGLE}
+            selected={selectedTabToggle}
+            onClick={(id) => {
+              setSelectedTabToggle(id);
+            }}
+          />
+        </Elements>
+        <Elements>
+          <h4>DisplayToggle</h4>
+          <DisplayToggle
+            displayType="group"
+            selected={selectedGroupToggle}
+            disabled={false}
+            onClick={(type) => setSelectedGroupToggle(type)}
+          />
+          <DisplayToggle
+            displayType="group"
+            selected={selectedGroupToggle}
+            disabled={true}
+            onClick={(type) => setSelectedGroupToggle(type)}
+          />
+          <DisplayToggle
+            displayType="stamp"
+            selected={selectedStampToggle}
+            disabled={false}
+            onClick={(type) => setSelectedStampToggle(type)}
+          />
+          <DisplayToggle
+            displayType="stamp"
+            selected={selectedStampToggle}
+            disabled={true}
+            onClick={(type) => setSelectedStampToggle(type)}
+          />
+        </Elements>
       </Elements>
       <Elements>
         <h3>Warning Modal</h3>
@@ -373,7 +447,8 @@ const Container = styled.div`
     display: none;
   }
 
-  h3 {
+  h3,
+  h4 {
     margin-bottom: 10px;
   }
 `;
