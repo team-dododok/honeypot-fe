@@ -23,6 +23,10 @@ import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import CloseModal from '@/components/Modal/CloseModal';
+import LetterInfo from '@/features/Compliment/components/Frame/LetterInfo';
+import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
+import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -32,6 +36,7 @@ const GuidePage = () => {
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
+  const [showCloseModal, setShowCloseModal] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -46,6 +51,8 @@ const GuidePage = () => {
     useState<ToggleType>('card');
   const [selectedStampToggle, setSelectedStampToggle] =
     useState<ToggleType>('honey');
+  const [showDetailHoneyModal, setShowDetailHoneyModal] =
+    useState<boolean>(false);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -100,6 +107,10 @@ const GuidePage = () => {
 
   const handleShowPreview = () => {
     setShowPreviewModal(!showPreviewModal);
+  };
+
+  const handleShowDetailHoney = () => {
+    setShowDetailHoneyModal(!showDetailHoneyModal);
   };
 
   return (
@@ -339,6 +350,27 @@ const GuidePage = () => {
         )}
       </Elements>
       <Elements>
+        <h3>Close Modal</h3>
+        <Button
+          text="show Close Modal"
+          variant="activate"
+          onClick={() => {
+            setShowCloseModal(true);
+          }}
+        />
+        {showCloseModal && (
+          <CloseModal
+            confirmText="confirmText"
+            onConfirm={() => {
+              setShowCloseModal(false);
+            }}
+            onClose={() => {
+              setShowCloseModal(false);
+            }}
+          ></CloseModal>
+        )}
+      </Elements>
+      <Elements>
         <h3>Stamp</h3>
         <p>확정 아니라 일부러 Gray로 넣어두었어요.</p>
         <Elements>
@@ -427,6 +459,53 @@ const GuidePage = () => {
           sender={'sender'}
           content={'content'}
         />
+      </Elements>
+      <Elements>
+        <h3>Compliment</h3>
+        <Elements>
+          <h4>Letter Info</h4>
+          <LetterInfo
+            profileImg=""
+            groupName="groupName"
+            date="2024.11.09"
+            nameType="receiver"
+            name="name"
+          />
+          <LetterInfo
+            profileImg=""
+            groupName="groupName"
+            date="2024.11.09"
+            nameType="sender"
+            name="name"
+          />
+        </Elements>
+        <Elements>
+          <h4>Read Letter</h4>
+          <ReadLetter
+            content="텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트"
+            stampImage=""
+          />
+        </Elements>
+        <Elements>
+          <h3>Modal Examples</h3>
+          <Button
+            text="show DetailHoney Modal"
+            onClick={handleShowDetailHoney}
+          />
+          {showDetailHoneyModal && (
+            <DetailHoneyModal
+              profileImg=""
+              groupName="groupName"
+              date="2024.11.09"
+              nameType="sender"
+              name="name"
+              content="텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트"
+              stampImage=""
+              onConfirm={handleShowDetailHoney}
+              onClose={handleShowDetailHoney}
+            />
+          )}
+        </Elements>
       </Elements>
     </Container>
   );
