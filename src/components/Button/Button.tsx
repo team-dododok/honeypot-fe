@@ -21,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {icon && <IconContainer $isText={!!text}>{icon}</IconContainer>}
+      {text}
     </StyledButton>
   );
 };

@@ -105,7 +105,7 @@ const SignUpEmailPage = () => {
 
   /* 타이머 */
   useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
+    let timer: number | null = null;
     if (isSend && leftTime > 0) {
       timer = setInterval(() => {
         setLeftTime((prevTime) => prevTime - 1);
