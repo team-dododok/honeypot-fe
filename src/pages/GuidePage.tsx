@@ -16,10 +16,17 @@ import StampModal from '@/features/Stamp/components/Modal/StampModal';
 import StampCard from '@/features/Stamp/components/StampCard';
 import StampLabel from '@/features/Stamp/components/StampLabel';
 import StampList from '@/features/Stamp/components/StampList';
+import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
+import TabToggle from '@/components/Toggle/TabToggle';
+import { HONEY_TOGGLE } from '@/constants/toggle';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import CloseModal from '@/components/Modal/CloseModal';
+import LetterInfo from '@/features/Compliment/components/Frame/LetterInfo';
+import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
+import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -29,6 +36,7 @@ const GuidePage = () => {
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
+  const [showCloseModal, setShowCloseModal] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -38,6 +46,13 @@ const GuidePage = () => {
     useState<boolean>(false);
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
   const [isHoneyStamp, setIsHoneyStamp] = useState<number | null>(null);
+  const [selectedTabToggle, setSelectedTabToggle] = useState<number>(0);
+  const [selectedGroupToggle, setSelectedGroupToggle] =
+    useState<ToggleType>('card');
+  const [selectedStampToggle, setSelectedStampToggle] =
+    useState<ToggleType>('honey');
+  const [showDetailHoneyModal, setShowDetailHoneyModal] =
+    useState<boolean>(false);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -94,6 +109,10 @@ const GuidePage = () => {
     setShowPreviewModal(!showPreviewModal);
   };
 
+  const handleShowDetailHoney = () => {
+    setShowDetailHoneyModal(!showDetailHoneyModal);
+  };
+
   return (
     <Container>
       <h2>Guide</h2>
@@ -109,6 +128,32 @@ const GuidePage = () => {
         <Button text="Activate" variant="activate" />
         <Button text="Danger" variant="danger" />
         <Button text="Warning" variant="warning" />
+      </Elements>
+      <Elements>
+        <h3>Floating Button</h3>
+        <Button
+          text=""
+          icon={
+            <img
+              src="/assets/icons/download.svg"
+              width={20}
+              height={20}
+              alt="Download"
+            />
+          }
+          width="32px"
+          height="32px"
+          padding="0px"
+          borderRadius="50%"
+        />
+        <Button
+          text={`수정\n예정`}
+          width="56px"
+          height="56px"
+          padding="9px 17px"
+          borderRadius="24px"
+          typography="body5"
+        />
       </Elements>
       <Elements>
         <h3>Back Button</h3>
@@ -161,6 +206,46 @@ const GuidePage = () => {
       <Elements>
         <h3>Progress Bar</h3>
         <ProgressBar current={1} total={4} />
+      </Elements>
+      <Elements>
+        <h3>Toggle</h3>
+        <Elements>
+          <h4>TabToggle</h4>
+          <TabToggle
+            tabs={HONEY_TOGGLE}
+            selected={selectedTabToggle}
+            onClick={(id) => {
+              setSelectedTabToggle(id);
+            }}
+          />
+        </Elements>
+        <Elements>
+          <h4>DisplayToggle</h4>
+          <DisplayToggle
+            displayType="group"
+            selected={selectedGroupToggle}
+            disabled={false}
+            onClick={(type) => setSelectedGroupToggle(type)}
+          />
+          <DisplayToggle
+            displayType="group"
+            selected={selectedGroupToggle}
+            disabled={true}
+            onClick={(type) => setSelectedGroupToggle(type)}
+          />
+          <DisplayToggle
+            displayType="stamp"
+            selected={selectedStampToggle}
+            disabled={false}
+            onClick={(type) => setSelectedStampToggle(type)}
+          />
+          <DisplayToggle
+            displayType="stamp"
+            selected={selectedStampToggle}
+            disabled={true}
+            onClick={(type) => setSelectedStampToggle(type)}
+          />
+        </Elements>
       </Elements>
       <Elements>
         <h3>Warning Modal</h3>
@@ -265,6 +350,27 @@ const GuidePage = () => {
         )}
       </Elements>
       <Elements>
+        <h3>Close Modal</h3>
+        <Button
+          text="show Close Modal"
+          variant="activate"
+          onClick={() => {
+            setShowCloseModal(true);
+          }}
+        />
+        {showCloseModal && (
+          <CloseModal
+            confirmText="confirmText"
+            onConfirm={() => {
+              setShowCloseModal(false);
+            }}
+            onClose={() => {
+              setShowCloseModal(false);
+            }}
+          ></CloseModal>
+        )}
+      </Elements>
+      <Elements>
         <h3>Stamp</h3>
         <p>확정 아니라 일부러 Gray로 넣어두었어요.</p>
         <Elements>
@@ -354,6 +460,53 @@ const GuidePage = () => {
           content={'content'}
         />
       </Elements>
+      <Elements>
+        <h3>Compliment</h3>
+        <Elements>
+          <h4>Letter Info</h4>
+          <LetterInfo
+            profileImg=""
+            groupName="groupName"
+            date="2024.11.09"
+            nameType="receiver"
+            name="name"
+          />
+          <LetterInfo
+            profileImg=""
+            groupName="groupName"
+            date="2024.11.09"
+            nameType="sender"
+            name="name"
+          />
+        </Elements>
+        <Elements>
+          <h4>Read Letter</h4>
+          <ReadLetter
+            content="텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트"
+            stampImage=""
+          />
+        </Elements>
+        <Elements>
+          <h3>Modal Examples</h3>
+          <Button
+            text="show DetailHoney Modal"
+            onClick={handleShowDetailHoney}
+          />
+          {showDetailHoneyModal && (
+            <DetailHoneyModal
+              profileImg=""
+              groupName="groupName"
+              date="2024.11.09"
+              nameType="sender"
+              name="name"
+              content="텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트"
+              stampImage=""
+              onConfirm={handleShowDetailHoney}
+              onClose={handleShowDetailHoney}
+            />
+          )}
+        </Elements>
+      </Elements>
     </Container>
   );
 };
@@ -373,7 +526,8 @@ const Container = styled.div`
     display: none;
   }
 
-  h3 {
+  h3,
+  h4 {
     margin-bottom: 10px;
   }
 `;

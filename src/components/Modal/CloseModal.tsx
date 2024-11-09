@@ -7,19 +7,43 @@ interface CloseModal {
   width?: string;
   height?: string;
   confirmText?: string;
+  buttonIcon?: React.ReactNode;
   children?: React.ReactNode;
   onConfirm: () => void;
+  onClose: () => void;
 }
 const CloseModal = (props: CloseModal) => {
-  const { width, height, confirmText = '저장', children, onConfirm } = props;
+  const {
+    width,
+    height,
+    confirmText = '저장',
+    buttonIcon,
+    children,
+    onConfirm,
+    onClose,
+  } = props;
   return (
     <ModalOverlay>
       <ModalContainer width={width} height={height}>
-        {/* <CloseButton></CloseButton> */}
+        <Top>
+          <CloseButton onClick={onClose}>
+            <img
+              src="/assets/icons/close.svg"
+              width={20}
+              height={20}
+              alt="닫기"
+            />
+          </CloseButton>
+        </Top>
         <ModalContent>
           {children}
           <ButtonWrapper>
-            <Button variant="normal" text={confirmText} onClick={onConfirm} />
+            <Button
+              variant="normal"
+              text={confirmText}
+              icon={buttonIcon}
+              onClick={onConfirm}
+            />
           </ButtonWrapper>
         </ModalContent>
       </ModalContainer>
@@ -40,6 +64,7 @@ const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   background: rgba(46, 44, 41, 0.8);
+  z-index: 10;
 `;
 
 const ModalContainer = styled.div<{ width?: string; height?: string }>`
@@ -53,6 +78,17 @@ const ModalContainer = styled.div<{ width?: string; height?: string }>`
   gap: 20px;
   border-radius: 16px;
   background: ${theme.colors.gray00};
+`;
+
+const Top = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+const CloseButton = styled.button`
+  width: 20px;
+  height: 20px;
 `;
 
 const ModalContent = styled.div`
