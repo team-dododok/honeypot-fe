@@ -60,6 +60,5 @@ const ButtonBox = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
-  padding: 8px;
   background-color: ${theme.colors.white};
 `;

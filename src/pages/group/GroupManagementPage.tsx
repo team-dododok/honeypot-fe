@@ -8,6 +8,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const GroupManagementPage: React.FC = () => {
   const [hasGroup, setHasGroup] = useState<boolean>(true);
+  // TODO: 그룹 데이터 API 연동
   const [groupItems, setGroupItems] = useState([
     { id: 1, name: 'A그룹A그룹A그룹' },
     { id: 2, name: 'B그룹B그룹B그룹' },
@@ -25,10 +26,10 @@ const GroupManagementPage: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Container>
-        {hasGroup ? (
+      {hasGroup ? (
+        <FullContainer>
+          <Button text="새 그룹 생성하기" />
           <GroupList>
-            <Button text="새 그룹 생성하기" />
             {groupItems.map((item, index) => (
               <DraggableButton
                 key={item.id}
@@ -39,17 +40,17 @@ const GroupManagementPage: React.FC = () => {
               />
             ))}
           </GroupList>
-        ) : (
-          <>
-            <img src="/assets/images/group/img-nonestamp.svg" alt="nonestamp" />
-            <Text>
-              <p>아직 그룹이 없어요.</p>
-              <p>새 그룹을 생성해 볼까요?</p>
-            </Text>
-            <Button text="새 그룹 생성하기" />
-          </>
-        )}
-      </Container>
+        </FullContainer>
+      ) : (
+        <BlankContainer>
+          <img src="/assets/images/group/img-nonestamp.svg" alt="nonestamp" />
+          <Text>
+            <p>아직 그룹이 없어요.</p>
+            <p>새 그룹을 생성해 볼까요?</p>
+          </Text>
+          <Button text="새 그룹 생성하기" />
+        </BlankContainer>
+      )}
     </DndProvider>
   );
 };
@@ -60,9 +61,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+`;
+
+const FullContainer = styled(Container)`
+  gap: 16px;
+  height: 100%;
+`;
+
+const BlankContainer = styled(Container)`
   justify-content: center;
   gap: 24px;
-  width: 100%;
   height: calc(100% - 164px);
 `;
 
@@ -76,17 +85,6 @@ const GroupList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
-  text-align: center;
-
-  h2 {
-    color: ${theme.colors.primary};
-    ${theme.typography.h4};
-  }
-
-  p {
-    color: ${theme.colors.gray60};
-    ${theme.typography.body1};
-  }
 `;
