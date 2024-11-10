@@ -4,16 +4,16 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import BackButton from '@/components/Button/BackButton';
 
-export interface OutletContext {
-  setPreviousPath: (path: string) => void;
+interface SubLayoutProps {
+  title: string;
+  padding?: string;
 }
-
-const SignupLayout: React.FC = () => {
+const SubLayout: React.FC<SubLayoutProps> = ({ title, padding = '26px' }) => {
   return (
-    <Container>
+    <Container $padding={padding}>
       <Header>
         <BackButton />
-        <Title>회원가입</Title>
+        <Title>{title}</Title>
       </Header>
       <Content>
         <Outlet />
@@ -22,14 +22,14 @@ const SignupLayout: React.FC = () => {
   );
 };
 
-export default SignupLayout;
+export default SubLayout;
 
-const Container = styled.div`
+const Container = styled.div<{ $padding: string }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 26px;
+  padding: ${({ $padding }) => $padding || '26px'};
   width: 100%;
   height: 100vh;
 `;

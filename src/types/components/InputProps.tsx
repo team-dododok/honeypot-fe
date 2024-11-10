@@ -4,8 +4,10 @@ export interface InputProps {
   clear?: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
   successMsg?: string;
   errorMsg?: string;
+  readOnly?: boolean;
 }
 
 export interface MessageProps {

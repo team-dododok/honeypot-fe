@@ -3,16 +3,19 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import GroupPage from '@/pages/GroupPage';
-import ProfilePage from '@/pages/profile/ProfilePage';
 import GroupDetailPage from '@/pages/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
 import SignUpEmailPage from '@/pages/signup/SignUpEmailPage';
 import SignUpProfilePage from '@/pages/signup/SignUpProfilePage';
-import SignupLayout from '@/layouts/SignupLayout';
 import SignUpCompletePage from '@/pages/signup/SignUpCompletePage';
 import GuidePage from '@/pages/GuidePage';
 import MainLayout from '@/layouts/MainLayout';
+import SubLayout from '@/layouts/SubLayout';
+import ComplimentSendTargetPage from '@/pages/compliment/send/ComplimentSendTargetPage';
+import ComplimentSendContentPage from '@/pages/compliment/send/ComplimentSendContentPage';
+import ComplimentSendCompletePage from '@/pages/compliment/send/ComplimentSendCompletePage';
+import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceivePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 
 const router = createBrowserRouter([
@@ -29,13 +32,16 @@ const router = createBrowserRouter([
         path: 'group/:id',
         element: <GroupDetailPage />,
       },
+
       {
         path: 'profile',
-        element: <ProfilePage />,
-      },
-      {
-        path: 'profile/update',
-        element: <ProfileUpdatePage />,
+        element: <SubLayout title="프로필 수정" padding="0px" />,
+        children: [
+          {
+            path: 'update',
+            element: <ProfileUpdatePage />,
+          },
+        ],
       },
     ],
   },
@@ -49,7 +55,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'signup',
-    element: <SignupLayout />,
+    element: <SubLayout title="회원가입" />,
     children: [
       {
         path: 'agree',
@@ -70,6 +76,39 @@ const router = createBrowserRouter([
       {
         path: 'complete',
         element: <SignUpCompletePage />,
+      },
+    ],
+  },
+  {
+    path: 'compliment',
+    children: [
+      {
+        path: 'send',
+        element: <SubLayout title="칭찬 보내기" />,
+        children: [
+          {
+            path: 'target',
+            element: <ComplimentSendTargetPage />,
+          },
+          {
+            path: 'content',
+            element: <ComplimentSendContentPage />,
+          },
+          {
+            path: 'complete',
+            element: <ComplimentSendCompletePage />,
+          },
+        ],
+      },
+      {
+        path: 'receive',
+        element: <SubLayout title="칭찬 받기" />,
+        children: [
+          {
+            path: '',
+            element: <ComplimentReceivePage />,
+          },
+        ],
       },
     ],
   },

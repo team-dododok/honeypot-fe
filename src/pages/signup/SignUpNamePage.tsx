@@ -2,7 +2,7 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
-import styled from '@emotion/styled';
+import { ProgressBarWrapper } from '@/features/Signup/layout/CommonLayout';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -51,11 +51,3 @@ const SignUpNamePage = () => {
 };
 
 export default SignUpNamePage;
-
-const ProgressBarWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 28px;
-`;

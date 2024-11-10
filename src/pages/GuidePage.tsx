@@ -3,7 +3,16 @@ import BackButton from '@/components/Button/BackButton';
 import Button from '@/components/Button/Button';
 import Check from '@/components/Check/Check';
 import Input from '@/components/Input/Input';
+import LinedInput from '@/components/Input/LinedInput';
+import BottomModal from '@/components/Modal/BottomModal';
+import CenterModal from '@/components/Modal/CenterModal';
 import WarningModal from '@/components/Modal/WarningModal';
+import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
+import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
+import GroupModal from '@/features/Group/components/Modal/GroupModal';
+import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
+import StampModal from '@/features/Stamp/components/Modal/StampModal';
+import StampLabel from '@/features/Stamp/components/StampLabel';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -15,6 +24,16 @@ const GuidePage = () => {
   const [checkValue, setCheckValue] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
+  const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
+  const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
+  const [group, setGroup] = useState<string>('');
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+  const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const [stampType, setStampType] = useState<number | null>(null);
+  const [showSelectedStampModal, setShowSelectedStampModal] =
+    useState<boolean>(false);
+  const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -42,6 +61,33 @@ const GuidePage = () => {
 
   const handleModalImage = () => {
     setShowModalImage(true);
+  };
+
+  const handleShowGroup = () => {
+    setShowGroupModal(true);
+  };
+
+  const handleSelectedGroup = () => {
+    setShowGroupModal(false);
+    console.log(group);
+    const selectedGroupName = GROUP_LIST_DUMMY.find(
+      (group) => group.id === selectedGroup
+    )?.groupName;
+    if (selectedGroupName) {
+      setGroup(selectedGroupName);
+    }
+  };
+
+  const handleShowInfo = () => {
+    setShowInfoModal(!showInfoModal);
+  };
+
+  const handleShowSelectedStamp = () => {
+    setShowSelectedStampModal(!showSelectedStampModal);
+  };
+
+  const handleShowPreview = () => {
+    setShowPreviewModal(!showPreviewModal);
   };
 
   return (
@@ -79,6 +125,13 @@ const GuidePage = () => {
           clear={true}
           value={inputValue}
           onChange={handleInput}
+        />
+        <LinedInput
+          placeholder="Lined Input"
+          value={inputValue}
+          onChange={(event) => {
+            setInputValue(event.target.value);
+          }}
         />
       </Elements>
       <Elements>
@@ -146,6 +199,112 @@ const GuidePage = () => {
             }}
           />
         )}
+      </Elements>
+      <Elements>
+        <h3>Bottom Modal</h3>
+        <Button
+          text="show Bottom Modal"
+          variant="activate"
+          onClick={() => {
+            setShowBottomModal(true);
+          }}
+        />
+        {showBottomModal && (
+          <BottomModal
+            height="516px"
+            title="Bottom Modal"
+            onCancel={() => {
+              setShowBottomModal(false);
+            }}
+            onConfirm={() => {
+              setShowBottomModal(false);
+            }}
+            confirmDisabled={false}
+            isVisible={true}
+          >
+            <Input
+              width="100%"
+              placeholder="Add the child you want."
+              clear={true}
+              value={''}
+              onChange={() => {}}
+            />
+          </BottomModal>
+        )}
+      </Elements>
+      <Elements>
+        <h3>Center Modal</h3>
+        <Button
+          text="show Center Modal"
+          variant="activate"
+          onClick={() => {
+            setShowCenterModal(true);
+          }}
+        />
+        {showCenterModal && (
+          <CenterModal
+            title="Center Modal"
+            confirmText="confirmText"
+            onConfirm={() => {
+              setShowCenterModal(false);
+            }}
+            disabled={false}
+          >
+            <Input
+              width="100%"
+              placeholder="Add the child you want."
+              clear={true}
+              value={''}
+              onChange={() => {}}
+            />
+          </CenterModal>
+        )}
+      </Elements>
+      <Elements>
+        <h3>Stamp</h3>
+        <p>확정 아니라 일부러 Gray로 넣어두었어요.</p>
+        <StampLabel
+          id={0}
+          image={'/assets/images/stamp/img-stamp-select.svg'}
+          stampName={'StampName'}
+          selected={0}
+          onClick={() => {}}
+        />
+        <StampLabel
+          id={0}
+          image={'/assets/images/stamp/img-stamp-select.svg'}
+          stampName={'StampName'}
+          selected={1}
+          onClick={() => {}}
+        />
+      </Elements>
+      <Elements>
+        <h3>Modal Examples</h3>
+        <Button text="show Group Modal" onClick={handleShowGroup} />
+        <Button text="show Info Modal" onClick={handleShowInfo} />
+        <Button text="show Stamp Modal" onClick={handleShowSelectedStamp} />
+        <Button text="show Preview Modal" onClick={handleShowPreview} />
+        <InfoModal showModal={showInfoModal} onClose={handleShowInfo} />
+        <GroupModal
+          isVisible={showGroupModal}
+          onClose={() => setShowGroupModal(false)}
+          onConfirm={handleSelectedGroup}
+          selectedGroup={selectedGroup}
+          setSelectedGroup={setSelectedGroup}
+        />
+        <StampModal
+          showModal={showSelectedStampModal}
+          onClose={handleShowSelectedStamp}
+          stampType={stampType}
+          setStampType={setStampType}
+        />
+        <PreviewModal
+          showModal={showPreviewModal}
+          onClose={handleShowPreview}
+          receiver={'receiver'}
+          sender={'sender'}
+          content={'content'}
+        />
       </Elements>
     </Container>
   );

@@ -17,5 +17,6 @@ export interface ButtonProps
   borderRadius?: string;
   variant?: ButtonType;
   disabled?: boolean;
+  disabledColor?: string;
   onClick?: () => void;
 }
