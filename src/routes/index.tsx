@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
-import LoginPage from '@/pages/LoginPage';
+import LoginPage from '@/pages/login/LoginPage';
 import GroupPage from '@/pages/GroupPage';
 import GroupDetailPage from '@/pages/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
@@ -17,6 +17,7 @@ import ComplimentSendContentPage from '@/pages/compliment/send/ComplimentSendCon
 import ComplimentSendCompletePage from '@/pages/compliment/send/ComplimentSendCompletePage';
 import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceivePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
+import KakaoPage from '@/pages/login/KakaoPage';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <LoginPage />,
+  },
+  {
+    path: 'login/kakao',
+    element: <KakaoPage />,
   },
   {
     path: 'signup',

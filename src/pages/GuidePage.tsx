@@ -11,8 +11,11 @@ import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
 import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
+import HoneyStamp from '@/features/Stamp/components/HoneyStamp';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
+import StampCard from '@/features/Stamp/components/StampCard';
 import StampLabel from '@/features/Stamp/components/StampLabel';
+import StampList from '@/features/Stamp/components/StampList';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -34,6 +37,7 @@ const GuidePage = () => {
   const [showSelectedStampModal, setShowSelectedStampModal] =
     useState<boolean>(false);
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
+  const [isHoneyStamp, setIsHoneyStamp] = useState<number | null>(null);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -263,20 +267,64 @@ const GuidePage = () => {
       <Elements>
         <h3>Stamp</h3>
         <p>확정 아니라 일부러 Gray로 넣어두었어요.</p>
-        <StampLabel
-          id={0}
-          image={'/assets/images/stamp/img-stamp-select.svg'}
-          stampName={'StampName'}
-          selected={0}
-          onClick={() => {}}
-        />
-        <StampLabel
-          id={0}
-          image={'/assets/images/stamp/img-stamp-select.svg'}
-          stampName={'StampName'}
-          selected={1}
-          onClick={() => {}}
-        />
+        <Elements>
+          <h4>Stamp Label</h4>
+          <StampLabel
+            id={0}
+            image={'/assets/images/stamp/img-stamp-example.svg'}
+            stampName={'StampName'}
+            selected={0}
+            onClick={() => {}}
+          />
+          <StampLabel
+            id={0}
+            image={'/assets/images/stamp/img-stamp-example.svg'}
+            stampName={'StampName'}
+            selected={1}
+            onClick={() => {}}
+          />
+        </Elements>
+        <Elements>
+          <h4>Stamp Card</h4>
+          <StampCard
+            imgUrl={'/assets/images/stamp/img-stamp-example.svg'}
+            stampName={'StampName'}
+            count={3}
+            totalCount={5}
+          />
+          <StampCard
+            imgUrl={'/assets/images/stamp/img-stamp-example.svg'}
+            stampName={'StampName'}
+            count={0}
+            totalCount={5}
+          />
+        </Elements>
+        <Elements>
+          <h4>Stamp List</h4>
+          <StampList
+            profileImg={''}
+            sender={'sender'}
+            content={'content'}
+            imgUrl={''}
+          />
+        </Elements>
+        <Elements>
+          <h4>Honey Stamp</h4>
+          <HoneyStamp
+            imgUrl={''}
+            date={'2024.05.01'}
+            sender={'sender'}
+            selected={isHoneyStamp === 1}
+            readOnly={false}
+            onClick={() => {
+              if (isHoneyStamp === 1) {
+                setIsHoneyStamp(null);
+              } else {
+                setIsHoneyStamp(1);
+              }
+            }}
+          />
+        </Elements>
       </Elements>
       <Elements>
         <h3>Modal Examples</h3>
@@ -319,7 +367,7 @@ const Container = styled.div`
   flex-direction: column;
   overflow-y: scroll;
   padding: 20px;
-  background-color: ${theme.colors.gray00};
+  background-color: ${theme.colors.gray05};
 
   &::-webkit-scrollbar {
     display: none;

@@ -18,7 +18,7 @@ const StampLabel = (props: StampLabel) => {
   return (
     <StampLabelBox $selected={id === selected} onClick={handleStampClick}>
       <StampImage
-        src={image || '/assets/images/stamp/img-stamp-select.svg'}
+        src={image || '/assets/images/stamp/img-stamp-example.svg'}
         alt="stamp"
       />
       {stampName}
