@@ -1,12 +1,18 @@
 import Button from '@/components/Button/Button';
-import { BottomWrapper, CenterLayout } from '@/features/Signup';
+import { BottomWrapper, CenterLayout } from '@/layouts/FormLayoutStyles';
+import { useSignUpStore } from '@/store/useSignupStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpCompletePage = () => {
   const navigate = useNavigate();
+  const { clearState } = useSignUpStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
 
   const handleButtonClick = () => {
     navigate('/');

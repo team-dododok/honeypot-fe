@@ -5,13 +5,13 @@ import Input from '@/components/Input/Input';
 import { CHECK_COMPLIMENT_OPTIONS } from '@/constants/check';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
 import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
-import { CommonLayout } from '@/features/Signup';
 import {
+  CommonLayout,
   BottomWrapper,
   Container,
   Label,
   ProgressBarWrapper,
-} from '@/features/Signup/layout/CommonLayout';
+} from '@/layouts/FormLayoutStyles';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';

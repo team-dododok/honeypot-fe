@@ -1,14 +1,19 @@
 import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
-import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
-import { ProgressBarWrapper } from '@/features/Signup/layout/CommonLayout';
+import {
+  ProgressBarWrapper,
+  BottomWrapper,
+  CommonLayout,
+  Label,
+} from '@/layouts/FormLayoutStyles';
+import { useSignUpStore } from '@/store/useSignupStore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpNamePage = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState<string>('');
+  const { name, setName } = useSignUpStore();
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

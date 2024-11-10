@@ -10,6 +10,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   height = '54px',
   disabledColor,
+  loading,
   ...props
 }) => {
   return (
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
       variant={variant}
       height={height}
       disabledColor={disabledColor}
+      loading={loading}
       {...props}
     >
       {icon && <IconContainer>{icon}</IconContainer>}
@@ -78,6 +80,8 @@ const StyledButton = styled.button<ButtonProps>`
       disabledColor ? disabledColor : theme.colors.gray30};
     border: none;
   }
+
+  opacity: ${({ loading }) => (loading ? 0.5 : 1)};
 `;
 
 const IconContainer = styled.span`

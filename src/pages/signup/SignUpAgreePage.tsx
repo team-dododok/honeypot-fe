@@ -5,29 +5,29 @@ import Button from '@/components/Button/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Check from '@/components/Check/Check';
 import { TERMS } from '@/constants/terms';
-import { BottomWrapper, CommonLayout, Label } from '@/features/Signup';
 import WarningModal from '@/components/Modal/WarningModal';
 import { history } from '@/utils/history';
+import { useSignUpStore } from '@/store/useSignupStore';
+import { BottomWrapper, CommonLayout, Label } from '@/layouts/FormLayoutStyles';
 
 const SignUpAgreePage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false);
-  const [isCheckedTerms, setIsCheckedTerms] = useState({
-    0: false,
-    1: false,
-    2: false,
-  });
+  const { isCheckedTerms, setIsCheckedTerms, setIsCheckedTerm } =
+    useSignUpStore();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
       if (action !== 'POP') return;
-      setShowModal(true);
-      history.push(pathname);
+      if (Object.values(isCheckedTerms).some((value) => value)) {
+        setShowModal(true);
+        history.push(pathname);
+      }
     });
     return unlistenHistoryEvent;
-  }, []);
+  }, [isCheckedTerms]);
 
   const handleCheckAll = () => {
     const newCheckedState = !isCheckedAll;
@@ -40,11 +40,7 @@ const SignUpAgreePage = () => {
   };
 
   const handleCheck = (id: 0 | 1 | 2) => {
-    setIsCheckedTerms((prev) => {
-      const newState = { ...prev, [id]: !prev[id] };
-      setIsCheckedAll(newState[0] && newState[1] && newState[2]);
-      return newState;
-    });
+    setIsCheckedTerm(id, !isCheckedTerms[id]);
   };
 
   const isNextButtonActive = isCheckedTerms[0] && isCheckedTerms[1];
@@ -82,7 +78,7 @@ const SignUpAgreePage = () => {
             />
             <button
               onClick={() => {
-                alert(term.content);
+                window.open(term.url, '_blank');
               }}
             >
               <img src="/assets/icons/more.svg" />

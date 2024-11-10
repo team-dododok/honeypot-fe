@@ -1,12 +1,12 @@
 import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import ComplimentLetter from '@/features/Compliment/components/Letter/ComplimentLetter';
-import { CommonLayout } from '@/features/Signup';
 import {
+  CommonLayout,
   BottomWrapper,
   Container,
   ProgressBarWrapper,
-} from '@/features/Signup/layout/CommonLayout';
+} from '@/layouts/FormLayoutStyles';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';

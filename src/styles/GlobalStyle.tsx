@@ -30,6 +30,10 @@ const GlobalStyle = () => (
         background-color: ${theme.colors.gray05};
       }
 
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
       a {
         color: inherit;
         text-decoration: none;

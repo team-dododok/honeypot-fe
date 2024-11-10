@@ -18,5 +18,6 @@ export interface ButtonProps
   variant?: ButtonType;
   disabled?: boolean;
   disabledColor?: string;
+  loading?: boolean;
   onClick?: () => void;
 }
