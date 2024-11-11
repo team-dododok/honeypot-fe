@@ -10,6 +10,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   disabledColor,
   loading,
+  border,
   ...props
 }) => {
   return (
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
       variant={variant}
       disabledColor={disabledColor}
       loading={loading}
+      border={border}
       {...props}
     >
       {icon && <IconContainer $isText={!!text}>{icon}</IconContainer>}
@@ -44,7 +46,7 @@ const StyledButton = styled.button<ButtonProps>`
     props.color ||
     variantStyles[props.variant || 'normal']?.color(props.theme)};
   border: ${(props) =>
-    variantStyles[props.variant || 'normal']?.border || 'none'};
+    props.border || variantStyles[props.variant || 'normal']?.border || 'none'};
 
   ${(props) =>
     props.typography

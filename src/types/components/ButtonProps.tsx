@@ -15,6 +15,7 @@ export interface ButtonProps
   icon?: React.ReactNode;
   background?: string;
   color?: string;
+  border?: string;
   borderRadius?: string;
   typography?: string;
   variant?: ButtonType;
