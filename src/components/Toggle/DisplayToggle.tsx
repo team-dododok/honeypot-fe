@@ -43,6 +43,7 @@ const DisplayToggle = (props: DisplayToggleProps) => {
 export default DisplayToggle;
 
 const DisplayToggleContainer = styled.div`
+  width: 92px;
   display: flex;
   padding: 2px 6px;
   justify-content: center;
