@@ -1,4 +1,5 @@
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
+import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
 import BackHeader from '@/components/Header/BackHeader';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
@@ -12,10 +13,11 @@ import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const GroupDetailPage = () => {
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -45,6 +47,11 @@ const GroupDetailPage = () => {
     showToast('그룹명 변경이 완료되었어요');
   };
 
+  const handleWriteCompliment = () => {
+    // 칭찬 작성하기 페이지 이동
+    navigate('/compliment/send/target');
+  };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tab = urlParams.get('tab');
@@ -55,6 +62,7 @@ const GroupDetailPage = () => {
     }
   }, [location.search]);
 
+  useEffect(() => {}, [isSelectMode]);
   return (
     <Layout>
       <BackHeader title={title}>
@@ -86,6 +94,13 @@ const GroupDetailPage = () => {
         </TotalStampList>
         <Guide>꿀도장 카드를 좌우로 넘겨 확인하세요.</Guide>
       </TotalHoneyContainer>
+      <ButtonWrapper>
+        <Button
+          variant="normal"
+          text="해당 그룹에게 꿀 보내기"
+          onClick={handleWriteCompliment}
+        />
+      </ButtonWrapper>
       <BottomSheet
         title="꿀도장 현황"
         initialHeight="250px"
@@ -110,6 +125,7 @@ const GroupDetailPage = () => {
         <GroupTabContainer
           type={selectedTab === 0 ? 'send' : 'receive'}
           displayType={selectedDisplay}
+          selectedMode={isSelectMode}
         />
         {/* 그룹명 수정 및 삭제 */}
         <EditGroupNameModal
@@ -174,6 +190,10 @@ const Guide = styled.div`
   color: ${theme.colors.gray60};
   ${theme.typography.detail5};
   text-align: center;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 16px;
 `;
 
 const DisplayToggleWrapper = styled.div`
