@@ -413,6 +413,10 @@ const GuidePage = () => {
             name={'받는 사람'}
             content={'content'}
             imgUrl={''}
+            date={'2024-11-14'}
+            selected={false}
+            readOnly={true}
+            onClick={() => {}}
           />
           <StampList
             profileImg={''}
@@ -420,14 +424,21 @@ const GuidePage = () => {
             name={'보내는 사람'}
             content={'content'}
             imgUrl={''}
+            date={'2024-11-14'}
+            selected={false}
+            readOnly={true}
+            onClick={() => {}}
           />
         </Elements>
         <Elements>
           <h4>Honey Stamp</h4>
           <HoneyStamp
+            profileImg={''}
+            nameType={'receiver'}
+            name={'sender'}
+            content={'content'}
             imgUrl={''}
             date={'2024.05.01'}
-            sender={'sender'}
             selected={isHoneyStamp === 1}
             readOnly={false}
             onClick={() => {

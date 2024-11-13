@@ -6,10 +6,11 @@ import { useLocation } from 'react-router-dom';
 
 interface ListViewProps {
   letters: HoneyLetter[];
+  selectedMode: boolean;
 }
 
 const ListView = (props: ListViewProps) => {
-  const { letters } = props;
+  const { letters, selectedMode } = props;
 
   const location = useLocation();
 
@@ -35,6 +36,10 @@ const ListView = (props: ListViewProps) => {
           name={letter[nameType]}
           content={letter.content}
           imgUrl=""
+          date={letter.date}
+          selected={false}
+          readOnly={!selectedMode}
+          onClick={() => {}}
         />
       ))}
     </ListViewContainer>

@@ -1,14 +1,27 @@
 import { HoneyLetter } from '@/features/Compliment/types/HoneyLetter';
 import styled from '@emotion/styled';
-import React from 'react';
-import HoneyStamp from '../../HoneyStamp';
+import React, { useEffect, useState } from 'react';
+import HoneyStamp, { NameType } from '../../HoneyStamp';
 
 interface HoneyViewProps {
   letters: HoneyLetter[];
+  selectedMode: boolean;
 }
 
 const HoneyView = (props: HoneyViewProps) => {
-  const { letters } = props;
+  const { letters, selectedMode } = props;
+
+  const [nameType, setNameType] = useState<NameType>('sender');
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tab = urlParams.get('tab');
+    if (tab === 'receive') {
+      setNameType('receiver');
+    } else if (tab === 'send') {
+      setNameType('sender');
+    }
+  }, [location.search]);
 
   const columns = [];
   let index = 0;
@@ -28,11 +41,14 @@ const HoneyView = (props: HoneyViewProps) => {
           {columnLetters.map((letter) => (
             <HoneyStamp
               key={letter.id}
-              sender={letter.sender}
+              profileImg=""
+              nameType={nameType}
+              name={letter.sender}
+              content={letter.content}
               imgUrl=""
               date={letter.date}
               selected={false}
-              readOnly={true}
+              readOnly={!selectedMode}
               onClick={() => {}}
             />
           ))}
@@ -56,5 +72,5 @@ const Column = styled.div<{ $isEven: boolean; $index: number }>`
   gap: 8px;
   margin-top: ${({ $isEven }) => ($isEven ? '0' : '68px')};
   /* 각 행이 겹쳐지게 이동 */
-  transform: ${({ $index }) => `translateX(${-28 * $index}px)`};
+  /* transform: ${({ $index }) => `translateX(${-28 * $index}px)`}; */
 `;

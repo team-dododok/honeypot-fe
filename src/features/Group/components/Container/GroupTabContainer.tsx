@@ -12,10 +12,11 @@ import React from 'react';
 interface GroupTabContainerProps {
   type: 'send' | 'receive' | null;
   displayType: ToggleType;
+  selectedMode: boolean;
 }
 
 const GroupTabContainer = (props: GroupTabContainerProps) => {
-  const { type, displayType } = props;
+  const { type, displayType, selectedMode } = props;
 
   let letters: HoneyLetter[] = [];
   if (type === 'send') {
@@ -27,9 +28,9 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
   return (
     <Container>
       {displayType === 'honey' ? (
-        <HoneyView letters={letters} />
+        <HoneyView letters={letters} selectedMode={selectedMode} />
       ) : (
-        <ListView letters={letters} />
+        <ListView letters={letters} selectedMode={selectedMode} />
       )}
     </Container>
   );
