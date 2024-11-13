@@ -10,7 +10,7 @@ interface WaringModal {
   description: string;
   cancelText: string;
   confirmText: string;
-  image?: React.ReactNode;
+  image?: boolean;
   onCancel: () => void;
   onConfirm: () => void;
 }
@@ -27,7 +27,7 @@ const WarningModal = (props: WaringModal) => {
   return (
     <ModalOverlay>
       <ModalContainer>
-        {image}
+        {image && <img src="/assets/images/warning/img-warning.svg" />}
         <ModalContent>
           <Title>{title}</Title>
           <Description>{description}</Description>
@@ -53,7 +53,9 @@ const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   background: rgba(46, 44, 41, 0.8);
+  z-index: 10;
 `;
+
 const ModalContainer = styled.div`
   display: flex;
   width: 308px;
