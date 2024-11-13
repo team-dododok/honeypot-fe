@@ -26,13 +26,12 @@ const GroupDetailPage = () => {
   const [groupName, setGroupName] = useState<string>('A그룹');
 
   const [isSelectMode, setIsSelectMode] = useState(false);
+  const [showEditGroupNameModal, setShowEditGroupNameModal] =
+    useState<boolean>(false);
 
   const handleToggle = () => {
     setIsSelectMode(!isSelectMode);
   };
-
-  const [showEditGroupNameModal, setShowEditGroupNameModal] =
-    useState<boolean>(false);
 
   const title = `${groupName} (11)`;
 

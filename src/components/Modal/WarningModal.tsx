@@ -77,12 +77,14 @@ const ModalContent = styled.div`
 
 const Title = styled.div`
   color: ${theme.colors.error60};
-  ${theme.typography.subtitle1}
+  ${theme.typography.subtitle1};
+  text-align: center;
 `;
 
 const Description = styled.div`
   color: ${theme.colors.gray60};
   ${theme.typography.detail4}
+  text-align: center;
 `;
 
 const ButtonWrapper = styled.div`
