@@ -1,8 +1,8 @@
 import React from 'react';
 import CenterModal from '@/components/Modal/CenterModal';
-import StampLabel from '@/features/Stamp/components/StampLabel';
-import { STAMP } from '@/features/Stamp/constants/stamp';
+import StampLabel from '@/features/Stamp/components/Stamp/StampLabel';
 import styled from '@emotion/styled';
+import { STAMP } from '../../constants/dummy/stamp';
 
 interface StampModalProps {
   showModal: boolean;
