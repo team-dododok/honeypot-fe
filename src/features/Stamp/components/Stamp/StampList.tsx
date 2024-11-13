@@ -1,6 +1,7 @@
+import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 
 export type NameType = 'receiver' | 'sender';
 
@@ -10,34 +11,84 @@ interface StampListProps {
   name: string;
   content: string;
   imgUrl: string;
+  date: string;
+  selected: boolean;
+  readOnly: boolean;
+  onClick: () => void;
 }
 
 const StampList = (props: StampListProps) => {
-  const { profileImg, nameType, name, content, imgUrl } = props;
+  const {
+    profileImg,
+    nameType,
+    name,
+    content,
+    imgUrl,
+    date,
+    selected,
+    readOnly,
+    onClick,
+  } = props;
+
+  const [showDetailHoneyModal, setShowDetailHoneyModal] =
+    useState<boolean>(false);
+
+  const handleClickStamp = () => {
+    if (!readOnly && onClick) {
+      onClick();
+    } else {
+      setShowDetailHoneyModal(true);
+    }
+  };
+
+  const handleSaveDetailHoney = () => {
+    // 이미지 저장하기
+    setShowDetailHoneyModal(false);
+  };
+
+  const handleCloseDetailHoney = () => {
+    setShowDetailHoneyModal(false);
+  };
 
   return (
-    <StampListBox>
-      <LeftElement>
-        <ProfileImage
-          src={profileImg || '/assets/images/profile/img-profile-1-120.svg'}
-          width={48}
-          height={48}
+    <>
+      <StampListBox onClick={handleClickStamp}>
+        {selected && '체크'}
+        <LeftElement>
+          <ProfileImage
+            src={profileImg || '/assets/images/profile/img-profile-1-120.svg'}
+            width={48}
+            height={48}
+            alt="꿀도장"
+          />
+          <TextBox>
+            <Name>
+              {nameType === 'receiver' ? 'From. ' : 'To. '} {name}
+            </Name>
+            <Content>{content}</Content>
+          </TextBox>
+        </LeftElement>
+        <StampImage
+          src={imgUrl || '/assets/images/stamp/img-stamp-example.svg'}
+          width={55}
+          height={55}
           alt="꿀도장"
         />
-        <TextBox>
-          <Name>
-            {nameType === 'receiver' ? 'From. ' : 'To. '} {name}
-          </Name>
-          <Content>{content}</Content>
-        </TextBox>
-      </LeftElement>
-      <StampImage
-        src={imgUrl || '/assets/images/stamp/img-stamp-example.svg'}
-        width={55}
-        height={55}
-        alt="꿀도장"
-      />
-    </StampListBox>
+      </StampListBox>
+      {showDetailHoneyModal && (
+        <DetailHoneyModal
+          profileImg={profileImg}
+          groupName="groupName"
+          date={date}
+          nameType={nameType}
+          name={name}
+          content={content}
+          stampImage={imgUrl}
+          onConfirm={handleSaveDetailHoney}
+          onClose={handleCloseDetailHoney}
+        />
+      )}
+    </>
   );
 };
 
@@ -54,6 +105,7 @@ const StampListBox = styled.div`
   border-radius: 16px;
   border: 1px solid ${theme.colors.gray05};
   background: ${theme.colors.gray00};
+  cursor: pointer;
 `;
 
 const LeftElement = styled.div`
