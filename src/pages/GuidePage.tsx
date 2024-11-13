@@ -11,11 +11,11 @@ import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
 import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
-import HoneyStamp from '@/features/Stamp/components/HoneyStamp';
+import HoneyStamp from '@/features/Stamp/components/Stamp/HoneyStamp';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
-import StampCard from '@/features/Stamp/components/StampCard';
-import StampLabel from '@/features/Stamp/components/StampLabel';
-import StampList from '@/features/Stamp/components/StampList';
+import StampCard from '@/features/Stamp/components/Stamp/StampCard';
+import StampLabel from '@/features/Stamp/components/Stamp/StampLabel';
+import StampList from '@/features/Stamp/components/Stamp/StampList';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
 import { HONEY_TOGGLE } from '@/constants/toggle';
@@ -277,7 +277,7 @@ const GuidePage = () => {
           <WarningModal
             title="Warning Modal"
             description="This is Description with image"
-            image={<img src="/assets/images/login/img-login-01.svg" />}
+            image={true}
             cancelText="취소"
             confirmText="확인"
             onCancel={() => {
@@ -409,7 +409,15 @@ const GuidePage = () => {
           <h4>Stamp List</h4>
           <StampList
             profileImg={''}
-            sender={'sender'}
+            nameType={'sender'}
+            name={'받는 사람'}
+            content={'content'}
+            imgUrl={''}
+          />
+          <StampList
+            profileImg={''}
+            nameType={'receiver'}
+            name={'보내는 사람'}
             content={'content'}
             imgUrl={''}
           />
