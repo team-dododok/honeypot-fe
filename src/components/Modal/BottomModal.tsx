@@ -36,7 +36,12 @@ const BottomModal = (props: BottomModal) => {
         <Title>{title}</Title>
         <ModalContent>{children}</ModalContent>
         <ButtonWrapper>
-          <Button variant="deactivate" text={cancelText} onClick={onCancel} />
+          <Button
+            variant="deactivate"
+            text={cancelText}
+            onClick={onCancel}
+            background={theme.colors.gray10}
+          />
           <Button
             variant="activate"
             text={confirmText}
@@ -75,6 +80,7 @@ const ModalContainer = styled.div<{ width?: string; height?: string }>`
   gap: 20px;
   border-radius: 24px 24px 0 0;
   background: ${theme.colors.gray00};
+  position: relative;
 `;
 
 const ModalContent = styled.div`
