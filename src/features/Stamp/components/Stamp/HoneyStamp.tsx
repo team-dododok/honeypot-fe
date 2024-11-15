@@ -62,14 +62,14 @@ const HoneyStamp = (props: HoneyStamp) => {
         <HoneyStampImage
           src={
             imgUrl ||
-            `/assets/images/stamp/img-stamp-polygon${selected ? '' : '-border'}.svg`
+            `/assets/images/stamp/img-stamp-polygon${readOnly ? '-border' : ''}.svg`
           }
           width={144}
           height={125}
           alt="꿀도장"
-          $selected={selected}
+          $isSelectMode={!readOnly}
         />
-        <HoneyStampContent $selected={selected}>
+        <HoneyStampContent $isSelectMode={!readOnly}>
           <Date>{date}</Date>
           <StampImage src={'/assets/images/stamp/img-stamp-example.svg'} />
           <Sender>
@@ -109,16 +109,16 @@ const OverlayImage = styled.img`
 `;
 
 const HoneyStampImage = styled.img<{
-  $selected: boolean;
+  $isSelectMode: boolean;
 }>`
   position: absolute;
   top: 0;
   left: 0;
-  opacity: ${({ $selected }) => ($selected ? 0.5 : 1)};
+  opacity: ${({ $isSelectMode }) => ($isSelectMode ? 0.8 : 1)};
 `;
 
 const HoneyStampContent = styled.div<{
-  $selected: boolean;
+  $isSelectMode: boolean;
 }>`
   display: flex;
   flex-direction: column;
@@ -128,7 +128,7 @@ const HoneyStampContent = styled.div<{
   left: 50%;
   transform: translate(-50%, -50%);
 
-  opacity: ${({ $selected }) => ($selected ? 0.4 : 1)};
+  opacity: ${({ $isSelectMode }) => ($isSelectMode ? 0.6 : 1)};
 `;
 
 const Date = styled.div`

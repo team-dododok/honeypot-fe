@@ -5,11 +5,11 @@ import HoneyStamp, { NameType } from '../../HoneyStamp';
 
 interface HoneyViewProps {
   letters: HoneyLetter[];
-  selectedMode: boolean;
+  isSelectMode: boolean;
 }
 
 const HoneyView = (props: HoneyViewProps) => {
-  const { letters, selectedMode } = props;
+  const { letters, isSelectMode } = props;
 
   const [nameType, setNameType] = useState<NameType>('sender');
 
@@ -50,7 +50,7 @@ const HoneyView = (props: HoneyViewProps) => {
                   imgUrl=""
                   date={letter.date}
                   selected={false}
-                  readOnly={!selectedMode}
+                  readOnly={!isSelectMode}
                   onClick={() => {}}
                 />
               </>
