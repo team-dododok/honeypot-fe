@@ -29,6 +29,7 @@ import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import Info from '@/components/Info/Info';
 import ProcessModal from '@/components/Modal/ProcessModal';
+import Badge from '@/features/Badge/components/Badge';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -568,7 +569,7 @@ const GuidePage = () => {
         </Elements>
       </Elements>
       <Elements>
-        <h4>Info</h4>
+        <h3>Info</h3>
         <Info>
           각 꿀도장 카드에 적힌 숫자는
           <br />
@@ -579,6 +580,26 @@ const GuidePage = () => {
           </Strong>
           를 의미합니다.
         </Info>
+      </Elements>
+      <Elements>
+        <h3>Badge & BadgeModal</h3>
+        <p>클릭해보세요!</p>
+        <Badge
+          id={0}
+          name={'뱃지명'}
+          goal={'달성 조건'}
+          image=""
+          isObtain={false}
+          date=""
+        />
+        <Badge
+          id={0}
+          name={'뱃지명'}
+          goal={'달성 조건'}
+          image="/assets/images/badge/img-badge-get-1.svg"
+          isObtain={true}
+          date="2024-11-10"
+        />
       </Elements>
     </Container>
   );
