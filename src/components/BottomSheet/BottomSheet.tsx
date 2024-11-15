@@ -7,10 +7,11 @@ interface BottomSheetProps {
   initialHeight: string;
   expandedHeight: string;
   children: React.ReactNode;
+  background?: string;
 }
 
 const BottomSheet = (props: BottomSheetProps) => {
-  const { title, initialHeight, expandedHeight, children } = props;
+  const { title, initialHeight, expandedHeight, children, background } = props;
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -19,11 +20,22 @@ const BottomSheet = (props: BottomSheetProps) => {
 
   return (
     <SheetOverlay>
-      <SheetContainer height={isExpanded ? expandedHeight : initialHeight}>
-        <Handle onClick={toggleExpand} />
-        <Title>{title}</Title>
-        <Content>{children}</Content>
-      </SheetContainer>
+      <SheetImageContainer height={isExpanded ? expandedHeight : initialHeight}>
+        {!isExpanded && (
+          <>
+            <BongBongFace src="/assets/images/group/stamp/img-stamp-modal-bongbong-face.svg" />
+            <BongBongHands src="/assets/images/group/stamp/img-stamp-modal-bongbong-hands.svg" />
+          </>
+        )}
+        <SheetContainer
+          height={isExpanded ? expandedHeight : initialHeight}
+          background={isExpanded ? background : ''}
+        >
+          <Handle onClick={toggleExpand} />
+          <Title>{title}</Title>
+          <Content>{children}</Content>
+        </SheetContainer>
+      </SheetImageContainer>
     </SheetOverlay>
   );
 };
@@ -41,11 +53,39 @@ const SheetOverlay = styled.div`
   pointer-events: none;
 `;
 
-const SheetContainer = styled.div<{ height: string }>`
+const SheetImageContainer = styled.div<{ height: string }>`
+  position: relative;
   width: 100%;
   max-width: 480px;
   height: ${({ height }) => height};
-  padding: 0 26px 32px 26px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: fixed;
+  z-index: 5;
+`;
+
+const BongBongFace = styled.img`
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+`;
+
+const BongBongHands = styled.img`
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+`;
+
+const SheetContainer = styled.div<{ height: string; background?: string }>`
+  width: 100%;
+  max-width: 480px;
+  height: ${({ height }) => height};
+  padding: 0 26px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -55,6 +95,16 @@ const SheetContainer = styled.div<{ height: string }>`
   transition: height 0.3s ease;
   overflow: hidden;
   pointer-events: auto;
+  z-index: 5;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  background-image: url(${({ background }) => background});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: -150px 200px;
 `;
 
 const Handle = styled.div`
