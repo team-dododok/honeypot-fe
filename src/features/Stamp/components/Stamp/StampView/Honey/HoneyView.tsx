@@ -6,12 +6,14 @@ import HoneyStamp, { NameType } from '../../HoneyStamp';
 interface HoneyViewProps {
   letters: HoneyLetter[];
   isSelectMode: boolean;
+  onSelectedChange: (count: number) => void;
 }
 
 const HoneyView = (props: HoneyViewProps) => {
-  const { letters, isSelectMode } = props;
+  const { letters, isSelectMode, onSelectedChange } = props;
 
   const [nameType, setNameType] = useState<NameType>('sender');
+  const [selected, setSelected] = useState<number[]>([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -23,6 +25,12 @@ const HoneyView = (props: HoneyViewProps) => {
     }
   }, [location.search]);
 
+  useEffect(() => {
+    if (!isSelectMode) {
+      setSelected([]);
+    }
+  }, [isSelectMode]);
+
   const columns = [];
   let index = 0;
 
@@ -33,6 +41,17 @@ const HoneyView = (props: HoneyViewProps) => {
     columns.push(letters.slice(index, index + itemsInColumn));
     index += itemsInColumn;
   }
+
+  const handleCheckHoneyStamp = (id: number) => {
+    const updatedSelected = selected.includes(id)
+      ? selected.filter((selectedId) => selectedId !== id)
+      : [...selected, id];
+
+    setSelected(updatedSelected);
+
+    // disabled 처리를 위해 선택된 도장 길이 전달
+    onSelectedChange(updatedSelected?.length);
+  };
 
   return (
     <>
@@ -49,9 +68,9 @@ const HoneyView = (props: HoneyViewProps) => {
                   content={letter.content}
                   imgUrl=""
                   date={letter.date}
-                  selected={false}
+                  selected={selected.includes(letter.id)}
                   readOnly={!isSelectMode}
-                  onClick={() => {}}
+                  onClick={() => handleCheckHoneyStamp(letter.id)}
                 />
               </>
             ))}

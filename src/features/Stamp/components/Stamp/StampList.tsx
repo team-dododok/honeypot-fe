@@ -1,3 +1,4 @@
+import Check from '@/components/Check/Check';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -53,8 +54,16 @@ const StampList = (props: StampListProps) => {
   return (
     <>
       <StampListBox onClick={handleClickStamp}>
-        {selected && '체크'}
         <LeftElement>
+          {!readOnly && (
+            <Check
+              variant="radio"
+              label=""
+              isChecked={selected}
+              onChange={onClick}
+              marginRight="0px"
+            />
+          )}
           <ProfileImage
             src={profileImg || '/assets/images/profile/img-profile-1-120.svg'}
             width={48}
