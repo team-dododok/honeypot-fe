@@ -6,6 +6,7 @@ import { theme } from '@/styles/theme';
 interface CloseModal {
   width?: string;
   height?: string;
+  gap?: string;
   confirmText?: string;
   buttonIcon?: React.ReactNode;
   children?: React.ReactNode;
@@ -16,6 +17,7 @@ const CloseModal = (props: CloseModal) => {
   const {
     width,
     height,
+    gap,
     confirmText = '저장',
     buttonIcon,
     children,
@@ -24,7 +26,7 @@ const CloseModal = (props: CloseModal) => {
   } = props;
   return (
     <ModalOverlay>
-      <ModalContainer width={width} height={height}>
+      <ModalContainer width={width} height={height} gap={gap}>
         <Top>
           <CloseButton onClick={onClose}>
             <img
@@ -37,14 +39,16 @@ const CloseModal = (props: CloseModal) => {
         </Top>
         <ModalContent>
           {children}
-          <ButtonWrapper>
-            <Button
-              variant="normal"
-              text={confirmText}
-              icon={buttonIcon}
-              onClick={onConfirm}
-            />
-          </ButtonWrapper>
+          {confirmText && (
+            <ButtonWrapper>
+              <Button
+                variant="normal"
+                text={confirmText}
+                icon={buttonIcon}
+                onClick={onConfirm}
+              />
+            </ButtonWrapper>
+          )}
         </ModalContent>
       </ModalContainer>
     </ModalOverlay>
@@ -67,7 +71,11 @@ const ModalOverlay = styled.div`
   z-index: 10;
 `;
 
-const ModalContainer = styled.div<{ width?: string; height?: string }>`
+const ModalContainer = styled.div<{
+  width?: string;
+  height?: string;
+  gap?: string;
+}>`
   display: flex;
   width: ${({ width }) => width || '100%'};
   max-width: 424px;
@@ -75,7 +83,7 @@ const ModalContainer = styled.div<{ width?: string; height?: string }>`
   padding: 16px 20px;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: ${({ gap }) => gap || '20px'};
   border-radius: 16px;
   background: ${theme.colors.gray00};
 `;
