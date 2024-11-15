@@ -27,6 +27,7 @@ import CloseModal from '@/components/Modal/CloseModal';
 import LetterInfo from '@/features/Compliment/components/Frame/LetterInfo';
 import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
+import Info from '@/components/Info/Info';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -526,6 +527,19 @@ const GuidePage = () => {
           )}
         </Elements>
       </Elements>
+      <Elements>
+        <h4>Info</h4>
+        <Info>
+          각 꿀도장 카드에 적힌 숫자는
+          <br />
+          <Strong>
+            ‘이 그룹에서 받은 꿀도장 개수 / 모든 그룹
+            <br />
+            에서 받은 꿀도장 개수’
+          </Strong>
+          를 의미합니다.
+        </Info>
+      </Elements>
     </Container>
   );
 };
@@ -559,4 +573,8 @@ const Elements = styled.div`
   gap: 5px;
   padding: 30px 0;
   border-bottom: 1px solid ${theme.colors.gray30};
+`;
+
+const Strong = styled.span`
+  ${theme.typography.subtitle4};
 `;
