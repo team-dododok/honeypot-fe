@@ -28,6 +28,7 @@ import LetterInfo from '@/features/Compliment/components/Frame/LetterInfo';
 import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import Info from '@/components/Info/Info';
+import ProcessModal from '@/components/Modal/ProcessModal';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -38,6 +39,7 @@ const GuidePage = () => {
   const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
   const [showCloseModal, setShowCloseModal] = useState<boolean>(false);
+  const [showProcessModal, setShowProcessModal] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -375,6 +377,38 @@ const GuidePage = () => {
               setShowCloseModal(false);
             }}
           ></CloseModal>
+        )}
+      </Elements>
+      <Elements>
+        <h3>Process Modal</h3>
+        <Button
+          text="show Process Modal"
+          variant="activate"
+          onClick={() => {
+            setShowProcessModal(true);
+          }}
+        />
+        {showProcessModal && (
+          <ProcessModal
+            height="400px"
+            title="Process Modal"
+            onCancel={() => {
+              setShowProcessModal(false);
+            }}
+            onConfirm={() => {
+              setShowProcessModal(false);
+            }}
+            confirmDisabled={false}
+            isVisible={true}
+          >
+            <Input
+              width="100%"
+              placeholder="Add the child you want."
+              clear={true}
+              value={''}
+              onChange={() => {}}
+            />
+          </ProcessModal>
         )}
       </Elements>
       <Elements>
