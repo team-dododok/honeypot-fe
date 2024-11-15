@@ -2,13 +2,16 @@ import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
 import BackHeader from '@/components/Header/BackHeader';
+import Info from '@/components/Info/Info';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
 import { HONEY_TOGGLE } from '@/constants/toggle';
+import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
 import { TOTAL_STAMP_DUMMY } from '@/features/Stamp/constants/dummy/stampDefault';
+import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -16,9 +19,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const GroupDetailPage = () => {
-  const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast();
+  const { isDetailModalOpen, modalContent, closeDetailModal } =
+    useDetailHoneyModalStore();
 
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
@@ -63,6 +68,17 @@ const GroupDetailPage = () => {
   }, [location.search]);
 
   useEffect(() => {}, [isSelectMode]);
+
+  /* DetailHoneyModal 관련 함수*/
+  const handleSaveDetailHoney = () => {
+    // 이미지 저장하기
+    closeDetailModal();
+  };
+
+  const handleCloseDetailHoney = () => {
+    closeDetailModal();
+  };
+
   return (
     <Layout>
       <BackHeader title={title}>
@@ -78,7 +94,19 @@ const GroupDetailPage = () => {
         </EditButtonWrapper>
       </BackHeader>
       <TotalHoneyContainer>
-        <Label>이 그룹에서 받은 꿀도장</Label>
+        <Label>
+          이 그룹에서 받은 꿀도장{' '}
+          <Info>
+            각 꿀도장 카드에 적힌 숫자는
+            <br />
+            <Strong>
+              ‘이 그룹에서 받은 꿀도장 개수 / 모든 그룹
+              <br />
+              에서 받은 꿀도장 개수’
+            </Strong>
+            를 의미합니다.
+          </Info>
+        </Label>
         <TotalStampList>
           {TOTAL_STAMP_DUMMY.map((item, index) => (
             <StampCard
@@ -105,6 +133,7 @@ const GroupDetailPage = () => {
         title="꿀도장 현황"
         initialHeight="250px"
         expandedHeight="642px"
+        background="/assets/images/group/stamp/img-stamp-modal-backgroud.svg"
       >
         <TabToggle
           tabs={HONEY_TOGGLE}
@@ -136,6 +165,19 @@ const GroupDetailPage = () => {
           setGroupName={setGroupName}
         />
       </BottomSheet>
+      {isDetailModalOpen && (
+        <DetailHoneyModal
+          profileImg={modalContent.profileImg}
+          groupName="groupName"
+          date={modalContent.date}
+          nameType={modalContent.nameType}
+          name={modalContent.name}
+          content={modalContent.content}
+          stampImage={modalContent.imgUrl}
+          onConfirm={handleSaveDetailHoney}
+          onClose={handleCloseDetailHoney}
+        />
+      )}
     </Layout>
   );
 };
@@ -172,9 +214,17 @@ const TotalHoneyContainer = styled.div`
 
 const Label = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
   color: ${theme.colors.gray80};
   ${theme.typography.body03};
   text-align: left;
+`;
+
+const Strong = styled.span`
+  ${theme.typography.subtitle4};
 `;
 
 const TotalStampList = styled.div`
