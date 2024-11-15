@@ -8,6 +8,8 @@ import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
 import { HONEY_TOGGLE } from '@/constants/toggle';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
+import HoneyMoveCheckModal from '@/features/Compliment/components/Modal/HoneyMoveCheckModal';
+import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModal';
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
@@ -17,12 +19,13 @@ import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { showToast } = useToast();
+  const { id } = useParams();
+  const { showToast, showMoveToast } = useToast();
   const { isDetailModalOpen, modalContent, closeDetailModal } =
     useDetailHoneyModalStore();
 
@@ -35,12 +38,18 @@ const GroupDetailPage = () => {
 
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedCount, setSelectedCount] = useState<number>(0);
+
+  const [isHoneyMoveModalOpen, setHoneyMoveModalOpen] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+  const [isHoneyMoveCheckModalOpen, setHoneyMoveCheckModalOpen] =
+    useState(false);
+
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showEditGroupNameModal, setShowEditGroupNameModal] =
     useState<boolean>(false);
 
   const handleToggle = () => {
-    if (isSelectMode) {
+    if (isSelectMode && selectedCount > 0) {
       setShowCancelModal(true);
     } else {
       setIsSelectMode(!isSelectMode);
@@ -75,6 +84,39 @@ const GroupDetailPage = () => {
   }, [location.search]);
 
   useEffect(() => {}, [isSelectMode]);
+
+  /* 꿀 옮기기 프로세스 관련 함수 */
+  const handleHoneyMove = () => {
+    setHoneyMoveModalOpen(true);
+  };
+
+  const handleHoneyMoveModalClose = async () => {
+    setHoneyMoveModalOpen(false);
+    setSelectedGroup(null);
+  };
+
+  const handleGroupSelectionConfirm = (groupId: number | null) => {
+    if (groupId !== null) {
+      setSelectedGroup(groupId);
+      setHoneyMoveModalOpen(false);
+      setHoneyMoveCheckModalOpen(true);
+    }
+  };
+
+  const handleHoneyMoveCheckModalClose = async () => {
+    setHoneyMoveCheckModalOpen(false);
+    setSelectedGroup(null);
+  };
+
+  const handleHoneyMoveCheckModalConfirm = async () => {
+    // 꿀 옮기기 API
+    setHoneyMoveCheckModalOpen(false);
+    handleCandleHoneyMove();
+
+    // 꿀 옮기기 성공 시 토스트 메세지
+
+    showMoveToast('성공적으로 꿀을 옮겼어요', `/group/${selectedGroup}`);
+  };
 
   /* 꿀 옮기기 취소 관련 함수 */
   const handleCandleHoneyMove = () => {
@@ -185,6 +227,7 @@ const GroupDetailPage = () => {
               text="다른 그룹으로 꿀 옮기기"
               variant="warning"
               disabled={selectedCount === 0}
+              onClick={handleHoneyMove}
             />
             <Button
               text=""
@@ -204,6 +247,24 @@ const GroupDetailPage = () => {
             />
           </SelectActionButtonWrapper>
         )}
+        {/* 꿀 옮기기 그룹 선택 모달 */}
+        <HoneyMoveModal
+          isVisible={isHoneyMoveModalOpen}
+          onClose={handleHoneyMoveModalClose}
+          onConfirm={handleGroupSelectionConfirm}
+          selectedGroup={selectedGroup}
+          setSelectedGroup={setSelectedGroup}
+          groupId={Number(id)}
+        />
+        {/* 꿀 옮기기 확인 모달 */}
+        <HoneyMoveCheckModal
+          isVisible={isHoneyMoveCheckModalOpen}
+          onClose={handleHoneyMoveCheckModalClose}
+          onConfirm={handleHoneyMoveCheckModalConfirm}
+          selectedGroup={selectedGroup}
+          groupId={Number(id)}
+          selectedCount={selectedCount}
+        />
         {showCancelModal && (
           <WarningModal
             title="꿀 옮기기를 취소하시겠어요?"
