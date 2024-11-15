@@ -3,6 +3,7 @@ import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
 import BackHeader from '@/components/Header/BackHeader';
 import Info from '@/components/Info/Info';
+import WarningModal from '@/components/Modal/WarningModal';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
 import { HONEY_TOGGLE } from '@/constants/toggle';
@@ -33,11 +34,17 @@ const GroupDetailPage = () => {
   const [groupName, setGroupName] = useState<string>('A그룹');
 
   const [isSelectMode, setIsSelectMode] = useState(false);
+  const [selectedCount, setSelectedCount] = useState<number>(0);
+  const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showEditGroupNameModal, setShowEditGroupNameModal] =
     useState<boolean>(false);
 
   const handleToggle = () => {
-    setIsSelectMode(!isSelectMode);
+    if (isSelectMode) {
+      setShowCancelModal(true);
+    } else {
+      setIsSelectMode(!isSelectMode);
+    }
   };
 
   const title = `${groupName} (11)`;
@@ -69,7 +76,13 @@ const GroupDetailPage = () => {
 
   useEffect(() => {}, [isSelectMode]);
 
-  /* DetailHoneyModal 관련 함수*/
+  /* 꿀 옮기기 취소 관련 함수 */
+  const handleCandleHoneyMove = () => {
+    setShowCancelModal(false);
+    setIsSelectMode(false);
+  };
+
+  /* 꿀 상세보기 관련 함수*/
   const handleSaveDetailHoney = () => {
     // 이미지 저장하기
     closeDetailModal();
@@ -154,7 +167,8 @@ const GroupDetailPage = () => {
         <GroupTabContainer
           type={selectedTab === 0 ? 'send' : 'receive'}
           displayType={selectedDisplay}
-          selectedMode={isSelectMode}
+          isSelectMode={isSelectMode}
+          onSelectedChange={(count: number) => setSelectedCount(count)}
         />
         {/* 그룹명 수정 및 삭제 */}
         <EditGroupNameModal
@@ -164,7 +178,44 @@ const GroupDetailPage = () => {
           groupName={groupName}
           setGroupName={setGroupName}
         />
+        {/* 꿀 이동 및 삭제 버튼 */}
+        {isSelectMode && (
+          <SelectActionButtonWrapper>
+            <Button
+              text="다른 그룹으로 꿀 옮기기"
+              variant="warning"
+              disabled={selectedCount === 0}
+            />
+            <Button
+              text=""
+              variant="activate"
+              icon={
+                <img
+                  src="/assets/icons/trash.svg"
+                  width={28}
+                  height={28}
+                  alt="삭제"
+                />
+              }
+              width="54px"
+              height="54px"
+              background={theme.colors.warning90}
+              disabled={selectedCount === 0}
+            />
+          </SelectActionButtonWrapper>
+        )}
+        {showCancelModal && (
+          <WarningModal
+            title="꿀 옮기기를 취소하시겠어요?"
+            description="지금 나가면 변경된 내용은 저장되지 않습니다."
+            cancelText="이전"
+            confirmText="나가기"
+            onCancel={() => setShowCancelModal(false)}
+            onConfirm={handleCandleHoneyMove}
+          />
+        )}
       </BottomSheet>
+      {/* 꿀 상세보기 */}
       {isDetailModalOpen && (
         <DetailHoneyModal
           profileImg={modalContent.profileImg}
@@ -251,4 +302,17 @@ const DisplayToggleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 14px;
+`;
+
+const SelectActionButtonWrapper = styled.div`
+  width: 100%;
+  padding: 0 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  bottom: 13px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
