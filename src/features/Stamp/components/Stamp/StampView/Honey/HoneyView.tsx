@@ -35,26 +35,30 @@ const HoneyView = (props: HoneyViewProps) => {
   }
 
   return (
-    <HoneyViewContainer>
-      {columns.map((columnLetters, index) => (
-        <Column key={index} $isEven={index % 2 !== 0} $index={index}>
-          {columnLetters.map((letter) => (
-            <HoneyStamp
-              key={letter.id}
-              profileImg=""
-              nameType={nameType}
-              name={letter.sender}
-              content={letter.content}
-              imgUrl=""
-              date={letter.date}
-              selected={false}
-              readOnly={!selectedMode}
-              onClick={() => {}}
-            />
-          ))}
-        </Column>
-      ))}
-    </HoneyViewContainer>
+    <>
+      <HoneyViewContainer>
+        {columns.map((columnLetters, index) => (
+          <Column key={index} $isEven={index % 2 !== 0} $index={index}>
+            {columnLetters.map((letter) => (
+              <>
+                <HoneyStamp
+                  key={letter.id}
+                  profileImg=""
+                  nameType={nameType}
+                  name={letter.sender}
+                  content={letter.content}
+                  imgUrl=""
+                  date={letter.date}
+                  selected={false}
+                  readOnly={!selectedMode}
+                  onClick={() => {}}
+                />
+              </>
+            ))}
+          </Column>
+        ))}
+      </HoneyViewContainer>
+    </>
   );
 };
 
@@ -72,5 +76,5 @@ const Column = styled.div<{ $isEven: boolean; $index: number }>`
   gap: 8px;
   margin-top: ${({ $isEven }) => ($isEven ? '0' : '68px')};
   /* 각 행이 겹쳐지게 이동 */
-  /* transform: ${({ $index }) => `translateX(${-28 * $index}px)`}; */
+  transform: ${({ $index }) => `translateX(${-28 * $index}px)`};
 `;

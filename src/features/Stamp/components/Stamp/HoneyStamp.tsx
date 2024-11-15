@@ -1,7 +1,7 @@
-import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
+import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 export type NameType = 'receiver' | 'sender';
 
@@ -30,24 +30,21 @@ const HoneyStamp = (props: HoneyStamp) => {
     onClick,
   } = props;
 
-  const [showDetailHoneyModal, setShowDetailHoneyModal] =
-    useState<boolean>(false);
+  const { openDetailModal } = useDetailHoneyModalStore();
 
   const handleClickStamp = () => {
     if (!readOnly && onClick) {
       onClick();
     } else {
-      setShowDetailHoneyModal(true);
+      openDetailModal({
+        profileImg,
+        nameType,
+        name,
+        content,
+        imgUrl,
+        date,
+      });
     }
-  };
-
-  const handleSaveDetailHoney = () => {
-    // 이미지 저장하기
-    setShowDetailHoneyModal(false);
-  };
-
-  const handleCloseDetailHoney = () => {
-    setShowDetailHoneyModal(false);
   };
 
   return (
@@ -63,12 +60,16 @@ const HoneyStamp = (props: HoneyStamp) => {
           />
         )}
         <HoneyStampImage
-          src={imgUrl || '/assets/images/stamp/img-stamp-polygon.svg'}
+          src={
+            imgUrl ||
+            `/assets/images/stamp/img-stamp-polygon${selected ? '' : '-border'}.svg`
+          }
           width={144}
           height={125}
           alt="꿀도장"
+          $selected={selected}
         />
-        <HoneyStampContent>
+        <HoneyStampContent $selected={selected}>
           <Date>{date}</Date>
           <StampImage src={'/assets/images/stamp/img-stamp-example.svg'} />
           <Sender>
@@ -78,19 +79,6 @@ const HoneyStamp = (props: HoneyStamp) => {
           </Sender>
         </HoneyStampContent>
       </HoneyStampBox>
-      {showDetailHoneyModal && (
-        <DetailHoneyModal
-          profileImg={profileImg}
-          groupName="groupName"
-          date={date}
-          nameType={nameType}
-          name={name}
-          content={content}
-          stampImage={imgUrl}
-          onConfirm={handleSaveDetailHoney}
-          onClose={handleCloseDetailHoney}
-        />
-      )}
     </>
   );
 };
@@ -101,6 +89,7 @@ const HoneyStampBox = styled.div`
   width: 144px;
   height: 125px;
   position: relative;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   cursor: pointer;
 `;
 
@@ -119,13 +108,18 @@ const OverlayImage = styled.img`
   z-index: 5;
 `;
 
-const HoneyStampImage = styled.img`
+const HoneyStampImage = styled.img<{
+  $selected: boolean;
+}>`
   position: absolute;
   top: 0;
   left: 0;
+  opacity: ${({ $selected }) => ($selected ? 0.5 : 1)};
 `;
 
-const HoneyStampContent = styled.div`
+const HoneyStampContent = styled.div<{
+  $selected: boolean;
+}>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -133,6 +127,8 @@ const HoneyStampContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  opacity: ${({ $selected }) => ($selected ? 0.4 : 1)};
 `;
 
 const Date = styled.div`
