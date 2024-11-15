@@ -198,6 +198,12 @@ const GuidePage = () => {
           isChecked={checkValue}
           onChange={handleCheck}
         />
+        <Check
+          variant="radio"
+          label="Check Radio"
+          isChecked={checkValue}
+          onChange={handleCheck}
+        />
       </Elements>
       <Elements>
         <h3>Toast</h3>
