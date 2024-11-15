@@ -78,10 +78,18 @@ const StyledButton = styled.button<ButtonProps>`
   }
 
   &:disabled {
-    color: ${theme.colors.gray80};
-    background-color: ${({ disabledColor }) =>
-      disabledColor ? disabledColor : theme.colors.gray30};
-    border: none;
+    ${({ variant }) =>
+      variant === 'warning'
+        ? `
+        color: ${theme.colors.gray50};
+        border: 1px solid ${theme.colors.gray30};
+        background: ${theme.colors.gray00};
+      `
+        : `
+        color: ${theme.colors.gray80};
+        background-color: ${theme.colors.gray30};
+        border: none;
+      `}
   }
 
   opacity: ${({ loading }) => (loading ? 0.5 : 1)};
