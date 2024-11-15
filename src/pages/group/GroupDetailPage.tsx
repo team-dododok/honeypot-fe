@@ -134,6 +134,15 @@ const GroupDetailPage = () => {
     closeDetailModal();
   };
 
+  const handleShowHoneyMoveModal = () => {
+    setHoneyMoveModalOpen(true);
+    closeDetailModal();
+  };
+
+  const handleShowHoneyDeleteModal = () => {
+    closeDetailModal();
+  };
+
   return (
     <Layout>
       <BackHeader title={title}>
@@ -288,6 +297,8 @@ const GroupDetailPage = () => {
           stampImage={modalContent.imgUrl}
           onConfirm={handleSaveDetailHoney}
           onClose={handleCloseDetailHoney}
+          onHoneyMove={handleShowHoneyMoveModal}
+          onHoneyDelete={handleShowHoneyDeleteModal}
         />
       )}
     </Layout>
