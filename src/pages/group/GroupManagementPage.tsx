@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '@/components/Button/Button';
 import DraggableButton from '@/components/Button/DraggableButton';
 import CreateGroupModal from '@/features/Group/components/Modal/CreateGroupModal';
+import WarningModal from '@/components/Modal/WarningModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
@@ -11,13 +12,15 @@ const GroupManagementPage: React.FC = () => {
   const [hasGroup, setHasGroup] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
-  // TODO: groupList API 연동
   const [groupItems, setGroupItems] = useState([
     { id: 1, name: 'A그룹A그룹A그룹' },
     { id: 2, name: 'B그룹B그룹B그룹' },
     { id: 3, name: 'C그룹C그룹C그룹' },
     { id: 4, name: 'D그룹D그룹D그룹' },
   ]);
+  const [showGroupDeleteModal, setShowGroupDeleteModal] =
+    useState<boolean>(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
   const moveGroup = (dragIndex: number, hoverIndex: number) => {
     const draggedItem = groupItems[dragIndex];
@@ -46,6 +49,21 @@ const GroupManagementPage: React.FC = () => {
     setIsVisible(false);
   };
 
+  const handleDeleteGroup = () => {
+    if (deleteTargetId !== null) {
+      setGroupItems((prev) =>
+        prev.filter((group) => group.id !== deleteTargetId)
+      );
+      setDeleteTargetId(null);
+    }
+    setShowGroupDeleteModal(false);
+  };
+
+  const handleOpenDeleteModal = (id: number) => {
+    setDeleteTargetId(id);
+    setShowGroupDeleteModal(true);
+  };
+
   return (
     <>
       <DndProvider backend={HTML5Backend}>
@@ -60,6 +78,7 @@ const GroupManagementPage: React.FC = () => {
                   id={item.id}
                   text={item.name}
                   moveGroup={moveGroup}
+                  onTrashClick={() => handleOpenDeleteModal(item.id)}
                 />
               ))}
             </GroupList>
@@ -82,6 +101,17 @@ const GroupManagementPage: React.FC = () => {
         onClose={handleCloseModal}
         onConfirm={handleConfirmModal}
       />
+      {showGroupDeleteModal && (
+        <WarningModal
+          title={`정말 '${groupItems.find((g) => g.id === deleteTargetId)?.name}'을\n삭제하시겠어요?`}
+          description={`받은 꿀, 보낸 꿀도 모두 함께 삭제되며,\n복구할 수 없어요.`}
+          image={true}
+          cancelText="취소"
+          confirmText="확인"
+          onCancel={() => setShowGroupDeleteModal(false)}
+          onConfirm={handleDeleteGroup}
+        />
+      )}
     </>
   );
 };

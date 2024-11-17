@@ -9,6 +9,7 @@ interface DraggableButtonProps {
   text: string;
   index: number;
   moveGroup: (dragIndex: number, hoverIndex: number) => void;
+  onTrashClick: () => void; // 휴지통 클릭 핸들러
 }
 
 const DraggableButton: React.FC<DraggableButtonProps> = ({
@@ -16,6 +17,7 @@ const DraggableButton: React.FC<DraggableButtonProps> = ({
   text,
   index,
   moveGroup,
+  onTrashClick,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [, drop] = useDrop({
@@ -47,7 +49,11 @@ const DraggableButton: React.FC<DraggableButtonProps> = ({
   return (
     <ButtonBox ref={ref} style={{ opacity: isDragging ? 0.5 : 1 }}>
       <img src="/assets/icons/ic-move-20.svg" alt="move" />
-      <img src="/assets/icons/icon-trash.svg" alt="trash" />
+      <img
+        src="/assets/icons/icon-trash.svg"
+        alt="trash"
+        onClick={onTrashClick}
+      />
       <ArrowButton text={text} direction="right" onClick={() => {}} />
     </ButtonBox>
   );
