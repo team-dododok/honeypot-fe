@@ -28,6 +28,7 @@ export default ReadLetter;
 const Container = styled.div`
   width: 100%;
   height: auto;
+  min-height: 80px;
   padding: 12px;
   border-radius: 16px;
   background: ${theme.colors.gray05};

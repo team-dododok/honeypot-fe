@@ -1,7 +1,8 @@
+import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
 
-type checkType = 'circle' | 'default';
+type checkType = 'circle' | 'default' | 'radio';
 
 interface CheckProps {
   variant?: checkType;
@@ -10,6 +11,7 @@ interface CheckProps {
   children?: React.ReactNode;
   fontSize?: string;
   color?: string;
+  marginRight?: string;
   disabled?: boolean;
   onChange?: (isChecked: boolean) => void;
 }
@@ -22,6 +24,7 @@ const Check: React.FC<CheckProps> = ({
   children,
   fontSize = 'subtitle2',
   color = 'gray90',
+  marginRight = '12px',
   disabled = false,
 }) => {
   const iconPath =
@@ -37,7 +40,11 @@ const Check: React.FC<CheckProps> = ({
         onChange={() => onChange && onChange(!isChecked)}
         disabled={disabled}
       />
-      <Icon src={iconPath} />
+      {variant === 'radio' ? (
+        <StyledRadio isChecked={isChecked} marginRight={marginRight} />
+      ) : (
+        <Icon src={iconPath} marginRight={marginRight} />
+      )}
       {label && (
         <LabelText fontSize={fontSize} color={color}>
           {label}
@@ -60,10 +67,36 @@ const CheckInput = styled.input`
   display: none;
 `;
 
-const Icon = styled.img`
+const Icon = styled.img<{ marginRight: string }>`
   width: 24px;
   height: 24px;
-  margin-right: 12px;
+  margin-right: ${(props) => props.marginRight};
+`;
+
+const StyledRadio = styled.div<{ isChecked: boolean; marginRight: string }>`
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: ${({ isChecked }) => (isChecked ? '2px' : '1px')} solid
+    ${({ theme }) => theme.colors.brand60};
+  background-color: ${theme.colors.gray00};
+  position: relative;
+  margin-right: ${(props) => props.marginRight};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: ${({ isChecked }) => (isChecked ? '10px' : '0px')};
+    height: ${({ isChecked }) => (isChecked ? '10px' : '0px')};
+    background-color: ${theme.colors.brand60};
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: ${({ isChecked }) => (isChecked ? '1' : '0')};
+    transition: opacity 0.2s ease;
+  }
 `;
 
 const LabelText = styled.span<{ fontSize: string; color: string }>`

@@ -2,12 +2,13 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
 
-interface StampCardProps {
+export interface StampCardProps {
   imgUrl: string;
   stampName: string;
   count: number;
   totalCount: number;
 }
+
 const StampCard = (props: StampCardProps) => {
   const { imgUrl, stampName, count, totalCount } = props;
 
@@ -57,4 +58,6 @@ const StampLabel = styled.div`
   ${theme.typography.body5};
 `;
 
-const StampName = styled.div``;
+const StampName = styled.div`
+  white-space: nowrap;
+`;

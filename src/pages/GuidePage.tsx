@@ -11,11 +11,11 @@ import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
 import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
-import HoneyStamp from '@/features/Stamp/components/HoneyStamp';
+import HoneyStamp from '@/features/Stamp/components/Stamp/HoneyStamp';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
-import StampCard from '@/features/Stamp/components/StampCard';
-import StampLabel from '@/features/Stamp/components/StampLabel';
-import StampList from '@/features/Stamp/components/StampList';
+import StampCard from '@/features/Stamp/components/Stamp/StampCard';
+import StampLabel from '@/features/Stamp/components/Stamp/StampLabel';
+import StampList from '@/features/Stamp/components/Stamp/StampList';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
 import { HONEY_TOGGLE } from '@/constants/toggle';
@@ -27,6 +27,8 @@ import CloseModal from '@/components/Modal/CloseModal';
 import LetterInfo from '@/features/Compliment/components/Frame/LetterInfo';
 import ReadLetter from '@/features/Compliment/components/Letter/ReadLetter';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
+import Info from '@/components/Info/Info';
+import ProcessModal from '@/components/Modal/ProcessModal';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -37,6 +39,7 @@ const GuidePage = () => {
   const [showBottomModal, setShowBottomModal] = useState<boolean>(false);
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
   const [showCloseModal, setShowCloseModal] = useState<boolean>(false);
+  const [showProcessModal, setShowProcessModal] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -197,6 +200,12 @@ const GuidePage = () => {
           isChecked={checkValue}
           onChange={handleCheck}
         />
+        <Check
+          variant="radio"
+          label="Check Radio"
+          isChecked={checkValue}
+          onChange={handleCheck}
+        />
       </Elements>
       <Elements>
         <h3>Toast</h3>
@@ -277,7 +286,7 @@ const GuidePage = () => {
           <WarningModal
             title="Warning Modal"
             description="This is Description with image"
-            image={<img src="/assets/images/login/img-login-01.svg" />}
+            image={true}
             cancelText="취소"
             confirmText="확인"
             onCancel={() => {
@@ -371,6 +380,38 @@ const GuidePage = () => {
         )}
       </Elements>
       <Elements>
+        <h3>Process Modal</h3>
+        <Button
+          text="show Process Modal"
+          variant="activate"
+          onClick={() => {
+            setShowProcessModal(true);
+          }}
+        />
+        {showProcessModal && (
+          <ProcessModal
+            height="400px"
+            title="Process Modal"
+            onCancel={() => {
+              setShowProcessModal(false);
+            }}
+            onConfirm={() => {
+              setShowProcessModal(false);
+            }}
+            confirmDisabled={false}
+            isVisible={true}
+          >
+            <Input
+              width="100%"
+              placeholder="Add the child you want."
+              clear={true}
+              value={''}
+              onChange={() => {}}
+            />
+          </ProcessModal>
+        )}
+      </Elements>
+      <Elements>
         <h3>Stamp</h3>
         <p>확정 아니라 일부러 Gray로 넣어두었어요.</p>
         <Elements>
@@ -409,17 +450,36 @@ const GuidePage = () => {
           <h4>Stamp List</h4>
           <StampList
             profileImg={''}
-            sender={'sender'}
+            nameType={'sender'}
+            name={'받는 사람'}
             content={'content'}
             imgUrl={''}
+            date={'2024-11-14'}
+            selected={false}
+            readOnly={true}
+            onClick={() => {}}
+          />
+          <StampList
+            profileImg={''}
+            nameType={'receiver'}
+            name={'보내는 사람'}
+            content={'content'}
+            imgUrl={''}
+            date={'2024-11-14'}
+            selected={false}
+            readOnly={true}
+            onClick={() => {}}
           />
         </Elements>
         <Elements>
           <h4>Honey Stamp</h4>
           <HoneyStamp
+            profileImg={''}
+            nameType={'receiver'}
+            name={'sender'}
+            content={'content'}
             imgUrl={''}
             date={'2024.05.01'}
-            sender={'sender'}
             selected={isHoneyStamp === 1}
             readOnly={false}
             onClick={() => {
@@ -507,6 +567,19 @@ const GuidePage = () => {
           )}
         </Elements>
       </Elements>
+      <Elements>
+        <h4>Info</h4>
+        <Info>
+          각 꿀도장 카드에 적힌 숫자는
+          <br />
+          <Strong>
+            ‘이 그룹에서 받은 꿀도장 개수 / 모든 그룹
+            <br />
+            에서 받은 꿀도장 개수’
+          </Strong>
+          를 의미합니다.
+        </Info>
+      </Elements>
     </Container>
   );
 };
@@ -540,4 +613,8 @@ const Elements = styled.div`
   gap: 5px;
   padding: 30px 0;
   border-bottom: 1px solid ${theme.colors.gray30};
+`;
+
+const Strong = styled.span`
+  ${theme.typography.subtitle4};
 `;

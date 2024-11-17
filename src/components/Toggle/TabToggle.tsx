@@ -1,27 +1,37 @@
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface Tabs {
   id: number;
   tabName: string;
+  path: string;
 }
 
 interface TabToggleProps {
   tabs: Tabs[];
   selected: number;
+  originalPath?: string;
   onClick: (id: number) => void;
 }
 
 const TabToggle = (props: TabToggleProps) => {
-  const { tabs, selected, onClick } = props;
+  const { tabs, selected, originalPath, onClick } = props;
+  const navigate = useNavigate();
+
+  const handleTabClick = (id: number, path: string) => {
+    onClick(id);
+    navigate(`${originalPath}?tab=${path}`);
+  };
+
   return (
     <TabToggleContainer>
       {tabs.map((item) => (
         <TabToggleButton
           key={item.id}
           $isSelected={selected === item.id}
-          onClick={() => onClick(item.id)}
+          onClick={() => handleTabClick(item.id, item.path)}
         >
           {item.tabName}
         </TabToggleButton>
