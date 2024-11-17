@@ -18,6 +18,7 @@ import ComplimentSendCompletePage from '@/pages/compliment/send/ComplimentSendCo
 import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceivePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import KakaoPage from '@/pages/login/KakaoPage';
+import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
 
 const router = createBrowserRouter([
@@ -33,6 +34,16 @@ const router = createBrowserRouter([
       {
         path: 'group/:id',
         element: <GroupDetailPage />,
+      },
+      {
+        path: 'group',
+        element: <SubLayout title="그룹 관리" padding="0px" />,
+        children: [
+          {
+            path: 'management',
+            element: <GroupManagementPage />,
+          },
+        ],
       },
       {
         path: 'badge',
