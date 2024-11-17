@@ -7,8 +7,10 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useToast } from '@/store/useToast';
 
 const GroupManagementPage: React.FC = () => {
+  const { showToast } = useToast();
   const [hasGroup, setHasGroup] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
@@ -57,6 +59,7 @@ const GroupManagementPage: React.FC = () => {
       setDeleteTargetId(null);
     }
     setShowGroupDeleteModal(false);
+    showToast('그룹을 삭제했어요');
   };
 
   const handleOpenDeleteModal = (id: number) => {
