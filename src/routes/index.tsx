@@ -20,6 +20,7 @@ import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import KakaoPage from '@/pages/login/KakaoPage';
 import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
+import AnnouncementPage from '@/pages/announcement/AnnouncementPage';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,16 @@ const router = createBrowserRouter([
       {
         path: 'badge',
         element: <BadgePage />,
+      },
+      {
+        path: 'announcement',
+        element: <SubLayout title="공지" padding="0px" />,
+        children: [
+          {
+            path: '',
+            element: <AnnouncementPage />,
+          },
+        ],
       },
       {
         path: 'profile',
