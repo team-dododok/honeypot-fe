@@ -2,8 +2,8 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/login/LoginPage';
-import GroupPage from '@/pages/GroupPage';
-import GroupDetailPage from '@/pages/GroupDetailPage';
+import GroupPage from '@/pages/group/GroupPage';
+import GroupDetailPage from '@/pages/group/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
 import SignUpEmailPage from '@/pages/signup/SignUpEmailPage';
@@ -19,6 +19,7 @@ import ComplimentReceivePage from '@/pages/compliment/receive/ComplimentReceiveP
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import KakaoPage from '@/pages/login/KakaoPage';
 import GroupManagementPage from '@/pages/group/GroupManagementPage';
+import BadgePage from '@/pages/badge/BadgePage';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,9 @@ const router = createBrowserRouter([
         ],
       },
 
+        path: 'badge',
+        element: <BadgePage />,
+      },
       {
         path: 'profile',
         element: <SubLayout title="프로필 수정" padding="0px" />,

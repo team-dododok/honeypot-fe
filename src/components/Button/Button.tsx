@@ -10,6 +10,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   disabledColor,
   loading,
+  border,
   ...props
 }) => {
   return (
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
       variant={variant}
       disabledColor={disabledColor}
       loading={loading}
+      border={border}
       {...props}
     >
       {icon && <IconContainer $isText={!!text}>{icon}</IconContainer>}
@@ -44,7 +46,7 @@ const StyledButton = styled.button<ButtonProps>`
     props.color ||
     variantStyles[props.variant || 'normal']?.color(props.theme)};
   border: ${(props) =>
-    variantStyles[props.variant || 'normal']?.border || 'none'};
+    props.border || variantStyles[props.variant || 'normal']?.border || 'none'};
 
   ${(props) =>
     props.typography
@@ -76,10 +78,18 @@ const StyledButton = styled.button<ButtonProps>`
   }
 
   &:disabled {
-    color: ${theme.colors.gray80};
-    background-color: ${({ disabledColor }) =>
-      disabledColor ? disabledColor : theme.colors.gray30};
-    border: none;
+    ${({ variant }) =>
+      variant === 'warning'
+        ? `
+        color: ${theme.colors.gray50};
+        border: 1px solid ${theme.colors.gray30};
+        background: ${theme.colors.gray00};
+      `
+        : `
+        color: ${theme.colors.gray80};
+        background-color: ${theme.colors.gray30};
+        border: none;
+      `}
   }
 
   opacity: ${({ loading }) => (loading ? 0.5 : 1)};

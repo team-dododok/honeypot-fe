@@ -1,8 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { theme } from '@/styles/theme';
-import BackButton from '@/components/Button/BackButton';
+import BackHeader from '@/components/Header/BackHeader';
 
 interface SubLayoutProps {
   title: string;
@@ -11,10 +10,7 @@ interface SubLayoutProps {
 const SubLayout: React.FC<SubLayoutProps> = ({ title, padding = '26px' }) => {
   return (
     <Container $padding={padding}>
-      <Header>
-        <BackButton />
-        <Title>{title}</Title>
-      </Header>
+      <BackHeader title={title} />
       <Content>
         <Outlet />
       </Content>
@@ -32,20 +28,6 @@ const Container = styled.div<{ $padding: string }>`
   padding: ${({ $padding }) => $padding || '26px'};
   width: 100%;
   height: 100vh;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.p`
-  color: ${theme.colors.gray80};
-  ${theme.typography.body2};
 `;
 
 const Content = styled.main`
