@@ -32,12 +32,9 @@ const GroupManagementPage: React.FC = () => {
     setGroupItems(updatedItems);
   };
 
-  const handleOpenModal = () => {
-    setIsVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsVisible(false);
+  // 모달 열기/닫기 함수 통합
+  const toggleModal = () => {
+    setIsVisible((prev) => !prev);
   };
 
   const handleConfirmModal = () => {
@@ -72,7 +69,7 @@ const GroupManagementPage: React.FC = () => {
       <DndProvider backend={HTML5Backend}>
         {hasGroup ? (
           <FullContainer>
-            <Button text="새 그룹 생성하기" onClick={handleOpenModal} />
+            <Button text="새 그룹 생성하기" onClick={toggleModal} />
             <GroupList>
               {groupItems.map((item, index) => (
                 <DraggableButton
@@ -93,7 +90,7 @@ const GroupManagementPage: React.FC = () => {
               <p>아직 그룹이 없어요.</p>
               <p>새 그룹을 생성해 볼까요?</p>
             </Text>
-            <Button text="새 그룹 생성하기" onClick={handleOpenModal} />
+            <Button text="새 그룹 생성하기" onClick={toggleModal} />
           </BlankContainer>
         )}
       </DndProvider>
@@ -101,7 +98,7 @@ const GroupManagementPage: React.FC = () => {
         isVisible={isVisible}
         Group={groupName}
         setGroup={setGroupName}
-        onClose={handleCloseModal}
+        onClose={toggleModal}
         onConfirm={handleConfirmModal}
       />
       {showGroupDeleteModal && (
