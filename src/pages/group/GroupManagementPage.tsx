@@ -32,7 +32,6 @@ const GroupManagementPage: React.FC = () => {
     setGroupItems(updatedItems);
   };
 
-  // 모달 열기/닫기 함수 통합
   const toggleModal = () => {
     setIsVisible((prev) => !prev);
   };
