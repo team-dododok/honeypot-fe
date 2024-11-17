@@ -61,4 +61,5 @@ const ButtonBox = styled.div`
   gap: 12px;
   align-items: center;
   background-color: ${theme.colors.white};
+  cursor: pointer;
 `;
