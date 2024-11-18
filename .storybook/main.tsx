@@ -17,6 +17,9 @@ const config: StorybookConfig = {
   core: {
     builder: '@storybook/builder-vite',
   },
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
   async viteFinal(config) {
     return config;
   },
