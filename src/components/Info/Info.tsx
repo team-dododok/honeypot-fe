@@ -1,4 +1,6 @@
+import { marginFadeIn, marginFadeOut } from '@/styles/Animation';
 import { theme } from '@/styles/theme';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -9,15 +11,24 @@ interface InfoProps {
 const Info = (props: InfoProps) => {
   const { children } = props;
   const [showBubble, setShowBubble] = useState<boolean>(false);
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
   const handleShowBubble = () => {
-    setShowBubble(!showBubble);
+    if (!showBubble) {
+      setShowBubble(true);
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+      setTimeout(() => setShowBubble(false), 500);
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
-      setShowBubble(false);
+      setIsVisible(false);
+      setTimeout(() => setShowBubble(false), 300);
     }
   };
 
@@ -37,7 +48,7 @@ const Info = (props: InfoProps) => {
         alt="자세히 보기"
         onClick={handleShowBubble}
       />
-      {showBubble && <InfoBubble>{children}</InfoBubble>}
+      {showBubble && <InfoBubble $visible={isVisible}>{children}</InfoBubble>}
     </InfoContainer>
   );
 };
@@ -54,7 +65,7 @@ const InfoIcon = styled.img`
   cursor: pointer;
 `;
 
-const InfoBubble = styled.div`
+const InfoBubble = styled.div<{ $visible: boolean }>`
   position: absolute;
   top: 33px;
   left: 0;
@@ -67,6 +78,14 @@ const InfoBubble = styled.div`
   text-align: left;
   z-index: 10;
   white-space: nowrap;
+  animation: ${(props) =>
+    props.$visible
+      ? css`
+          ${marginFadeIn} 0.3s ease-in-out forwards
+        `
+      : css`
+          ${marginFadeOut} 0.3s ease-in-out forwards
+        `};
 
   &::before {
     content: '';

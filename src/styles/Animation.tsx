@@ -29,3 +29,25 @@ export const fadeOut = keyframes`
     opacity: 0;
   }
 `;
+
+export const marginFadeIn = keyframes`
+  from {
+    opacity: 0;
+    margin-top: 5px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+`;
+
+export const marginFadeOut = keyframes`
+  from {
+    opacity: 1;
+    margin-top: 0;
+  }
+  to {
+    opacity: 0;
+    margin-top: 5px;
+  }
+`;
