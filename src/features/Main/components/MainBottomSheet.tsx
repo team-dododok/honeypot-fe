@@ -2,10 +2,11 @@ import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import HonyeBlank from './HoneyBlank';
 
 const MainBottomSheet = () => {
   // TODO : 꿀단지 개수 연동
-  const [count] = useState(5);
+  const [count] = useState(0);
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
 
@@ -23,6 +24,7 @@ const MainBottomSheet = () => {
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>
+      {count === 0 && <HonyeBlank />}
     </Container>
   );
 };
@@ -30,6 +32,9 @@ const MainBottomSheet = () => {
 export default MainBottomSheet;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: calc(100% + 40px);
   height: calc(100vh - 60px - 12px - 20px);
   padding: 15px 26px;
@@ -52,4 +57,8 @@ const Title = styled.h1`
   justify-content: center;
   align-items: center;
   gap: 4px;
+
+  img {
+    cursor: pointer;
+  }
 `;
