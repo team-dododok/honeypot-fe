@@ -1,3 +1,4 @@
+import Tooltip from '@/features/Main/components/Tooltip';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
@@ -5,6 +6,11 @@ import React, { useState } from 'react';
 const Profile = () => {
   const [name] = useState('민혜린');
   const [email] = useState('team.dododok@gmail.com');
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const toggleTooltip = () => {
+    setIsTooltipVisible(!isTooltipVisible);
+  };
 
   return (
     <Container>
@@ -38,8 +44,16 @@ const Profile = () => {
         <Divider />
         <Section>
           <Label>Best 꿀도장</Label>
-          <Icon>
+          <Icon onClick={toggleTooltip}>
             <img src="/assets/icons/description.svg" alt="description" />
+            {isTooltipVisible && (
+              <TooltipWrapper>
+                <Tooltip>
+                  꿀도장을 3개 이상 받으면 팀원들에게 가장 많이 받은 꿀도장을 볼
+                  수 있어요
+                </Tooltip>
+              </TooltipWrapper>
+            )}
           </Icon>
         </Section>
       </ProfileDesc>
@@ -122,6 +136,7 @@ const Section = styled.div`
   height: 100%;
   padding: 0 12px;
   gap: 4px;
+  position: relative;
 `;
 
 const Label = styled.p`
@@ -141,11 +156,21 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
   height: 30px;
+  position: relative;
+  cursor: pointer;
 
   img {
     width: 16px;
     height: 16px;
   }
+`;
+
+const TooltipWrapper = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 `;
 
 const Divider = styled.div`
