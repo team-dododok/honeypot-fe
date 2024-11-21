@@ -1,5 +1,7 @@
+import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import { BottomWrapper, ProgressBarWrapper } from '@/layouts/FormLayoutStyles';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -87,69 +89,78 @@ const EmailUpdatePage = () => {
   };
 
   return (
-    <Container>
-      <Text>이메일 주소를 입력해주세요.</Text>
-      <InputContainer>
-        <InputBox>
-          <StyledInput
-            width="100%"
-            placeholder="*****@***.***"
-            clear={false}
-            value={inputValue}
-            onChange={handleInput}
-          />
-          <StyledButton
-            text={verificationButtonText}
-            variant={
-              verificationSuccess
-                ? 'deactivate'
-                : isEmailValid
-                  ? 'activate'
-                  : 'default'
-            }
-            disabled={!isEmailValid || verificationSuccess}
-            onClick={handleVerificationButtonClick}
-          />
-        </InputBox>
-        {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
-      </InputContainer>
+    <>
+      <ProgressBarWrapper>
+        <ProgressBar current={2} total={3} />
+      </ProgressBarWrapper>
+      <Container>
+        <Text>이메일 주소를 입력해주세요.</Text>
+        <InputContainer>
+          <InputBox>
+            <Input
+              width="100%"
+              placeholder="*****@***.***"
+              clear={false}
+              value={inputValue}
+              onChange={handleInput}
+            />
+            <StyledButton
+              text={verificationButtonText}
+              variant={
+                verificationSuccess
+                  ? 'deactivate'
+                  : isEmailValid
+                    ? 'activate'
+                    : 'default'
+              }
+              disabled={!isEmailValid || verificationSuccess}
+              onClick={handleVerificationButtonClick}
+            />
+          </InputBox>
+          {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
+        </InputContainer>
 
-      {isVerificationVisible && (
-        <>
-          <Text>인증번호를 입력해 주세요.</Text>
-          <InputContainer>
-            <InputBox>
-              <StyledInput
-                width="100%"
-                placeholder="인증번호 입력"
-                clear={false}
-                value={verificationCode}
-                onChange={handleVerificationInput}
-              />
-              <StyledButton
-                text={verificationSuccess ? '인증완료' : '인증하기'}
-                variant={
-                  verificationSuccess
-                    ? 'deactivate'
-                    : verificationCode
-                      ? 'activate'
-                      : 'default'
-                }
-                disabled={verificationSuccess || !verificationCode}
-                onClick={handleVerifyClick}
-              />
-            </InputBox>
-            {verificationError && <ErrorText>{verificationError}</ErrorText>}
-            {verificationSuccess && <SuccessText>인증되었어요.</SuccessText>}
-            <TimerBox>
-              {!verificationSuccess && isTimerActive && (
-                <TimerText>{formatTime(timer)}</TimerText>
-              )}
-            </TimerBox>
-          </InputContainer>
-        </>
-      )}
-    </Container>
+        {isVerificationVisible && (
+          <>
+            <Text>인증번호를 입력해 주세요.</Text>
+            <InputContainer>
+              <InputBox>
+                <Input
+                  width="100%"
+                  placeholder="인증번호 입력"
+                  clear={false}
+                  value={verificationCode}
+                  onChange={handleVerificationInput}
+                />
+                <StyledButton
+                  text={verificationSuccess ? '인증완료' : '인증하기'}
+                  variant={
+                    verificationSuccess
+                      ? 'deactivate'
+                      : verificationCode
+                        ? 'activate'
+                        : 'default'
+                  }
+                  disabled={verificationSuccess || !verificationCode}
+                  onClick={handleVerifyClick}
+                />
+              </InputBox>
+              {verificationError && <ErrorText>{verificationError}</ErrorText>}
+              {verificationSuccess && <SuccessText>인증되었어요.</SuccessText>}
+              <TimerBox>
+                {!verificationSuccess && isTimerActive && (
+                  <TimerText>{formatTime(timer)}</TimerText>
+                )}
+              </TimerBox>
+            </InputContainer>
+          </>
+        )}
+
+        <BottomWrapper>
+          <Button text="다음" variant="deactivate" />
+        </BottomWrapper>
+      </Container>
+    </>
   );
 };
 
@@ -180,12 +191,8 @@ const InputBox = styled.div`
   width: 100%;
 `;
 
-const StyledInput = styled(Input)`
-  width: 70%;
-`;
-
 const StyledButton = styled(Button)`
-  width: 30%;
+  width: 35%;
 `;
 
 const ErrorText = styled.p`
