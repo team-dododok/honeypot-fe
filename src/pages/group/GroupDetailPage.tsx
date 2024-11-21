@@ -203,8 +203,8 @@ const GroupDetailPage = () => {
       />
       <BottomSheet
         title="꿀도장 현황"
-        initialHeight="250px"
-        expandedHeight="642px"
+        initialMargin={550}
+        expandedMargin={135}
         background="/assets/images/group/stamp/img-stamp-modal-backgroud.svg"
       >
         <TabToggle
