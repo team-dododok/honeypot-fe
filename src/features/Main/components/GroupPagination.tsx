@@ -6,10 +6,11 @@ interface GroupPaginationProps {
   currentPage: number;
   totalGroups: number;
   onPageChange: (newPage: number) => void;
+  type?: 'group' | 'list';
 }
 
 const GroupPagination = (props: GroupPaginationProps) => {
-  const { currentPage, totalGroups, onPageChange } = props;
+  const { currentPage, totalGroups, onPageChange, type = 'group' } = props;
 
   return (
     <Container>
@@ -18,9 +19,15 @@ const GroupPagination = (props: GroupPaginationProps) => {
         alt="left"
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
       />
-      <p>
-        <span>{currentPage}번째 그룹</span> / {totalGroups}
-      </p>
+      {type === 'group' ? (
+        <p>
+          <span>{currentPage}번째 그룹</span> / {totalGroups}
+        </p>
+      ) : (
+        <p>
+          <span>{currentPage}</span> / {totalGroups}
+        </p>
+      )}
       <img
         src="/assets/images/main/icn-fill-upwardarrow-1.svg"
         alt="right"

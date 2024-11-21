@@ -29,6 +29,7 @@ const GroupList = () => {
         currentPage={currentPage}
         totalGroups={Math.ceil(GROUP_LIST.length / groupsPerPage)}
         onPageChange={handlePageChange}
+        type="list"
       />
     </>
   );

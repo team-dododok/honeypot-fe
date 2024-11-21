@@ -46,6 +46,7 @@ const HoneyGroup = () => {
         currentPage={currentPage}
         totalGroups={totalGroups}
         onPageChange={handlePageChange}
+        type="group"
       />
     </>
   );
