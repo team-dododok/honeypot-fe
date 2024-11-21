@@ -25,7 +25,13 @@ const MainBottomSheet = () => {
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>
-      {count === 0 ? <HonyeBlank /> : <HoneyGroup />}
+      {count === 0 ? (
+        <HonyeBlank />
+      ) : (
+        <>
+          <HoneyGroup />
+        </>
+      )}
     </Container>
   );
 };

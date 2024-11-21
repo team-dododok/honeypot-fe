@@ -3,10 +3,17 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import HoneyCard from './HoneyCard';
 import Button from '@/components/Button/Button';
+import GroupPagination from './GroupPagination';
 
 const HoneyGroup = () => {
   const [groupName] = useState('A');
   const [groupMembers] = useState(['달리는토끼', '매콤한당나귀', '박예진']);
+  // TODO : 총 그룹수 연동
+  const [totalGroups] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   const displayedMembers =
     groupMembers.length > 2
@@ -14,23 +21,30 @@ const HoneyGroup = () => {
       : groupMembers.join(', ');
 
   return (
-    <Container>
-      <Header>
-        <div>
-          <h1>{groupName} 그룹</h1>
-          <p>{displayedMembers}</p>
-        </div>
-        <img
-          src="/assets/images/main/icn-rightwardarrow-16-varient.svg"
-          alt="groupedit"
-        />
-      </Header>
-      <CardBox>
-        <HoneyCard type={true} count={24} />
-        <HoneyCard type={false} count={24} />
-      </CardBox>
-      <Button text="이 그룹에 꿀 보내기" />
-    </Container>
+    <>
+      <Container>
+        <Header>
+          <div>
+            <h1>{groupName} 그룹</h1>
+            <p>{displayedMembers}</p>
+          </div>
+          <img
+            src="/assets/images/main/icn-rightwardarrow-16-varient.svg"
+            alt="groupedit"
+          />
+        </Header>
+        <CardBox>
+          <HoneyCard type={true} count={24} />
+          <HoneyCard type={false} count={24} />
+        </CardBox>
+        <Button text="이 그룹에 꿀 보내기" />
+      </Container>
+      <GroupPagination
+        currentPage={currentPage}
+        totalGroups={totalGroups}
+        onPageChange={handlePageChange}
+      />
+    </>
   );
 };
 
