@@ -12,8 +12,8 @@ const ProfileUpdatePage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { showToast } = useToast();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('형준동료');
+  const [email] = useState('phjung1216@naver.com');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
@@ -53,10 +53,6 @@ const ProfileUpdatePage = () => {
     } else {
       setNameError('');
     }
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
   };
 
   const handleSaveButtonClick = () => {
@@ -109,7 +105,21 @@ const ProfileUpdatePage = () => {
 
         <div>
           <SubTitle>이메일 수정</SubTitle>
-          <Input clear={true} value={email} onChange={handleEmailChange} />
+          <InputBox>
+            <Input
+              value={email}
+              onChange={() => {}}
+              width="100%"
+              style={{
+                color: theme.colors.gray50,
+                backgroundColor: theme.colors.gray10,
+                pointerEvents: 'none',
+              }}
+            />
+            <EditButton onClick={() => navigate('/email/update')}>
+              편집
+            </EditButton>
+          </InputBox>
         </div>
 
         <Button
@@ -167,4 +177,26 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 36px;
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+const EditButton = styled.button`
+  display: flex;
+  padding: 1px 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 60px;
+  height: 35px;
+
+  color: ${theme.colors.gray50};
+  ${theme.typography.body4};
+  background-color: ${theme.colors.gray00};
+  border: 1px solid ${theme.colors.gray30};
+  border-radius: 70px;
 `;

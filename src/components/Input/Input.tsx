@@ -13,6 +13,7 @@ const Input: React.FC<InputProps> = ({
   successMsg,
   errorMsg,
   readOnly = false,
+  style,
 }) => {
   const handleClear = () => {
     onChange({
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
         hasValue={!!value}
         placeholder={placeholder}
         readOnly={readOnly}
+        style={style}
       />
       {clear && (
         <ClearIconContainer onClick={handleClear} hasValue={!!value}>
