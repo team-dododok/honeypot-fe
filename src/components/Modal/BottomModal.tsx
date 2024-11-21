@@ -66,7 +66,7 @@ const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   background: rgba(46, 44, 41, 0.8);
-  z-index: 10;
+  z-index: 20;
 `;
 
 const ModalContainer = styled.div<{ width?: string; height?: string }>`
