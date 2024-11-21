@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 const AnnouncementPage = () => {
   // TODO: 공지사항 목록 API 연동
-  const [announcementList, setAnnouncementList] = useState([]);
+  const [announcementList] = useState([]);
 
   return (
     <>

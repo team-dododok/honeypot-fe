@@ -11,7 +11,7 @@ import { useToast } from '@/store/useToast';
 
 const GroupManagementPage: React.FC = () => {
   const { showToast } = useToast();
-  const [hasGroup, setHasGroup] = useState<boolean>(true);
+  const [hasGroup] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
   const [groupItems, setGroupItems] = useState([
