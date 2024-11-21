@@ -52,7 +52,7 @@ const Number = styled.div`
 const ReceivedImg = styled.img`
   width: 100%;
   height: 100%;
-  transform: translate(22px, 10px);
+  transform: translate(22px, 12px);
 `;
 
 const SentImg = styled.img`
