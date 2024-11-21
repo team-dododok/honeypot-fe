@@ -52,8 +52,8 @@ const MenuSectionWrapper = styled.div`
 `;
 
 const MenuTitle = styled.h5`
-  font-size: ${({ theme }) => theme.typography.subtitle2};
-  margin-left: 12px;
+  color: ${theme.colors.gray80};
+  ${({ theme }) => theme.typography.subtitle2};
   margin-bottom: 5px;
   cursor: pointer;
 `;
