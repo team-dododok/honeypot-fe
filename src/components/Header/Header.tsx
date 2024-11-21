@@ -35,6 +35,8 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  position: absolute;
+  z-index: 1;
 `;
 
 const LogoWrapper = styled.div`

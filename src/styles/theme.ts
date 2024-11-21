@@ -45,7 +45,8 @@ const colors = {
   black: '#000000',
 
   gradient01: 'linear-gradient(122deg, #FFEEC6 9.54%, #FFDA82 89.25%)',
-  gradient02: 'linear-gradient(90deg, #FFF 39.29%, #FFF1CE 100%)',
+  gradient02: 'linear-gradient(360deg, #FFF 39.29%, #FFF1CE 100%)',
+  gradient02_1: 'linear-gradient(90deg, #FFF 39.29%, #FFF1CE 100%)',
   gradient03: 'linear-gradient(180deg, #FFF7E5 0%, #FFE5A4 41.56%)',
 } as const;
 
