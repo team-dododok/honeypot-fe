@@ -17,11 +17,11 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         />
       </LogoWrapper>
       <IconsWrapper>
+        <IconWrapper>
+          <img src="/assets/icons/ic-24-profile.svg" alt="header-profile" />
+        </IconWrapper>
         <IconWrapper onClick={onMenuClick}>
           <img src="/assets/icons/menu.svg" alt="header-menu" />
-        </IconWrapper>
-        <IconWrapper>
-          <img src="/assets/icons/notification.svg" alt="header-notification" />
         </IconWrapper>
       </IconsWrapper>
     </HeaderContainer>
@@ -34,9 +34,12 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 16px 26px;
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
+  width: 100%;
 `;
 
 const LogoWrapper = styled.div`

@@ -13,22 +13,27 @@ const MainLayout = () => {
   };
 
   return (
-    <>
+    <Layout>
       <Header onMenuClick={toggleVerticalTab} />
       <Container>
         <Outlet />
         <SidebarMenu isOpen={isOpen} onClose={toggleVerticalTab} />
         {/* <Footer /> */}
       </Container>
-    </>
+    </Layout>
   );
 };
 
 export default MainLayout;
 
+const Layout = styled.div`
+  position: relative;
+`;
+
 const Container = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 26px;
+  padding-top: 58px;
 `;

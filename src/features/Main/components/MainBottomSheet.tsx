@@ -43,11 +43,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: calc(100% + 40px);
+  width: calc(100% + 52px);
   height: calc(100vh - 60px - 12px - 20px);
   padding: 15px 26px;
   border-radius: 24px 24px 0px 0px;
-  margin: 0 -20px;
+  margin: 0 -26px;
   background: ${theme.colors.gray00};
 `;
 

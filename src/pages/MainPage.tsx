@@ -22,8 +22,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background: ${theme.colors.gradient02};
+  transform: translateY(-58px);
   wdith: 100%;
   height: 100vh;
-  margin: -20px;
-  padding: 20px;
+  margin: -26px;
+  padding: 26px;
 `;
