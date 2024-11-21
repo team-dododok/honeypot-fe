@@ -3,10 +3,11 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import HonyeBlank from './HoneyBlank';
+import HoneyGroup from './HoneyGroup';
 
 const MainBottomSheet = () => {
   // TODO : 꿀단지 개수 연동
-  const [count] = useState(0);
+  const [count] = useState(3);
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
 
@@ -24,7 +25,7 @@ const MainBottomSheet = () => {
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>
-      {count === 0 && <HonyeBlank />}
+      {count === 0 ? <HonyeBlank /> : <HoneyGroup />}
     </Container>
   );
 };
@@ -47,6 +48,8 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 0;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.h1`
