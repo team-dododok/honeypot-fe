@@ -1,4 +1,5 @@
 import basicAxios from "@/api/basicAxios";
+import { SignUpData } from "../types/kakao";
 
 export const postKakaoLogin = async (kakaoAccessToken:string) => {
   const endpoint = '/api/auth/kakao-login';
@@ -25,15 +26,7 @@ export const postSignUp = async ({
   email,
   imageUrl,
   onboarding,
-}: {
-  serviceTerm: number;
-  personalInfo: number;
-  emailMarketing: number;
-  name: string;
-  email: string;
-  imageUrl: string;
-  onboarding: number;
-}) => {
+}: SignUpData) => {
   const endpoint = '/api/auth/register';
 
   try {
