@@ -59,6 +59,7 @@ const BottomWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   padding: 0 25px;
+
 `;
 
 export {

@@ -21,6 +21,7 @@ import KakaoPage from '@/pages/login/KakaoPage';
 import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
 import AnnouncementPage from '@/pages/announcement/AnnouncementPage';
+import ProfilePage from '@/pages/profile/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
             element: <AnnouncementPage />,
           },
         ],
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
       },
       {
         path: 'profile',
