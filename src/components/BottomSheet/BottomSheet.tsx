@@ -148,7 +148,7 @@ const SheetOverlay = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
-
+  pointer-events: none;
   touch-action: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -172,7 +172,6 @@ const SheetImageContainer = styled.div<{ height: string }>`
   align-items: flex-end;
   position: fixed;
   z-index: 5;
-  pointer-events: auto;
 `;
 
 const BongBongFace = styled.img`
