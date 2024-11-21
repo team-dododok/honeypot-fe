@@ -11,12 +11,12 @@ const MainBox = () => {
     <Container>
       <MainLeft>
         <div>
-          <h1>{name}님,</h1>
+          <h1>{name} 님,</h1>
           <h2>팀원들에게 꿀을 보내보세요!</h2>
         </div>
         <MainButton />
       </MainLeft>
-      <img src="/assets/images/main/Group.svg" alt="Group" />
+      <MainImage src="/assets/images/main/Group.svg" alt="Group" />
     </Container>
   );
 };
@@ -33,7 +33,8 @@ const Container = styled.div`
   border-radius: 24px;
   box-shadow: 0px 0px 8px 0px rgba(201, 201, 201, 0.25);
   padding: 20px 24px;
-  margin: 20px;
+  margin-top: 60px;
+  margin-bottom: 12px;
 `;
 
 const MainLeft = styled.div`
@@ -48,4 +49,10 @@ const MainLeft = styled.div`
     ${theme.typography.body4};
     color: ${theme.colors.gray80};
   }
+`;
+
+const MainImage = styled.img`
+  width: 120px;
+  height: 151px;
+  transform: translate(20px, 20px);
 `;

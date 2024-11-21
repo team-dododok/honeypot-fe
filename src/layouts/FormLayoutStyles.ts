@@ -12,6 +12,7 @@ const CommonLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: relative;
 `;
 
 const ProgressBarWrapper = styled.div<{ marginBottom?: string }>`
