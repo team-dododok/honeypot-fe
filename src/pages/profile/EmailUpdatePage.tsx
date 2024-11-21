@@ -1,14 +1,15 @@
-import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
-import { BottomWrapper, ProgressBarWrapper } from '@/layouts/FormLayoutStyles';
+import { BottomWrapper } from '@/layouts/FormLayoutStyles';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EmailUpdatePage = () => {
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -90,9 +91,6 @@ const EmailUpdatePage = () => {
 
   return (
     <>
-      <ProgressBarWrapper>
-        <ProgressBar current={2} total={3} />
-      </ProgressBarWrapper>
       <Container>
         <Text>이메일 주소를 입력해주세요.</Text>
         <InputContainer>
@@ -157,7 +155,14 @@ const EmailUpdatePage = () => {
         )}
 
         <BottomWrapper>
-          <Button text="다음" variant="deactivate" />
+          <Button
+            text="다음"
+            variant={verificationSuccess ? 'activate' : 'deactivate'}
+            disabled={!verificationSuccess}
+            onClick={() => {
+              navigate('/profile/update');
+            }}
+          />
         </BottomWrapper>
       </Container>
     </>
@@ -171,6 +176,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+  padding: 20px 0;
 `;
 
 const Text = styled.h1`
