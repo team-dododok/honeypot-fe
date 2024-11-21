@@ -34,10 +34,9 @@ const StampList = (props: StampListProps) => {
   const [showDetailHoneyModal, setShowDetailHoneyModal] =
     useState<boolean>(false);
 
-  const handleClickStamp = () => {
-    if (!readOnly && onClick) {
-      onClick();
-    } else {
+  const handleClickStamp = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (readOnly) {
       setShowDetailHoneyModal(true);
     }
   };
@@ -61,6 +60,7 @@ const StampList = (props: StampListProps) => {
               label=""
               isChecked={selected}
               onChange={onClick}
+              // onChange={handleCheckClick}
               marginRight="0px"
             />
           )}
