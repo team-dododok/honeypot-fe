@@ -16,7 +16,7 @@ const MainBox = () => {
         </div>
         <MainButton />
       </MainLeft>
-      <MainImage src="/assets/images/main/Group.svg" alt="Group" />
+      <MainImage src="/assets/images/main/group.png" alt="Group" />
     </Container>
   );
 };
