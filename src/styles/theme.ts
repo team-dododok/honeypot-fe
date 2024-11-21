@@ -45,6 +45,8 @@ const colors = {
   black: '#000000',
 
   gradient01: 'linear-gradient(122deg, #FFEEC6 9.54%, #FFDA82 89.25%)',
+  gradient02: 'linear-gradient(90deg, #FFF 39.29%, #FFF1CE 100%)',
+  gradient03: 'linear-gradient(180deg, #FFF7E5 0%, #FFE5A4 41.56%)',
 } as const;
 
 interface Font {
@@ -75,12 +77,12 @@ const typography = {
   heading1: FONT({ weight: 700, size: 32 }),
   heading2: FONT({ weight: 700, size: 28 }),
   heading3: FONT({ weight: 700, size: 24 }),
-  
+
   subtitle1: FONT({ weight: 700, size: 20 }),
   subtitle2: FONT({ weight: 700, size: 16 }),
   subtitle3: FONT({ weight: 700, size: 14 }),
   subtitle4: FONT({ weight: 700, size: 12 }),
-  
+
   body1: FONT({ weight: 500, size: 24 }),
   body2: FONT({ weight: 500, size: 20 }),
   body3: FONT({ weight: 500, size: 16 }),
