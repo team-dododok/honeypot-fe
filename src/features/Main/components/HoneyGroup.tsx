@@ -4,28 +4,31 @@ import React, { useState } from 'react';
 import HoneyCard from './HoneyCard';
 import Button from '@/components/Button/Button';
 import GroupPagination from './GroupPagination';
+import { GROUP_LIST } from '../constants/GroupList';
 
 const HoneyGroup = () => {
-  const [groupName] = useState('A');
-  const [groupMembers] = useState(['달리는토끼', '매콤한당나귀', '박예진']);
-  // TODO : 총 그룹수 연동
-  const [totalGroups] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
+  const totalGroups = GROUP_LIST.length;
+
+  const currentGroup = GROUP_LIST[currentPage - 1];
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
   const displayedMembers =
-    groupMembers.length > 2
-      ? `${groupMembers.slice(0, 2).join(', ')} 외 ${groupMembers.length - 2}명`
-      : groupMembers.join(', ');
+    currentGroup.groupMembers.length > 2
+      ? `${currentGroup.groupMembers.slice(0, 2).join(', ')} 외 ${
+          currentGroup.groupMembers.length - 2
+        }명`
+      : currentGroup.groupMembers.join(', ');
 
   return (
     <>
       <Container>
         <Header>
           <div>
-            <h1>{groupName} 그룹</h1>
+            <h1>{currentGroup.groupName} 그룹</h1>
             <p>{displayedMembers}</p>
           </div>
           <img
@@ -34,8 +37,8 @@ const HoneyGroup = () => {
           />
         </Header>
         <CardBox>
-          <HoneyCard type={true} count={24} />
-          <HoneyCard type={false} count={24} />
+          <HoneyCard type={true} count={currentGroup.receivedHoney} />
+          <HoneyCard type={false} count={currentGroup.sentHoney} />
         </CardBox>
         <Button text="이 그룹에 꿀 보내기" />
       </Container>

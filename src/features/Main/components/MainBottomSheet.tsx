@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import HonyeBlank from './HoneyBlank';
 import HoneyGroup from './HoneyGroup';
+import GroupList from './GroupList';
 
 const MainBottomSheet = () => {
   // TODO : 꿀단지 개수 연동
-  const [count] = useState(3);
+  const [count] = useState(6);
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
 
@@ -27,10 +28,10 @@ const MainBottomSheet = () => {
       </Header>
       {count === 0 ? (
         <HonyeBlank />
+      ) : selectedGroupToggle === 'card' ? (
+        <HoneyGroup />
       ) : (
-        <>
-          <HoneyGroup />
-        </>
+        <GroupList />
       )}
     </Container>
   );
