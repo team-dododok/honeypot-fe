@@ -1,6 +1,8 @@
+import { postKakaoLogin } from '@/features/Login/api/kakao';
 import { getKakaoAccessTokenUrl } from '@/features/Login/services/oauthToken';
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import { setAccessToken, setRefreshToken } from '@/utils/storage';
+import axios, { AxiosError } from 'axios';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const KakaoPage = () => {
@@ -21,15 +23,25 @@ const KakaoPage = () => {
         console.log('카카오 액세스 토큰', kakao_accessToken);
 
         /* 로그인 유무 확인 */
-        // API 연결
+        try {
+          const response = await postKakaoLogin(kakao_accessToken);
+          setAccessToken(response.result.accessToken);
+          setRefreshToken(response.result.refreshToken);
+          navigate('/');
 
-        navigate('/signup/agree');
-        // navigate('/');
+          // params에 칭찬 글 id가 있을 경우 해당 편지 주소로 이동하기
+          // 추후 작성
+        } catch (error) {
+          if ((error as AxiosError).response?.status === 404) {
+            navigate('/signup/agree');
+          }
+        }
       } catch (error) {
-        navigate('/login');
         console.log(error);
+        navigate('/login');
       }
     };
+
     if (!CODE) {
       console.log('code가 없습니다.');
       return;
@@ -38,7 +50,7 @@ const KakaoPage = () => {
     }
   }, []);
 
-  return <div>KakaoPage</div>;
+  return null;
 };
 
 export default KakaoPage;
