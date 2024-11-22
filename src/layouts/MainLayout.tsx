@@ -37,5 +37,5 @@ const Container = styled.main`
   flex-direction: column;
   width: 100%;
   padding: 0 26px;
-  padding-top: 58px;
+  padding-top: 40px;
 `;

@@ -30,4 +30,5 @@ const Button = styled.button`
   background: ${theme.colors.gradient01};
 
   ${theme.typography.subtitle3};
+  color: ${theme.colors.gray80};
 `;

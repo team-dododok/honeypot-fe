@@ -45,7 +45,12 @@ const HoneyGroup = () => {
           <HoneyCard type={true} count={currentGroup.receivedHoney} />
           <HoneyCard type={false} count={currentGroup.sentHoney} />
         </CardBox>
-        <Button text="이 그룹에 꿀 보내기" />
+        <Button
+          text="이 그룹에 꿀 보내기"
+          onClick={() => {
+            navigate(`/compliment/send/target`);
+          }}
+        />
       </Container>
       <GroupPagination
         currentPage={currentPage}
@@ -64,11 +69,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-
+  gap: 24px;
   wdith: 100%;
-  height: 100%;
-
   padding: 16px 22px;
   border-radius: 24px;
   border: 1px solid ${(props) => props.theme.colors.gray10};
@@ -80,7 +82,6 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
 
   h1 {
     ${theme.typography.subtitle1};
