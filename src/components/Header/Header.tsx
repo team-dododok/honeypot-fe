@@ -11,7 +11,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
   return (
     <HeaderContainer>
-      <LogoWrapper>
+      <LogoWrapper onClick={() => navigate('/')}>
         <img
           src="/assets/images/logo-typo.svg"
           width={56}

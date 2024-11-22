@@ -13,9 +13,7 @@ const GlobalStyle = () => (
 
       html {
         width: 100%;
-        height: 100%;
         max-width: 480px;
-        min-height: 100%;
         margin: 0 auto;
         box-shadow: 0px 0px 64px 0px rgba(30, 41, 59, 0.1);
         background-color: ${theme.colors.gray05};
@@ -23,7 +21,6 @@ const GlobalStyle = () => (
 
       body {
         width: 100%;
-        height: 100%;
         max-width: 480px;
         font-family: 'Pretendard';
         white-space: pre-line;

@@ -21,6 +21,8 @@ import KakaoPage from '@/pages/login/KakaoPage';
 import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
 import AnnouncementPage from '@/pages/announcement/AnnouncementPage';
+import ComplimentDetailPage from '@/pages/compliment/ComplimentDetailPage';
+import YellowBackgroundLayout from '@/layouts/YellowBackgroundLayout';
 import ProfilePage from '@/pages/profile/ProfilePage';
 import EmailUpdatePage from '@/pages/profile/EmailUpdatePage';
 
@@ -156,6 +158,16 @@ const router = createBrowserRouter([
             element: <ComplimentReceivePage />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: <YellowBackgroundLayout />,
+    children: [
+      {
+        path: 'compliment/:id',
+        element: <ComplimentDetailPage />,
       },
     ],
   },

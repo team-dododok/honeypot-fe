@@ -8,18 +8,20 @@ interface ComplimentLetterProps {
   receiver: string;
   sender: string;
   content: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-  onClick: () => void;
+  setContent?: React.Dispatch<React.SetStateAction<string>>;
+  onClick?: () => void;
+  children?: React.ReactNode;
 }
 
 const ComplimentLetter = (props: ComplimentLetterProps) => {
-  const { receiver, sender, content, setContent, onClick } = props;
+  const { receiver, sender, content, setContent, onClick, children } = props;
 
   return (
     <Container>
       <Stamp onClick={onClick}>
         <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
       </Stamp>
+      {children}
       <Letter
         receiver={receiver}
         sender={sender}

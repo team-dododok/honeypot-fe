@@ -7,7 +7,7 @@ interface LetterProps {
   receiver: string;
   sender: string;
   content: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
+  setContent?: React.Dispatch<React.SetStateAction<string>>;
   totalLength: number;
 }
 
@@ -20,7 +20,7 @@ const Letter = (props: LetterProps) => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const newValue = event.target.value;
-    if (newValue.length <= totalLength) {
+    if (newValue.length <= totalLength && setContent) {
       setContent(newValue);
     }
   };
@@ -40,9 +40,13 @@ const Letter = (props: LetterProps) => {
         />
       </Content>
       <BottomWrapper>
-        <Length $isMaxLengthReached={isMaxLengthReached}>
-          {content.length}/{totalLength}자
-        </Length>
+        {setContent ? (
+          <Length $isMaxLengthReached={isMaxLengthReached}>
+            {content.length}/{totalLength}자
+          </Length>
+        ) : (
+          <div />
+        )}
         <NameLabel>From. {sender}</NameLabel>
       </BottomWrapper>
     </LetterContainer>

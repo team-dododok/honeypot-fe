@@ -30,7 +30,8 @@ const SignUpProfilePage = () => {
         emailMarketing: isCheckedTerms[2] ? 1 : 0,
         name,
         email,
-        imageUrl: '', // 이미지 URL
+        imageUrl:
+          'https://aws-artview-bucket.s3.ap-northeast-2.amazonaws.com/a2853240-10fb-47fe-9675-e0bbbe083b47_%EB%AC%BC%EA%B3%A0%EA%B8%B0%EB%A7%B9%EA%B5%AC.jpg', // 이미지 URL
         onboarding: 0,
       };
 

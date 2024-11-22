@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { MENU } from '@/constants/menu';
 import { theme } from '@/styles/theme';
 import MenuSection from './MenuSection';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarMenuProps {
   isOpen: boolean;
@@ -10,25 +11,58 @@ interface SidebarMenuProps {
 }
 
 const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
   return (
     <SidebarOverlay isOpen={isOpen}>
       <SidebarContainer isOpen={isOpen}>
-        <IconsWrapper>
-          <IconWrapper onClick={onClose}>
-            <img src="/assets/icons/menu.svg" alt="header-menu" />
-          </IconWrapper>
-          <IconWrapper>
-            <img
-              src="/assets/icons/notification.svg"
-              alt="header-notification"
-            />
-          </IconWrapper>
-        </IconsWrapper>
-        <MenuWrapper>
-          {MENU.map((menu) => (
-            <MenuSection key={menu.id} menu={menu} onClose={onClose} />
-          ))}
-        </MenuWrapper>
+        <div>
+          <IconsWrapper>
+            <IconWrapper onClick={onClose}>
+              <img src="/assets/icons/menu.svg" alt="header-menu" />
+            </IconWrapper>
+            <IconWrapper>
+              <img
+                src="/assets/icons/notification.svg"
+                alt="header-notification"
+              />
+              <ProfileImage
+                src="/assets/images/profile/img-profile-1-120.svg"
+                width={24}
+                height={24}
+                alt="header-notification"
+              />
+            </IconWrapper>
+          </IconsWrapper>
+          <MenuWrapper>
+            {MENU.map((menu) => (
+              <MenuSection key={menu.id} menu={menu} onClose={onClose} />
+            ))}
+          </MenuWrapper>
+        </div>
+        <BottomWrapper>
+          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          <LinkWrapper>
+            <a
+              href="https://www.instagram.com/team.dododok/?hl=ko"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/assets/icons/instagram.svg" alt="인스타그램" />
+            </a>
+            <a
+              href="https://marpple.shop/kr/ddd_bemypeer?fbclid=PAZXh0bgNhZW0CMTEAAab6etiRW2GCm-ePwNECgmbNWhwDLJ4U9G9dfPTliK0XTDaQtliCvQTYsXs_aem_KuLtEDU0IHPS-udw_g0htA"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/assets/icons/shop.svg" alt="마플샵" />
+            </a>
+          </LinkWrapper>
+        </BottomWrapper>
       </SidebarContainer>
     </SidebarOverlay>
   );
@@ -52,6 +86,7 @@ const SidebarOverlay = styled.div<{ isOpen: boolean }>`
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   transition: opacity 0.3s ease;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+  z-index: 100;
 `;
 
 const SidebarContainer = styled.div<{ isOpen: boolean }>`
@@ -59,9 +94,10 @@ const SidebarContainer = styled.div<{ isOpen: boolean }>`
   right: 0;
   width: 70%;
   height: 100%;
-  padding: 20px;
+  padding: 36px 46px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: ${theme.colors.gray00};
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '100%')});
   transition: transform 0.5s ease;
@@ -70,13 +106,41 @@ const SidebarContainer = styled.div<{ isOpen: boolean }>`
 const IconsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 16px 26px;
+  padding-bottom: 20px;
 `;
 
 const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
   cursor: pointer;
 `;
 
+const ProfileImage = styled.img`
+  border-radius: 9px;
+`;
 const MenuWrapper = styled.div`
-  padding: 26px 14px;
+  padding-top: 20px;
+`;
+
+const BottomWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+`;
+
+const LogoutButton = styled.button`
+  text-align: left;
+  color: ${theme.colors.gray50};
+  ${theme.typography.body5}
+`;
+
+const LinkWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 9px;
 `;
