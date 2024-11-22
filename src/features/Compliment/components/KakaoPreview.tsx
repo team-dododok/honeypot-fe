@@ -12,7 +12,7 @@ const KakaoPreview = (props: KakaoPreviewProps) => {
 
   return (
     <KakaoPreviewBox>
-      <Image src="/assets/images/stamp/img-stamp-select.svg" alt="stamp" />
+      <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
       <PreviewContainer>
         <Team>꿀단지</Team>
         <Divider />

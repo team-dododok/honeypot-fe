@@ -15,7 +15,7 @@ const ComplimentSendCompletePage = () => {
 
   return (
     <CenterLayout>
-      <Image src="/assets/images/signup/img-signup-01.svg" alt="team" />
+      <Image src="/assets/images/signup/signup-01.svg" alt="team" />
       <Title>
         `{receiver}`님에게
         <br /> 칭찬이 전달되었어요!

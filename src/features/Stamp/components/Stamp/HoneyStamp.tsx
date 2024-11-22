@@ -53,7 +53,7 @@ const HoneyStamp = (props: HoneyStamp) => {
         {selected && <CheckIcon src="/assets/icons/stamp-check.svg" />}
         {selected && (
           <OverlayImage
-            src={imgUrl || '/assets/images/stamp/img-stamp-overlay.svg'}
+            src={imgUrl || '/assets/images/stamp/stamp-overlay.svg'}
             width={144}
             height={125}
             alt="꿀도장"
@@ -62,7 +62,7 @@ const HoneyStamp = (props: HoneyStamp) => {
         <HoneyStampImage
           src={
             imgUrl ||
-            `/assets/images/stamp/img-stamp-polygon${readOnly ? '-border' : ''}.svg`
+            `/assets/images/stamp/stamp-polygon${readOnly ? '-border' : ''}.svg`
           }
           width={144}
           height={125}
@@ -71,7 +71,7 @@ const HoneyStamp = (props: HoneyStamp) => {
         />
         <HoneyStampContent $isSelectMode={!readOnly}>
           <Date>{date}</Date>
-          <StampImage src={'/assets/images/stamp/img-stamp-example.svg'} />
+          <StampImage src={'/assets/images/stamp/stamp-example.svg'} />
           <Sender>
             {' '}
             {nameType === 'receiver' ? 'From. ' : 'To. '}

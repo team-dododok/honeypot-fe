@@ -68,7 +68,7 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
         <HoneyGroupInfoContainer>
           {groupInfo?.map((group) => (
             <HoneyGroupInfo key={group.id}>
-              <HoneypotImage src="/assets/images/group/move/img-honeypot.svg" />
+              <HoneypotImage src="/assets/images/group/move/honey-pot.svg" />
               <Info>
                 {group.groupName}
                 <Detail>
@@ -77,7 +77,7 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
               </Info>
             </HoneyGroupInfo>
           ))}
-          <DotArrowImage src="/assets/images/group/move/img-dot-arrow.svg" />
+          <DotArrowImage src="/assets/images/group/move/dot-arrow.svg" />
         </HoneyGroupInfoContainer>
       </HoneyMoveCheckContainer>
     </ProcessModal>
