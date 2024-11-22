@@ -56,6 +56,13 @@ const EmailUpdatePage = () => {
       setIsEmailValid(false);
       setErrorMessage('올바른 이메일 형식으로 입력해주세요.');
     }
+
+    setVerificationCode('');
+    setVerificationError('');
+    setVerificationSuccess(false);
+    setIsVerificationVisible(false);
+    setIsTimerActive(false);
+    setTimer(300);
   };
 
   const handleVerificationButtonClick = () => {
