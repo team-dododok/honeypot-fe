@@ -30,6 +30,7 @@ import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoney
 import Info from '@/components/Info/Info';
 import ProcessModal from '@/components/Modal/ProcessModal';
 import Badge from '@/features/Badge/components/Badge';
+import ToastModal from '@/components/Modal/ToastModal';
 
 const GuidePage = () => {
   const { showToast, showMoveToast } = useToast();
@@ -41,6 +42,7 @@ const GuidePage = () => {
   const [showCenterModal, setShowCenterModal] = useState<boolean>(false);
   const [showCloseModal, setShowCloseModal] = useState<boolean>(false);
   const [showProcessModal, setShowProcessModal] = useState<boolean>(false);
+  const [showToastModal, setShowToastModal] = useState<boolean>(false);
   const [group, setGroup] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -411,6 +413,24 @@ const GuidePage = () => {
             />
           </ProcessModal>
         )}
+      </Elements>
+      <Elements>
+        <h3>Toast Modal</h3>
+        <Button
+          text="show Toast Modal"
+          variant="activate"
+          onClick={() => {
+            setShowToastModal(true);
+          }}
+        />
+        <ToastModal
+          isVisible={showToastModal}
+          image={<img src="/assets/images/saved.svg" />}
+          text="꿀이 저장되었어요!"
+          onClose={() => {
+            setShowToastModal(false);
+          }}
+        />
       </Elements>
       <Elements>
         <h3>Stamp</h3>
