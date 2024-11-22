@@ -4,7 +4,7 @@ import React from 'react';
 
 interface GroupListBox {
   id: number;
-  currentId?: number;
+  currentId: number;
   groupName: string;
   selected: boolean;
   onClick: (id: number) => void;
@@ -22,6 +22,7 @@ const GroupListBox = (props: GroupListBox) => {
 
   return (
     <GroupListBoxContainer
+      isAdd={id === -1}
       selected={selected}
       current={id === currentId}
       onClick={() => handleSelectedGroupBox(id)}
@@ -39,6 +40,7 @@ const GroupListBox = (props: GroupListBox) => {
 export default GroupListBox;
 
 const GroupListBoxContainer = styled.div<{
+  isAdd: boolean;
   selected: boolean;
   current: boolean;
 }>`
@@ -65,8 +67,8 @@ const GroupListBoxContainer = styled.div<{
         ? theme.colors.gray50
         : theme.colors.gray80};
   ${theme.typography.body3};
-  ${({ selected, theme }) =>
-    selected ? theme.typography.subtitle2 : theme.typography.body3};
+  ${({ isAdd, selected, theme }) =>
+    isAdd || selected ? theme.typography.subtitle2 : theme.typography.body3};
 `;
 
 const Selected = styled.div`

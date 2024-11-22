@@ -33,8 +33,10 @@ const BottomModal = (props: BottomModal) => {
   return (
     <ModalOverlay>
       <ModalContainer width={width} height={height}>
-        <Title>{title}</Title>
-        <ModalContent>{children}</ModalContent>
+        <ModalTop>
+          <Title>{title}</Title>
+          <ModalContent>{children}</ModalContent>
+        </ModalTop>
         <ButtonWrapper>
           <Button
             variant="deactivate"
@@ -77,10 +79,20 @@ const ModalContainer = styled.div<{ width?: string; height?: string }>`
   padding: 32px 26px;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
   border-radius: 24px 24px 0 0;
   background: ${theme.colors.gray00};
   position: relative;
+`;
+
+const ModalTop = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 `;
 
 const ModalContent = styled.div`
@@ -88,7 +100,7 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: flex-start;
 `;
 
 const Title = styled.div`

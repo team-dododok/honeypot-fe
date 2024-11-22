@@ -15,4 +15,12 @@ export const GROUP_LIST_DUMMY = [
         id: 3,
         groupName: '도도독D',
     },
+    {
+        id: 4,
+        groupName: '도도독E',
+    },
+    {
+        id: 5,
+        groupName: '도도독F',
+    },
 ]
