@@ -45,7 +45,12 @@ const HoneyGroup = () => {
           <HoneyCard type={true} count={currentGroup.receivedHoney} />
           <HoneyCard type={false} count={currentGroup.sentHoney} />
         </CardBox>
-        <Button text="이 그룹에 꿀 보내기" />
+        <Button
+          text="이 그룹에 꿀 보내기"
+          onClick={() => {
+            navigate(`/compliment/send/target`);
+          }}
+        />
       </Container>
       <GroupPagination
         currentPage={currentPage}
