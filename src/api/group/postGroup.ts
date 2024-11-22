@@ -1,5 +1,5 @@
-import axios from '../basicAxios';
-import { PostGroupParams } from './interfaces/Group';
+import axios from '../authAxios';
+import { PostGroupParams } from './types/Group';
 
 export const postGroup = async ({ groupName }: PostGroupParams) => {
   const response = await axios.post(`/api/group`, {

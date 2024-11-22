@@ -1,4 +1,4 @@
-import axios from '../basicAxios';
+import axios from '../authAxios';
 
 export const getMemberProfileImage = async () => {
   const response = await axios.get(`/api/member/profile_image`);

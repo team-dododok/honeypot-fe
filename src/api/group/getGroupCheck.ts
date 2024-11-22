@@ -1,5 +1,5 @@
-import axios from '../basicAxios';
-import { GroupCheckParams, GroupCheckResponse } from './interfaces/Group';
+import axios from '../authAxios';
+import { GroupCheckParams, GroupCheckResponse } from './types/Group';
 
 export const getGroupCheck = async ({
   id,

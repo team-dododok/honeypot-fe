@@ -1,5 +1,5 @@
-import axios from '../basicAxios';
-import { PatchGroupParams } from './interfaces/Group';
+import axios from '../authAxios';
+import { PatchGroupParams } from './types/Group';
 
 export const patchGroupOrder = async ({
   groupId,

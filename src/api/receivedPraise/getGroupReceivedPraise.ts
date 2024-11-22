@@ -1,8 +1,8 @@
-import axios from '../basicAxios';
+import axios from '../authAxios';
 import {
   GroupReceivedPraiseParams,
   GroupReceivePraiseInfo,
-} from './interfaces/ReceivedPraise';
+} from './types/ReceivedPraise';
 
 export const getGroupReceivedPraise = async ({
   id,

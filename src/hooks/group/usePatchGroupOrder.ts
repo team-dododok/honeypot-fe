@@ -1,4 +1,4 @@
-import { PatchGroupParams } from '@/api/group/interfaces/Group';
+import { PatchGroupParams } from '@/api/group/types/Group';
 import { patchGroupOrder } from '@/api/group/patchGroupOrder';
 import { useQuery } from '@tanstack/react-query';
 

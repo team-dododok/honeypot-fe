@@ -1,4 +1,4 @@
-import { PostReceivedPraise } from '@/api/receivedPraise/interfaces/ReceivedPraise';
+import { PostReceivedPraise } from '@/api/receivedPraise/types/ReceivedPraise';
 import { postReceivedPraise } from '@/api/receivedPraise/postReceivedPraise';
 import { useQuery } from '@tanstack/react-query';
 

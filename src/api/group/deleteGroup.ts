@@ -1,5 +1,5 @@
-import axios from '../basicAxios';
-import { DeleteGroupParams } from './interfaces/Group';
+import axios from '../authAxios';
+import { DeleteGroupParams } from './types/Group';
 
 export const deleteGroup = async (groupId: DeleteGroupParams) => {
   const response = await axios.delete(`/api/group/${groupId}`);

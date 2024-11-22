@@ -1,4 +1,4 @@
-import axios from '../basicAxios';
+import axios from '../authAxios';
 
 export const patchMember = async () => {
   const response = await axios.patch(`/api/member`);

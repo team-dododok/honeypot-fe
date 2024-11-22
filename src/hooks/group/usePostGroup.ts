@@ -1,4 +1,4 @@
-import { PostGroupParams } from '@/api/group/interfaces/Group';
+import { PostGroupParams } from '@/api/group/types/Group';
 import { postGroup } from '@/api/group/postGroup';
 import { useQuery } from '@tanstack/react-query';
 
