@@ -1,19 +1,19 @@
-import { Badge } from "../types/Badge";
+import { Badge } from '../types/Badge';
 
 export const BADGES: Badge[] = [
   {
     id: 0,
     name: '첫 꿀 받기',
-        goal: '받은 꿀 1회',
-    image: "/assets/images/badge/img-badge-get-1.svg",
+    goal: '받은 꿀 1회',
+    image: '/assets/images/badge/badge-get-1.svg',
     isObtain: true,
     date: '2024-11-16',
-},
-{
+  },
+  {
     id: 1,
     name: '꿀 좀 받아본 사람',
     goal: '받은 꿀 7회',
-    image: "/assets/images/badge/img-badge-get-1.svg",
+    image: '/assets/images/badge/badge-get-1.svg',
     isObtain: true,
     date: '2024-11-16',
   },

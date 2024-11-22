@@ -23,7 +23,7 @@ const ArrowButton = ({
     >
       <TextWrapper>{text}</TextWrapper>
       {direction === 'right' && (
-        <img src="/assets/icons/icn-upwardarrow.svg" alt="arrow" />
+        <img src="/assets/icons/up-ward-arrow.svg" alt="arrow" />
       )}
     </Button>
   );

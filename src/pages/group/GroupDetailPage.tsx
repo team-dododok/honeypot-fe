@@ -175,9 +175,7 @@ const GroupDetailPage = () => {
           {TOTAL_STAMP_DUMMY.map((item, index) => (
             <StampCard
               key={index}
-              imgUrl={
-                item.imgUrl || '/assets/images/stamp/img-stamp-example.svg'
-              }
+              imgUrl={item.imgUrl || '/assets/images/stamp/stamp-example.svg'}
               stampName={item.stampName}
               count={item.count}
               totalCount={item.totalCount}
@@ -205,7 +203,7 @@ const GroupDetailPage = () => {
         title="꿀도장 현황"
         initialMargin={550}
         expandedMargin={135}
-        background="/assets/images/group/stamp/img-stamp-modal-backgroud.svg"
+        background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
       >
         <TabToggle
           tabs={HONEY_TOGGLE}

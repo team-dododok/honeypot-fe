@@ -13,6 +13,7 @@ const Input: React.FC<InputProps> = ({
   successMsg,
   errorMsg,
   readOnly = false,
+  style,
 }) => {
   const handleClear = () => {
     onChange({
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
         hasValue={!!value}
         placeholder={placeholder}
         readOnly={readOnly}
+        style={style}
       />
       {clear && (
         <ClearIconContainer onClick={handleClear} hasValue={!!value}>
@@ -56,7 +58,7 @@ const InputContainer = styled.div<{ width?: string }>`
   height: 54px;
 `;
 
-const StyledInput = styled.input<{ hasValue: boolean }>`
+const StyledInput = styled.input<{ hasValue: boolean; readOnly?: boolean }>`
   width: 100%;
   height: 100%;
   padding: 24px 20px;
@@ -64,8 +66,10 @@ const StyledInput = styled.input<{ hasValue: boolean }>`
   border: 1px solid
     ${({ hasValue, theme }) =>
       hasValue ? theme.colors.gray60 : theme.colors.gray10};
-  background: ${theme.colors.gray00};
-  color: ${theme.colors.gray80};
+  background: ${({ readOnly, theme }) =>
+    readOnly ? theme.colors.gray10 : theme.colors.gray00};
+  color: ${({ readOnly, theme }) =>
+    readOnly ? theme.colors.gray50 : theme.colors.gray80};
   ${theme.typography.body3};
 
   outline: none;

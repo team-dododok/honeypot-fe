@@ -90,14 +90,14 @@ const BottomSheet = (props: BottomSheetProps) => {
         {!isExpanded && (
           <>
             <BongBongFace
-              src="/assets/images/group/stamp/img-stamp-modal-bongbong-face.svg"
+              src="/assets/images/group/stamp/stamp-modal-bongbong-face.svg"
               onMouseDown={handlePressStart}
               onTouchStart={handlePressStart}
               onMouseUp={handlePressEnd}
               onTouchEnd={handlePressEnd}
             />
             <BongBongHands
-              src="/assets/images/group/stamp/img-stamp-modal-bongbong-hands.svg"
+              src="/assets/images/group/stamp/stamp-modal-bongbong-hands.svg"
               onMouseDown={handlePressStart}
               onTouchStart={handlePressStart}
               onMouseUp={handlePressEnd}

@@ -8,6 +8,7 @@ export interface InputProps {
   successMsg?: string;
   errorMsg?: string;
   readOnly?: boolean;
+  style?: React.CSSProperties;
 }
 
 export interface MessageProps {
