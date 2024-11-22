@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <LogoWrapper>
@@ -14,11 +17,20 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           width={56}
           height={20}
           alt="header-logo"
+          onClick={() => {
+            navigate('/');
+          }}
         />
       </LogoWrapper>
       <IconsWrapper>
         <IconWrapper>
-          <img src="/assets/icons/profile.svg" alt="header-profile" />
+          <img
+            src="/assets/icons/profile.svg"
+            alt="header-profile"
+            onClick={() => {
+              navigate('/profile');
+            }}
+          />
         </IconWrapper>
         <IconWrapper onClick={onMenuClick}>
           <img src="/assets/icons/menu.svg" alt="header-menu" />

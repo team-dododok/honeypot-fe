@@ -5,8 +5,10 @@ import HoneyCard from './HoneyCard';
 import Button from '@/components/Button/Button';
 import GroupPagination from './GroupPagination';
 import { GROUP_LIST } from '../constants/GroupList';
+import { useNavigate } from 'react-router-dom';
 
 const HoneyGroup = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const totalGroups = GROUP_LIST.length;
 
@@ -31,7 +33,13 @@ const HoneyGroup = () => {
             <h1>{currentGroup.groupName} 그룹</h1>
             <p>{displayedMembers}</p>
           </div>
-          <img src="/assets/icons/right-ward-arrow.svg" alt="groupedit" />
+          <img
+            src="/assets/icons/right-ward-arrow.svg"
+            alt="groupedit"
+            onClick={() => {
+              navigate(`/group/${currentGroup.id}`);
+            }}
+          />
         </Header>
         <CardBox>
           <HoneyCard type={true} count={currentGroup.receivedHoney} />

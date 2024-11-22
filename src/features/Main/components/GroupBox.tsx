@@ -2,6 +2,7 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Group } from '../types/group';
+import { useNavigate } from 'react-router-dom';
 
 interface GroupBoxProps {
   group: Group;
@@ -9,6 +10,7 @@ interface GroupBoxProps {
 
 const GroupBox = (prop: GroupBoxProps) => {
   const { group } = prop;
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -22,7 +24,13 @@ const GroupBox = (prop: GroupBoxProps) => {
             : group.groupMembers.join(', ')}
         </p>
       </div>
-      <img src="/assets/icons/right-ward-arrow.svg" alt="groupedit" />
+      <img
+        src="/assets/icons/right-ward-arrow.svg"
+        alt="groupedit"
+        onClick={() => {
+          navigate(`/group/${group.id}`);
+        }}
+      />
     </Container>
   );
 };
