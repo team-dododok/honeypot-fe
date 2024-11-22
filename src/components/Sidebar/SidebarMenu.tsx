@@ -111,9 +111,6 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const ProfileImage = styled.img`
-  border-radius: 9px;
-`;
 const MenuWrapper = styled.div`
   padding-top: 20px;
 `;
