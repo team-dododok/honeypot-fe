@@ -30,12 +30,6 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
                 src="/assets/icons/notification.svg"
                 alt="header-notification"
               />
-              <ProfileImage
-                src="/assets/images/profile/img-profile-1-120.svg"
-                width={24}
-                height={24}
-                alt="header-notification"
-              />
             </IconWrapper>
           </IconsWrapper>
           <MenuWrapper>
@@ -94,7 +88,7 @@ const SidebarContainer = styled.div<{ isOpen: boolean }>`
   right: 0;
   width: 70%;
   height: 100%;
-  padding: 36px 46px;
+  padding: 16px 26px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -117,9 +111,6 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
-const ProfileImage = styled.img`
-  border-radius: 9px;
-`;
 const MenuWrapper = styled.div`
   padding-top: 20px;
 `;
