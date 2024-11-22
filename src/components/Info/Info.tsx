@@ -71,7 +71,7 @@ const InfoBubble = styled.div`
   &::before {
     content: '';
     position: absolute;
-    top: -6px;
+    top: -5.5px;
     left: calc(60% + 2px);
     width: 0;
     height: 0;

@@ -32,7 +32,7 @@ const Container = styled.div`
 
   border-radius: 24px;
   box-shadow: 0px 0px 8px 0px rgba(201, 201, 201, 0.25);
-  padding: 20px 24px;
+  padding: 4px 24px;
   margin-top: 60px;
   margin-bottom: 12px;
 `;
@@ -52,7 +52,7 @@ const MainLeft = styled.div`
 `;
 
 const MainImage = styled.img`
-  width: 120px;
-  height: 151px;
-  transform: translate(20px, 20px);
+  width: 116px;
+  height: 150px;
+  transform: translate(25px, 4px);
 `;
