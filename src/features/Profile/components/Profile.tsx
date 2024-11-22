@@ -2,8 +2,10 @@ import Info from '@/components/Info/Info';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [name] = useState('민혜린');
   const [email] = useState('team.dododok@gmail.com');
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -17,7 +19,13 @@ const Profile = () => {
       <ProfileContainer>
         <ProfileBox>
           <ProfileImg src="/assets/images/profile/profile.svg" alt="profile" />
-          <ProfileEdit src="/assets/icons/profile-edit.svg" alt="profileedit" />
+          <ProfileEdit
+            src="/assets/icons/profile-edit.svg"
+            alt="profileedit"
+            onClick={() => {
+              navigate('update');
+            }}
+          />
         </ProfileBox>
         <ProfileInfo>
           <h1>{name}</h1>

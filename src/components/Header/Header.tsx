@@ -17,11 +17,20 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           width={56}
           height={20}
           alt="header-logo"
+          onClick={() => {
+            navigate('/');
+          }}
         />
       </LogoWrapper>
       <IconsWrapper>
         <IconWrapper>
-          <img src="/assets/icons/profile.svg" alt="header-profile" />
+          <img
+            src="/assets/icons/profile.svg"
+            alt="header-profile"
+            onClick={() => {
+              navigate('/profile');
+            }}
+          />
         </IconWrapper>
         <IconWrapper onClick={onMenuClick}>
           <img src="/assets/icons/menu.svg" alt="header-menu" />

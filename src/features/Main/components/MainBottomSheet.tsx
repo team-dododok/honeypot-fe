@@ -5,9 +5,11 @@ import React, { useState } from 'react';
 import HonyeBlank from './HoneyBlank';
 import HoneyGroup from './HoneyGroup';
 import GroupList from './GroupList';
+import { useNavigate } from 'react-router-dom';
 
 const MainBottomSheet = () => {
   // TODO : 꿀단지 개수 연동
+  const navigate = useNavigate();
   const [count] = useState(6);
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
@@ -16,8 +18,14 @@ const MainBottomSheet = () => {
     <Container>
       <Header>
         <Title>
-          나의 꿀단지 ({count})
-          <img src="/assets/icons/group-edit.svg" alt="groupedit" />
+          <p>나의 꿀단지 ({count})</p>
+          <img
+            src="/assets/icons/group-edit.svg"
+            alt="groupedit"
+            onClick={() => {
+              navigate('/group/management');
+            }}
+          />
         </Title>
         <DisplayToggle
           displayType="group"
@@ -70,5 +78,6 @@ const Title = styled.h1`
 
   img {
     cursor: pointer;
+    transform: translateY(1.8px);
   }
 `;

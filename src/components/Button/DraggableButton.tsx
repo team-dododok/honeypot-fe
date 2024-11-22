@@ -3,6 +3,7 @@ import ArrowButton from './ArrowButton';
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { theme } from '@/styles/theme';
+import { useNavigate } from 'react-router-dom';
 
 interface DraggableButtonProps {
   id: number;
@@ -19,6 +20,7 @@ const DraggableButton: React.FC<DraggableButtonProps> = ({
   moveGroup,
   onTrashClick,
 }) => {
+  const navigate = useNavigate();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const [, drop] = useDrop({
@@ -53,11 +55,17 @@ const DraggableButton: React.FC<DraggableButtonProps> = ({
         <img src="/assets/icons/move.svg" alt="move" />
       </MoveIconWrapper>
       <img
-        src="/assets/icons/icon-trash.svg"
+        src="/assets/icons/group-trash.svg"
         alt="trash"
         onClick={onTrashClick}
       />
-      <ArrowButton text={text} direction="right" onClick={() => {}} />
+      <ArrowButton
+        text={text}
+        direction="right"
+        onClick={() => {
+          navigate(`/group/${id}`);
+        }}
+      />
     </ButtonBox>
   );
 };

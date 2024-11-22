@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
+import { useNavigate } from 'react-router-dom';
 
 const MainButton = () => {
-  const handleButtonClick = () => {};
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/compliment/send/target');
+  };
 
   return (
     <Button onClick={handleButtonClick}>
-      <p>응원의 꿀 보내기</p>
+      <p>칭찬의 꿀 보내기</p>
       <img src="/assets/icons/right-ward-arrow.svg" alt="Group" />
     </Button>
   );
