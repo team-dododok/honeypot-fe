@@ -3,6 +3,7 @@ import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
 import BackHeader from '@/components/Header/BackHeader';
 import Info from '@/components/Info/Info';
+import ToastModal from '@/components/Modal/ToastModal';
 import WarningModal from '@/components/Modal/WarningModal';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
@@ -47,6 +48,19 @@ const GroupDetailPage = () => {
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showEditGroupNameModal, setShowEditGroupNameModal] =
     useState<boolean>(false);
+
+  const [showToastModal, setShowToastModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (location.state?.showToast) {
+      setShowToastModal(true);
+      const timer = setTimeout(() => {
+        setShowToastModal(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const handleToggle = () => {
     if (isSelectMode && selectedCount > 0) {
@@ -299,6 +313,15 @@ const GroupDetailPage = () => {
           onHoneyDelete={handleShowHoneyDeleteModal}
         />
       )}
+      {/* 꿀 저장 성공 모달*/}
+      <ToastModal
+        isVisible={showToastModal}
+        image={<img src="/assets/images/saved.svg" />}
+        text="꿀이 저장되었어요!"
+        onClose={() => {
+          setShowToastModal(false);
+        }}
+      />
     </Layout>
   );
 };

@@ -1,19 +1,47 @@
 import Button from '@/components/Button/Button';
 import ComplimentLetter from '@/features/Compliment/components/Letter/ComplimentLetter';
+import GroupModal from '@/features/Group/components/Modal/GroupModal';
+import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
 import KakaoButton from '@/features/Login/components/KakaoButton';
 import { theme } from '@/styles/theme';
 import { getAccessToken } from '@/utils/storage';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ComplimentDetailPage = () => {
+  const navigate = useNavigate();
   const [sender] = useState('박형준');
   const [receiver] = useState('오진영');
   const content =
     "Baby got passion, ambition 난 보란 듯이Look at that 온몸으로 느끼는 내 몸짓 Baby got Drip, drip, drip, drip, drip, drip, drip Baby got Drip, drip, drip, drip, drip, drip, drip Let 'em out";
   const stampType = 0;
   const saved = false; // 이미 저장된 편지인지 여부
+  const groupId = 1;
   const accessToken = getAccessToken();
+
+  // const [group, setGroup] = useState<string>('');
+  const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+
+  const handleClickButton = () => {
+    if (saved && groupId !== null) {
+      // navigate(`/group/${groupId}`);
+    } else {
+      setShowGroupModal(true);
+    }
+  };
+
+  const handleSelectedGroup = () => {
+    setShowGroupModal(false);
+    const selectedGroupName = GROUP_LIST_DUMMY.find(
+      (group) => group.id === selectedGroup
+    )?.groupName;
+    if (selectedGroupName) {
+      // setGroup(selectedGroupName);
+      navigate(`/group/${groupId}`, { state: { showToast: true } });
+    }
+  };
 
   return (
     <CenterLayout>
@@ -46,11 +74,20 @@ const ComplimentDetailPage = () => {
         {accessToken ? (
           <Button
             text={saved ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'}
+            onClick={handleClickButton}
           />
         ) : (
           <KakaoButton text="카카오 로그인하고 꿀 저장하기" />
         )}
       </ButtonWrapper>
+      <GroupModal
+        isVisible={showGroupModal}
+        placeholder="꿀을 저장할 그룹 이름을 작성해주세요"
+        onClose={() => setShowGroupModal(false)}
+        onConfirm={handleSelectedGroup}
+        selectedGroup={selectedGroup}
+        setSelectedGroup={setSelectedGroup}
+      />
     </CenterLayout>
   );
 };

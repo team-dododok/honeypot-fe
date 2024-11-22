@@ -110,7 +110,7 @@ const ProfileUpdatePage = () => {
               value={email}
               onChange={() => {}}
               width="100%"
-              readOnly={true}
+              disabled={true}
             />
             <EditButton onClick={() => navigate('/email/update')}>
               편집
