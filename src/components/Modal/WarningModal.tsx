@@ -27,7 +27,7 @@ const WarningModal = (props: WaringModal) => {
   return (
     <ModalOverlay>
       <ModalContainer>
-        {image && <img src="/assets/images/warning/img-warning.svg" />}
+        {image && <img src="/assets/images/warning/warning.svg" />}
         <ModalContent>
           <Title>{title}</Title>
           <Description>{description}</Description>

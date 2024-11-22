@@ -419,14 +419,14 @@ const GuidePage = () => {
           <h4>Stamp Label</h4>
           <StampLabel
             id={0}
-            image={'/assets/images/stamp/img-stamp-example.svg'}
+            image={'/assets/images/stamp/stamp-example.svg'}
             stampName={'StampName'}
             selected={0}
             onClick={() => {}}
           />
           <StampLabel
             id={0}
-            image={'/assets/images/stamp/img-stamp-example.svg'}
+            image={'/assets/images/stamp/stamp-example.svg'}
             stampName={'StampName'}
             selected={1}
             onClick={() => {}}
@@ -435,13 +435,13 @@ const GuidePage = () => {
         <Elements>
           <h4>Stamp Card</h4>
           <StampCard
-            imgUrl={'/assets/images/stamp/img-stamp-example.svg'}
+            imgUrl={'/assets/images/stamp/stamp-example.svg'}
             stampName={'StampName'}
             count={3}
             totalCount={5}
           />
           <StampCard
-            imgUrl={'/assets/images/stamp/img-stamp-example.svg'}
+            imgUrl={'/assets/images/stamp/stamp-example.svg'}
             stampName={'StampName'}
             count={0}
             totalCount={5}
@@ -596,7 +596,7 @@ const GuidePage = () => {
           id={0}
           name={'뱃지명'}
           goal={'달성 조건'}
-          image="/assets/images/badge/img-badge-get-1.svg"
+          image="/assets/images/badge/badge-get-1.svg"
           isObtain={true}
           date="2024-11-10"
         />

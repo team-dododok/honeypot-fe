@@ -20,7 +20,7 @@ const SignUpCompletePage = () => {
 
   return (
     <CenterLayout>
-      <Image src="/assets/images/signup/img-signup-01.svg" alt="team" />
+      <Image src="/assets/images/signup/signup-01.svg" alt="team" />
       <Title>
         축하합니다!
         <br /> 회원가입이 완료되었어요.

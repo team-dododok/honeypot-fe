@@ -175,9 +175,7 @@ const GroupDetailPage = () => {
           {TOTAL_STAMP_DUMMY.map((item, index) => (
             <StampCard
               key={index}
-              imgUrl={
-                item.imgUrl || '/assets/images/stamp/img-stamp-example.svg'
-              }
+              imgUrl={item.imgUrl || '/assets/images/stamp/stamp-example.svg'}
               stampName={item.stampName}
               count={item.count}
               totalCount={item.totalCount}
@@ -193,11 +191,19 @@ const GroupDetailPage = () => {
           onClick={handleWriteCompliment}
         />
       </ButtonWrapper>
+      {/* 그룹명 수정 및 삭제 */}
+      <EditGroupNameModal
+        isVisible={showEditGroupNameModal}
+        onClose={() => setShowEditGroupNameModal(false)}
+        onConfirm={handleEditGroupName}
+        groupName={groupName}
+        setGroupName={setGroupName}
+      />
       <BottomSheet
-        title="꿀도장 현황"
-        initialHeight="250px"
-        expandedHeight="642px"
-        background="/assets/images/group/stamp/img-stamp-modal-backgroud.svg"
+        title="꿀단지 현황"
+        initialMargin={550}
+        expandedMargin={135}
+        background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
       >
         <TabToggle
           tabs={HONEY_TOGGLE}
@@ -220,14 +226,6 @@ const GroupDetailPage = () => {
           displayType={selectedDisplay}
           isSelectMode={isSelectMode}
           onSelectedChange={(count: number) => setSelectedCount(count)}
-        />
-        {/* 그룹명 수정 및 삭제 */}
-        <EditGroupNameModal
-          isVisible={showEditGroupNameModal}
-          onClose={() => setShowEditGroupNameModal(false)}
-          onConfirm={handleEditGroupName}
-          groupName={groupName}
-          setGroupName={setGroupName}
         />
         {/* 꿀 이동 및 삭제 버튼 */}
         {isSelectMode && (

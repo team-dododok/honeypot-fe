@@ -29,7 +29,7 @@ const ComplimentDetailPage = () => {
             <Strong>{sender}</Strong>님이 <Strong>{receiver}</Strong>
             님에게 보낸 꿀이에요!
             <br />
-            꿀단지에서 팀원들과 꿀같은 칭찬을 주고받아볼까요?
+            꿀단지에서 팀원들과 꿀 같은 칭찬을 주고받아볼까요?
           </Text>
         </Title>
         <ComplimentLetter

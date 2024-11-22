@@ -34,10 +34,9 @@ const StampList = (props: StampListProps) => {
   const [showDetailHoneyModal, setShowDetailHoneyModal] =
     useState<boolean>(false);
 
-  const handleClickStamp = () => {
-    if (!readOnly && onClick) {
-      onClick();
-    } else {
+  const handleClickStamp = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (readOnly) {
       setShowDetailHoneyModal(true);
     }
   };
@@ -61,11 +60,12 @@ const StampList = (props: StampListProps) => {
               label=""
               isChecked={selected}
               onChange={onClick}
+              // onChange={handleCheckClick}
               marginRight="0px"
             />
           )}
           <ProfileImage
-            src={profileImg || '/assets/images/profile/img-profile-1-120.svg'}
+            src={profileImg || '/assets/images/profile/profile-1-120.svg'}
             width={48}
             height={48}
             alt="꿀도장"
@@ -78,7 +78,7 @@ const StampList = (props: StampListProps) => {
           </TextBox>
         </LeftElement>
         <StampImage
-          src={imgUrl || '/assets/images/stamp/img-stamp-example.svg'}
+          src={imgUrl || '/assets/images/stamp/stamp-example.svg'}
           width={55}
           height={55}
           alt="꿀도장"

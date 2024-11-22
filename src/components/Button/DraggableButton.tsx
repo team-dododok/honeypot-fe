@@ -50,7 +50,7 @@ const DraggableButton: React.FC<DraggableButtonProps> = ({
   return (
     <ButtonBox style={{ opacity: isDragging ? 0.5 : 1 }}>
       <MoveIconWrapper ref={ref}>
-        <img src="/assets/icons/ic-move-20.svg" alt="move" />
+        <img src="/assets/icons/move.svg" alt="move" />
       </MoveIconWrapper>
       <img
         src="/assets/icons/icon-trash.svg"

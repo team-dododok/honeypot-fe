@@ -22,7 +22,7 @@ const TabToggle = (props: TabToggleProps) => {
 
   const handleTabClick = (id: number, path: string) => {
     onClick(id);
-    navigate(`${originalPath}?tab=${path}`);
+    navigate(`${originalPath}?tab=${path}`, { replace: true });
   };
 
   return (

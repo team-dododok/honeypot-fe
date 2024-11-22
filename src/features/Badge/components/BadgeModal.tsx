@@ -21,7 +21,7 @@ const BadgeModal = forwardRef<HTMLDivElement, BadgeModalType>((props, ref) => {
         <Date>
           {isObtain && date ? `${formatDateToKorean(date)} 획득` : '미획득'}
         </Date>
-        <BadgeImage src={image || '/assets/images/badge/img-badge.svg'} />
+        <BadgeImage src={image || '/assets/images/badge/badge.svg'} />
         <BadgeInfo>
           {name}
           <Goal>{goal}</Goal>

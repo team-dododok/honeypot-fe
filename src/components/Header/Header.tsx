@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
-      <LogoWrapper>
+      <LogoWrapper onClick={() => navigate('/')}>
         <img
           src="/assets/images/logo-typo.svg"
           width={56}
@@ -17,11 +20,11 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         />
       </LogoWrapper>
       <IconsWrapper>
+        <IconWrapper>
+          <img src="/assets/icons/profile.svg" alt="header-profile" />
+        </IconWrapper>
         <IconWrapper onClick={onMenuClick}>
           <img src="/assets/icons/menu.svg" alt="header-menu" />
-        </IconWrapper>
-        <IconWrapper>
-          <img src="/assets/icons/notification.svg" alt="header-notification" />
         </IconWrapper>
       </IconsWrapper>
     </HeaderContainer>
@@ -34,7 +37,12 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 16px 26px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
 `;
 
 const LogoWrapper = styled.div`
