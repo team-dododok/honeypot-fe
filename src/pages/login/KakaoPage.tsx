@@ -25,8 +25,8 @@ const KakaoPage = () => {
         /* 로그인 유무 확인 */
         try {
           const response = await postKakaoLogin(kakao_accessToken);
-          setAccessToken(response.result.accessToken);
-          setRefreshToken(response.result.refreshToken);
+          setAccessToken(response.data.accessToken);
+          setRefreshToken(response.data.refreshToken);
           navigate('/');
 
           // params에 칭찬 글 id가 있을 경우 해당 편지 주소로 이동하기
