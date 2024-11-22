@@ -13,6 +13,7 @@ const Input: React.FC<InputProps> = ({
   successMsg,
   errorMsg,
   readOnly = false,
+  disabled = false,
   style,
 }) => {
   const handleClear = () => {
@@ -31,6 +32,7 @@ const Input: React.FC<InputProps> = ({
         hasValue={!!value}
         placeholder={placeholder}
         readOnly={readOnly}
+        disabled={disabled}
         style={style}
       />
       {clear && (
@@ -66,10 +68,10 @@ const StyledInput = styled.input<{ hasValue: boolean; readOnly?: boolean }>`
   border: 1px solid
     ${({ hasValue, theme }) =>
       hasValue ? theme.colors.gray60 : theme.colors.gray10};
-  background: ${({ readOnly, theme }) =>
-    readOnly ? theme.colors.gray10 : theme.colors.gray00};
-  color: ${({ readOnly, theme }) =>
-    readOnly ? theme.colors.gray50 : theme.colors.gray80};
+  background: ${({ disabled, theme }) =>
+    disabled ? theme.colors.gray10 : theme.colors.gray00};
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.colors.gray50 : theme.colors.gray80};
   ${theme.typography.body3};
 
   outline: none;
