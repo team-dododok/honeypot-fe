@@ -21,6 +21,8 @@ import KakaoPage from '@/pages/login/KakaoPage';
 import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
 import AnnouncementPage from '@/pages/announcement/AnnouncementPage';
+import ComplimentDetailPage from '@/pages/compliment/ComplimentDetailPage';
+import YellowBackgroundLayout from '@/layouts/YellowBackgroundLayout';
 
 const router = createBrowserRouter([
   {
@@ -140,6 +142,16 @@ const router = createBrowserRouter([
             element: <ComplimentReceivePage />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: <YellowBackgroundLayout />,
+    children: [
+      {
+        path: 'compliment/:id',
+        element: <ComplimentDetailPage />,
       },
     ],
   },
