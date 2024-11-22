@@ -84,7 +84,7 @@ const GroupManagementPage: React.FC = () => {
           </FullContainer>
         ) : (
           <BlankContainer>
-            <img src="/assets/images/group/img-nonestamp.svg" alt="nonestamp" />
+            <img src="/assets/images/group/none-stamp.svg" alt="nonestamp" />
             <Text>
               <p>아직 그룹이 없어요.</p>
               <p>새 그룹을 생성해 볼까요?</p>

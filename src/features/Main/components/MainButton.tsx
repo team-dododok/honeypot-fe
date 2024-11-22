@@ -8,10 +8,7 @@ const MainButton = () => {
   return (
     <Button onClick={handleButtonClick}>
       <p>응원의 꿀 보내기</p>
-      <img
-        src="/assets/images/main/icn-rightwardarrow-16-varient.svg"
-        alt="Group"
-      />
+      <img src="/assets/icons/right-ward-arrow.svg" alt="Group" />
     </Button>
   );
 };

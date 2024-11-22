@@ -14,7 +14,7 @@ const ReadLetter = (props: ReadLetterProps) => {
     <Container>
       <Content>{content}</Content>
       <StampImage
-        src={stampImage || '/assets/images/stamp/img-stamp-example.svg'}
+        src={stampImage || '/assets/images/stamp/stamp-example.svg'}
         width={55}
         height={55}
         alt="꿀도장"

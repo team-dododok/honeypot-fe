@@ -22,7 +22,7 @@ const ProfileUpdatePage = () => {
 
   const profileImages = Array.from(
     { length: 6 },
-    (_, i) => `/assets/images/profile/img-profile-${i + 1}-120.svg`
+    (_, i) => `/assets/images/profile/profile-${i + 1}-120.svg`
   );
 
   useEffect(() => {

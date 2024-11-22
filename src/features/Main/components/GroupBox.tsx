@@ -22,10 +22,7 @@ const GroupBox = (prop: GroupBoxProps) => {
             : group.groupMembers.join(', ')}
         </p>
       </div>
-      <img
-        src="/assets/images/main/icn-rightwardarrow-16-varient.svg"
-        alt="groupedit"
-      />
+      <img src="/assets/icons/right-ward-arrow.svg" alt="groupedit" />
     </Container>
   );
 };

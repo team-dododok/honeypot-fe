@@ -6,7 +6,7 @@ import React from 'react';
 const HonyeBlank = () => {
   return (
     <Container>
-      <img src="/assets/images/main/img-nonestamp.svg" alt="nonestamp" />
+      <img src="/assets/images/main/none-stamp.svg" alt="nonestamp" />
       <div>
         <p>아직 그룹이 없어요.</p>
         <p>새 그룹을 생성해 볼까요?</p>

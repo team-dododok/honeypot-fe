@@ -15,7 +15,7 @@ const GroupPagination = (props: GroupPaginationProps) => {
   return (
     <Container>
       <img
-        src="/assets/images/main/icn-fill-upwardarrow.svg"
+        src="/assets/icons/fill-up-ward-arrow.svg"
         alt="left"
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
       />
@@ -29,7 +29,7 @@ const GroupPagination = (props: GroupPaginationProps) => {
         </p>
       )}
       <img
-        src="/assets/images/main/icn-fill-upwardarrow-1.svg"
+        src="/assets/icons/fill-up-ward-arrow-1.svg"
         alt="right"
         onClick={() => onPageChange(Math.min(totalGroups, currentPage + 1))}
       />

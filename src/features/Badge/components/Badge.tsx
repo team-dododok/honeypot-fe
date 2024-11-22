@@ -19,7 +19,7 @@ const Badge = (props: BadgeType) => {
   return (
     <>
       <BadgeBox onClick={handleClickBadge}>
-        <BadgeImage src={image || '/assets/images/badge/img-badge.svg'} />
+        <BadgeImage src={image || '/assets/images/badge/badge.svg'} />
         <BadgeInfo>
           {name}
           <Goal>{goal}</Goal>

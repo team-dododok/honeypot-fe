@@ -23,8 +23,8 @@ const BottomSheet = (props: BottomSheetProps) => {
       <SheetImageContainer height={isExpanded ? expandedHeight : initialHeight}>
         {!isExpanded && (
           <>
-            <BongBongFace src="/assets/images/group/stamp/img-stamp-modal-bongbong-face.svg" />
-            <BongBongHands src="/assets/images/group/stamp/img-stamp-modal-bongbong-hands.svg" />
+            <BongBongFace src="/assets/images/group/stamp/stamp-modal-bongbong-face.svg" />
+            <BongBongHands src="/assets/images/group/stamp/stamp-modal-bongbong-hands.svg" />
           </>
         )}
         <SheetContainer

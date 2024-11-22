@@ -31,10 +31,7 @@ const HoneyGroup = () => {
             <h1>{currentGroup.groupName} 그룹</h1>
             <p>{displayedMembers}</p>
           </div>
-          <img
-            src="/assets/images/main/icn-rightwardarrow-16-varient.svg"
-            alt="groupedit"
-          />
+          <img src="/assets/icons/right-ward-arrow.svg" alt="groupedit" />
         </Header>
         <CardBox>
           <HoneyCard type={true} count={currentGroup.receivedHoney} />

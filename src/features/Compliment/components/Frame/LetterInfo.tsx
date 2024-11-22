@@ -18,9 +18,7 @@ const LetterInfo = (props: StampListProps) => {
   return (
     <LetterInfoBox>
       <ProfileImage
-        src={
-          profileImg || '/assets/images/profile/img-profile-1-120-varient.svg'
-        }
+        src={profileImg || '/assets/images/profile/profile-1-120-varient.svg'}
         width={48}
         height={48}
         alt="프로필"

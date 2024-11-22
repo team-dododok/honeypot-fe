@@ -18,7 +18,7 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
   return (
     <Container>
       <Stamp onClick={onClick}>
-        <Image src="/assets/images/stamp/img-stamp-select.svg" alt="stamp" />
+        <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
       </Stamp>
       <Letter
         receiver={receiver}

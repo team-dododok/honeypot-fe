@@ -15,7 +15,7 @@ const StampCard = (props: StampCardProps) => {
   return (
     <StampCardBox $isVisible={count !== 0}>
       <StampImage
-        src={imgUrl || '/assets/images/stamp/img-stamp-example.svg'}
+        src={imgUrl || '/assets/images/stamp/stamp-example.svg'}
         width={58}
         height={58}
         alt={stampName}

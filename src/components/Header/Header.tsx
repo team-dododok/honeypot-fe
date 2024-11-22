@@ -18,7 +18,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
       </LogoWrapper>
       <IconsWrapper>
         <IconWrapper>
-          <img src="/assets/icons/ic-24-profile.svg" alt="header-profile" />
+          <img src="/assets/icons/profile.svg" alt="header-profile" />
         </IconWrapper>
         <IconWrapper onClick={onMenuClick}>
           <img src="/assets/icons/menu.svg" alt="header-menu" />

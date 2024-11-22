@@ -17,7 +17,7 @@ const MainBottomSheet = () => {
       <Header>
         <Title>
           나의 꿀단지 ({count})
-          <img src="/assets/images/main/ic-groupedit.svg" alt="groupedit" />
+          <img src="/assets/icons/group-edit.svg" alt="groupedit" />
         </Title>
         <DisplayToggle
           displayType="group"
