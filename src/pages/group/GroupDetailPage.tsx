@@ -191,10 +191,18 @@ const GroupDetailPage = () => {
           onClick={handleWriteCompliment}
         />
       </ButtonWrapper>
+      {/* 그룹명 수정 및 삭제 */}
+      <EditGroupNameModal
+        isVisible={showEditGroupNameModal}
+        onClose={() => setShowEditGroupNameModal(false)}
+        onConfirm={handleEditGroupName}
+        groupName={groupName}
+        setGroupName={setGroupName}
+      />
       <BottomSheet
         title="꿀도장 현황"
-        initialHeight="250px"
-        expandedHeight="642px"
+        initialMargin={550}
+        expandedMargin={135}
         background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
       >
         <TabToggle
@@ -218,14 +226,6 @@ const GroupDetailPage = () => {
           displayType={selectedDisplay}
           isSelectMode={isSelectMode}
           onSelectedChange={(count: number) => setSelectedCount(count)}
-        />
-        {/* 그룹명 수정 및 삭제 */}
-        <EditGroupNameModal
-          isVisible={showEditGroupNameModal}
-          onClose={() => setShowEditGroupNameModal(false)}
-          onConfirm={handleEditGroupName}
-          groupName={groupName}
-          setGroupName={setGroupName}
         />
         {/* 꿀 이동 및 삭제 버튼 */}
         {isSelectMode && (

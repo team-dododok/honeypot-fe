@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
-      <LogoWrapper>
+      <LogoWrapper onClick={() => navigate('/')}>
         <img
           src="/assets/images/logo-typo.svg"
           width={56}
