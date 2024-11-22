@@ -101,6 +101,7 @@ const EmailUpdatePage = () => {
               clear={false}
               value={inputValue}
               onChange={handleInput}
+              errorMsg={errorMessage}
             />
             <StyledButton
               text={verificationButtonText}
@@ -115,7 +116,6 @@ const EmailUpdatePage = () => {
               onClick={handleVerificationButtonClick}
             />
           </InputBox>
-          {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
         </InputContainer>
 
         {isVerificationVisible && (
@@ -129,6 +129,8 @@ const EmailUpdatePage = () => {
                   clear={false}
                   value={verificationCode}
                   onChange={handleVerificationInput}
+                  errorMsg={verificationError}
+                  successMsg={verificationSuccess ? '인증되었어요.' : ''}
                 />
                 <StyledButton
                   text={verificationSuccess ? '인증완료' : '인증하기'}
@@ -143,8 +145,6 @@ const EmailUpdatePage = () => {
                   onClick={handleVerifyClick}
                 />
               </InputBox>
-              {verificationError && <ErrorText>{verificationError}</ErrorText>}
-              {verificationSuccess && <SuccessText>인증되었어요.</SuccessText>}
               <TimerBox>
                 {!verificationSuccess && isTimerActive && (
                   <TimerText>{formatTime(timer)}</TimerText>
@@ -199,18 +199,6 @@ const InputBox = styled.div`
 
 const StyledButton = styled(Button)`
   width: 35%;
-`;
-
-const ErrorText = styled.p`
-  color: ${theme.colors.error60};
-  ${theme.typography.body3};
-  margin: 0;
-`;
-
-const SuccessText = styled.p`
-  color: ${theme.colors.success90};
-  ${theme.typography.body3};
-  margin: 0;
 `;
 
 const TimerBox = styled.div`
