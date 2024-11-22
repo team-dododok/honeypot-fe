@@ -1,4 +1,4 @@
-import Tooltip from '@/features/Main/components/Tooltip';
+import Info from '@/components/Info/Info';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
@@ -45,15 +45,11 @@ const Profile = () => {
         <Section>
           <Label>Best 꿀도장</Label>
           <Icon onClick={toggleTooltip}>
-            <img src="/assets/icons/description.svg" alt="description" />
-            {isTooltipVisible && (
-              <TooltipWrapper>
-                <Tooltip>
-                  꿀도장을 3개 이상 받으면 팀원들에게 가장 많이 받은 꿀도장을 볼
-                  수 있어요
-                </Tooltip>
-              </TooltipWrapper>
-            )}
+            <Info>
+              꿀도장을 3개 이상 받으면 팀원들에게
+              <br />
+              가장 많이 받은 꿀도장을 볼 수 있어요
+            </Info>
           </Icon>
         </Section>
       </ProfileDesc>
