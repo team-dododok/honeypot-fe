@@ -1,6 +1,7 @@
 import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
+import { postSignUp } from '@/features/Login/api/kakao';
 import {
   ProgressBarWrapper,
   BottomWrapper,
@@ -14,14 +15,30 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const { profileIdx, setProfileIdx } = useSignUpStore();
+  const { isCheckedTerms, name, email, profileIdx, setProfileIdx } =
+    useSignUpStore();
 
   const handleProfileImageClick = (index: number) => {
     setProfileIdx(index);
   };
 
-  const handleButtonClick = () => {
-    navigate('/signup/complete');
+  const handleButtonClick = async () => {
+    try {
+      const requestBody = {
+        serviceTerm: isCheckedTerms[0] ? 1 : 0,
+        personalInfo: isCheckedTerms[1] ? 1 : 0,
+        emailMarketing: isCheckedTerms[2] ? 1 : 0,
+        name,
+        email,
+        imageUrl: '', // 이미지 URL
+        onboarding: 0,
+      };
+
+      await postSignUp(requestBody);
+      navigate('/signup/complete');
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
   };
 
   return (

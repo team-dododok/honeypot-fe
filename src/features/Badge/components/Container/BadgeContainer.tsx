@@ -28,5 +28,5 @@ const BadgeGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 24px;
-  column-gap: 28px;
+  column-gap: 10px;
 `;

@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 export interface Badge {
   id: number;
   name: string;
@@ -10,4 +12,5 @@ export interface Badge {
 export interface BadgeModal extends Badge {
   onConfirm: () => void;
   onClose: () => void;
+  ref: RefObject<HTMLDivElement>;
 }

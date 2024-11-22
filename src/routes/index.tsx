@@ -22,6 +22,7 @@ import GroupManagementPage from '@/pages/group/GroupManagementPage';
 import BadgePage from '@/pages/badge/BadgePage';
 import AnnouncementPage from '@/pages/announcement/AnnouncementPage';
 import ProfilePage from '@/pages/profile/ProfilePage';
+import EmailUpdatePage from '@/pages/profile/EmailUpdatePage';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,16 @@ const router = createBrowserRouter([
           {
             path: 'update',
             element: <ProfileUpdatePage />,
+          },
+        ],
+      },
+      {
+        path: 'email',
+        element: <SubLayout title="이메일 수정" padding="0px" />,
+        children: [
+          {
+            path: 'update',
+            element: <EmailUpdatePage />,
           },
         ],
       },
