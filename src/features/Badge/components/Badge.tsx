@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Badge as BadgeType } from '../types/Badge';
 import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import BadgeModal from './BadgeModal';
+import { saveImageFromRef } from '@/utils/saveImage';
 
 const Badge = (props: BadgeType) => {
   const { id, image, name, goal, isObtain, date } = props;
   const [isBadgeModal, setIsBadgeModal] = useState<boolean>(false);
+  const badgeBoxRef = useRef<HTMLDivElement>(null);
 
   const handleClickBadge = () => {
     setIsBadgeModal(!isBadgeModal);
   };
 
-  const handleSaveBadge = () => {
-    // 배지 저장하기
+  const handleSaveBadge = async () => {
+    if (badgeBoxRef.current) {
+      saveImageFromRef(
+        badgeBoxRef,
+        `${name} 뱃지.png`,
+        '308px',
+        '16px',
+        '16px'
+      );
+    }
   };
 
   return (
@@ -35,6 +45,7 @@ const Badge = (props: BadgeType) => {
           date={date}
           onClose={handleClickBadge}
           onConfirm={handleSaveBadge}
+          ref={badgeBoxRef}
         />
       )}
     </>

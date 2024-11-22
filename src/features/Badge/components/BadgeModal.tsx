@@ -1,11 +1,11 @@
 import CloseModal from '@/components/Modal/CloseModal';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { BadgeModal as BadgeModalType } from '../types/Badge';
 import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import { formatDateToKorean } from '@/utils/format';
 
-const BadgeModal = (props: BadgeModalType) => {
+const BadgeModal = forwardRef<HTMLDivElement, BadgeModalType>((props, ref) => {
   const { name, image, goal, isObtain, date, onClose, onConfirm } = props;
 
   return (
@@ -17,7 +17,7 @@ const BadgeModal = (props: BadgeModalType) => {
       onConfirm={onConfirm}
       onClose={onClose}
     >
-      <BadgeBox>
+      <BadgeBox ref={ref}>
         <Date>
           {isObtain && date ? `${formatDateToKorean(date)} 획득` : '미획득'}
         </Date>
@@ -29,15 +29,17 @@ const BadgeModal = (props: BadgeModalType) => {
       </BadgeBox>
     </CloseModal>
   );
-};
+});
 
+BadgeModal.displayName = 'BadgeModal';
 export default BadgeModal;
 
-const BadgeBox = styled.button`
+const BadgeBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 16px;
   gap: 16px;
 `;
 

@@ -1,11 +1,22 @@
 import BackHeader from '@/components/Header/BackHeader';
 import BadgeContainer from '@/features/Badge/components/Container/BadgeContainer';
+import { saveImageFromRef } from '@/utils/saveImage';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useRef } from 'react';
 
 const BadgePage = () => {
+  const badgeListRef = useRef<HTMLDivElement>(null);
+
   const handleSaveAllBadges = () => {
-    // 전체 화면 스크린샷 저장
+    if (badgeListRef.current) {
+      saveImageFromRef(
+        badgeListRef,
+        '꿀단지 뱃지 모아보기.png',
+        null,
+        '20px',
+        null
+      );
+    }
   };
 
   return (
@@ -22,7 +33,9 @@ const BadgePage = () => {
           </SaveButton>
         </SaveButtonWrapper>
       </BackHeader>
-      <BadgeContainer />
+      <BadgeContainerWrapper ref={badgeListRef}>
+        <BadgeContainer />
+      </BadgeContainerWrapper>
     </Layout>
   );
 };
@@ -42,3 +55,5 @@ const SaveButtonWrapper = styled.div`
 `;
 
 const SaveButton = styled.button``;
+
+const BadgeContainerWrapper = styled.div``;
