@@ -200,7 +200,7 @@ const GroupDetailPage = () => {
         setGroupName={setGroupName}
       />
       <BottomSheet
-        title="꿀도장 현황"
+        title="꿀단지 현황"
         initialMargin={550}
         expandedMargin={135}
         background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
