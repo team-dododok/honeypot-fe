@@ -103,7 +103,8 @@ const EmailUpdatePage = () => {
               onChange={handleInput}
               errorMsg={errorMessage}
             />
-            <StyledButton
+            <Button
+              width="35%"
               text={verificationButtonText}
               variant={
                 verificationSuccess
@@ -132,7 +133,8 @@ const EmailUpdatePage = () => {
                   errorMsg={verificationError}
                   successMsg={verificationSuccess ? '인증되었어요.' : ''}
                 />
-                <StyledButton
+                <Button
+                  width="35%"
                   text={verificationSuccess ? '인증완료' : '인증하기'}
                   variant={
                     verificationSuccess
@@ -195,10 +197,6 @@ const InputBox = styled.div`
   align-items: center;
   gap: 16px;
   width: 100%;
-`;
-
-const StyledButton = styled(Button)`
-  width: 35%;
 `;
 
 const TimerBox = styled.div`
