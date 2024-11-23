@@ -1,5 +1,5 @@
-import axios from '../basicAxios';
-import { PostReceivedPraise } from './interfaces/ReceivedPraise';
+import axios from '../authAxios';
+import { PostReceivedPraise } from './types/ReceivedPraise';
 
 export const postReceivedPraise = async (
   receivedParise: PostReceivedPraise
