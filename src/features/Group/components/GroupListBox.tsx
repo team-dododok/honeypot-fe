@@ -69,6 +69,7 @@ const GroupListBoxContainer = styled.div<{
   ${theme.typography.body3};
   ${({ isAdd, selected, theme }) =>
     isAdd || selected ? theme.typography.subtitle2 : theme.typography.body3};
+  cursor: pointer;
 `;
 
 const Selected = styled.div`

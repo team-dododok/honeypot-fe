@@ -3,8 +3,8 @@ import Input from '@/components/Input/Input';
 import BottomModal from '@/components/Modal/BottomModal';
 import GroupListBox from '@/features/Group/components/GroupListBox';
 import styled from '@emotion/styled';
-import { useGroup } from '@/hooks/group/useGroup';
 import { usePostGroup } from '@/hooks/group/usePostGroup';
+import { useGroupSearch } from '@/hooks/group/useGroupSearch';
 
 interface GroupModalProps {
   isVisible: boolean;
@@ -24,10 +24,10 @@ const GroupModal: React.FC<GroupModalProps> = ({
   setSelectedGroup,
 }) => {
   const [localGroupName, setLocalGroupName] = useState<string>('');
-  const { data: groupData, refetch } = useGroup();
+  const { data: groupData, refetch } = useGroupSearch(localGroupName);
   const { mutate: addGroup } = usePostGroup();
 
-  const groupList = groupData?.groupWithMembersInfos || [];
+  const groupList = groupData?.groupInfos || [];
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalGroupName(e.target.value);
@@ -77,15 +77,16 @@ const GroupModal: React.FC<GroupModalProps> = ({
         onChange={handleGroupChange}
       />
       <GroupList>
-        {localGroupName.length > 0 && (
-          <GroupListBox
-            id={-1}
-            groupName={`'${localGroupName}' 그룹 추가하기`}
-            currentId={0}
-            selected={0 === selectedGroup}
-            onClick={handleAddGroup}
-          />
-        )}
+        {localGroupName.length > 0 &&
+          groupList.every((group) => group.groupName !== localGroupName) && (
+            <GroupListBox
+              id={-1}
+              groupName={`'${localGroupName}' 그룹 추가하기`}
+              currentId={0}
+              selected={0 === selectedGroup}
+              onClick={handleAddGroup}
+            />
+          )}
         {groupList?.map((group) => (
           <GroupListBox
             key={group.groupId}
