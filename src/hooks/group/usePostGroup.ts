@@ -1,7 +1,18 @@
-import { PostGroupParams } from '@/api/group/types/Group';
 import { postGroup } from '@/api/group/postGroup';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import { handleMutationError } from '@/utils/error';
+import { useToast } from '@/store/useToast';
 
-export const usePostGroup = (groupName: PostGroupParams) => {
-  return useQuery(['group'], () => postGroup(groupName));
+export const usePostGroup = () => {
+  const { showToast } = useToast.getState();
+
+  return useMutation(postGroup, {
+    onError: (error) => {
+      handleMutationError(error);
+      showToast(`그룹을 추가하는 데 실패했습니다.`);
+    },
+    onSuccess: () => {
+      showToast('그룹이 성공적으로 추가되었습니다.');
+    },
+  });
 };
