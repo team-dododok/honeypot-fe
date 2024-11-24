@@ -1,4 +1,4 @@
-import axios from '../authAxios';
+import { authAxios as axios } from '../authAxios';
 import { PatchGroupParams } from './types/Group';
 
 export const patchGroupOrder = async ({
