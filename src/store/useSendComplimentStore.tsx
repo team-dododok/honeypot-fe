@@ -1,0 +1,45 @@
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+
+interface SendComplimentState {
+  receiverName: string;
+  groupId: number | null;
+  groupName: string;
+  ongoing: boolean;
+  honeyStampId: number | null;
+  setReceiverName: (receiverName: string) => void;
+  setGroupId: (groupId: number | null) => void;
+  setGroupName: (groupName: string) => void;
+  setOngoing: (ongoing: boolean) => void;
+  setHoneyStampId: (honeyStampId: number | null) => void;
+  clearState: () => void;
+}
+
+export const useSendComplimentStore = create<SendComplimentState>()(
+  persist(
+    (set) => ({
+      receiverName: '',
+      groupName: '',
+      groupId: null,
+      ongoing: false,
+      honeyStampId: null,
+      setReceiverName: (receiverName) => set({ receiverName }),
+      setGroupId: (groupId) => set({ groupId }),
+      setGroupName: (groupName) => set({ groupName }),
+      setOngoing: (ongoing) => set({ ongoing }),
+      setHoneyStampId: (honeyStampId) => set({ honeyStampId }),
+      clearState: () =>
+        set({
+          receiverName: '',
+          groupId: null,
+          groupName: '',
+          ongoing: false,
+          honeyStampId: null,
+        }),
+    }),
+    {
+      name: 'send-compliment-storage',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
