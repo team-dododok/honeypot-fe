@@ -25,13 +25,18 @@ import ComplimentDetailPage from '@/pages/compliment/ComplimentDetailPage';
 import YellowBackgroundLayout from '@/layouts/YellowBackgroundLayout';
 import ProfilePage from '@/pages/profile/ProfilePage';
 import EmailUpdatePage from '@/pages/profile/EmailUpdatePage';
+import { theme } from '@/styles/theme';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <MainLayout background={theme.colors.gradient02} />,
+    children: [{ index: true, element: <MainPage /> }],
+  },
+  {
+    path: '/',
     element: <MainLayout />,
     children: [
-      { index: true, element: <MainPage /> },
       {
         path: 'group',
         element: <GroupPage />,
