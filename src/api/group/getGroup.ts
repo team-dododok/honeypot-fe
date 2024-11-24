@@ -1,4 +1,4 @@
-import axios from '../authAxios';
+import { authAxios as axios } from '../authAxios';
 import { GroupResponse } from './types/Group';
 
 export const getGroup = async (): Promise<GroupResponse> => {
