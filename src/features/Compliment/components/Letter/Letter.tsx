@@ -1,4 +1,5 @@
 import LinedInput from '@/components/Input/LinedInput';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -7,12 +8,13 @@ interface LetterProps {
   receiver: string;
   sender: string;
   content: string;
-  setContent?: React.Dispatch<React.SetStateAction<string>>;
   totalLength: number;
+  readOnly?: boolean;
 }
 
 const Letter = (props: LetterProps) => {
-  const { receiver, sender, content, setContent, totalLength } = props;
+  const { receiver, sender, content, totalLength, readOnly = true } = props;
+  const { setContent } = useSendComplimentStore();
 
   const isMaxLengthReached = content.length === totalLength;
 
@@ -40,7 +42,7 @@ const Letter = (props: LetterProps) => {
         />
       </Content>
       <BottomWrapper>
-        {setContent ? (
+        {!readOnly ? (
           <Length $isMaxLengthReached={isMaxLengthReached}>
             {content.length}/{totalLength}자
           </Length>

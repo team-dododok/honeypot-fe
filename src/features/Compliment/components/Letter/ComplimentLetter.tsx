@@ -8,13 +8,20 @@ interface ComplimentLetterProps {
   receiver: string;
   sender: string;
   content: string;
-  setContent?: React.Dispatch<React.SetStateAction<string>>;
   onClick?: () => void;
   children?: React.ReactNode;
+  readOnly?: boolean;
 }
 
 const ComplimentLetter = (props: ComplimentLetterProps) => {
-  const { receiver, sender, content, setContent, onClick, children } = props;
+  const {
+    receiver,
+    sender,
+    content,
+    onClick,
+    children,
+    readOnly = true,
+  } = props;
 
   return (
     <Container>
@@ -26,8 +33,8 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
         receiver={receiver}
         sender={sender}
         content={content}
-        setContent={setContent}
         totalLength={180}
+        readOnly={readOnly}
       />
     </Container>
   );

@@ -3,16 +3,16 @@ import CenterModal from '@/components/Modal/CenterModal';
 import StampLabel from '@/features/Stamp/components/Stamp/StampLabel';
 import styled from '@emotion/styled';
 import { STAMP } from '../../constants/dummy/stamp';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 
 interface StampModalProps {
   showModal: boolean;
   onClose: () => void;
-  stampType: number | null;
-  setStampType: (type: number | null) => void;
 }
 
 const StampModal = (props: StampModalProps) => {
-  const { showModal, onClose, stampType, setStampType } = props;
+  const { showModal, onClose } = props;
+  const { honeyStampId, setHoneyStampId } = useSendComplimentStore();
 
   if (!showModal) return null;
 
@@ -21,7 +21,7 @@ const StampModal = (props: StampModalProps) => {
       title="보내고 싶은 꿀도장을 선택하세요."
       confirmText="도장찍기"
       onConfirm={onClose}
-      disabled={stampType === null}
+      disabled={honeyStampId === null}
     >
       <GridContainer>
         {STAMP.map((item) => (
@@ -30,12 +30,12 @@ const StampModal = (props: StampModalProps) => {
             id={item.id}
             image={item.image}
             stampName={item.stampName}
-            selected={stampType}
+            selected={honeyStampId}
             onClick={() => {
-              if (item.id === stampType) {
-                setStampType(null);
+              if (item.id === honeyStampId) {
+                setHoneyStampId(null);
               } else {
-                setStampType(item.id);
+                setHoneyStampId(item.id);
               }
             }}
           />

@@ -6,9 +6,13 @@ interface KakaoPreviewProps {
   receiver: string;
   sender: string;
   content: string;
+  stampId: number | null;
 }
+
 const KakaoPreview = (props: KakaoPreviewProps) => {
-  const { receiver, sender, content } = props;
+  const { receiver, sender, content, stampId } = props;
+
+  console.log(stampId); // 추후 이미지 불러오기
 
   return (
     <KakaoPreviewBox>
