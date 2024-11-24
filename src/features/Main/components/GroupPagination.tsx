@@ -43,7 +43,8 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 24px;
 
   ${theme.typography.detail4};
   color: ${theme.colors.gray50};

@@ -70,7 +70,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 24px;
-  wdith: 100%;
+  width: 100%;
   padding: 16px 22px;
   border-radius: 24px;
   border: 1px solid ${(props) => props.theme.colors.gray10};
@@ -97,7 +97,8 @@ const Header = styled.div`
 `;
 
 const CardBox = styled.div`
-  display: flex;
-  gap: 12px;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 `;
