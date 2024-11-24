@@ -20,8 +20,8 @@ const SignUpProfilePage = () => {
     useSignUpStore();
   const { data } = useMemberProfileImage();
 
-  const profileImages = data?.profileImageUrl
-    ? Object.entries(data.profileImageUrl as Record<string, string>)
+  const profileImages = data?.data.profileImageUrl
+    ? Object.entries(data.data.profileImageUrl as Record<string, string>)
     : [];
 
   const handleProfileImageClick = (index: number) => {
@@ -62,7 +62,7 @@ const SignUpProfilePage = () => {
 
       <ProfileGridWrapper>
         <ProfileGrid>
-          {data?.profileImageUrl?.map(([key, url]: [string, string]) => {
+          {profileImages.map(([key, url]: [string, string]) => {
             const index = parseInt(key, 10);
             return (
               <ProfileImage
@@ -70,7 +70,7 @@ const SignUpProfilePage = () => {
                 src={url}
                 alt={`프로필${index}`}
                 isSelected={profileIdx === index}
-                index={index}
+                index={index - 1}
                 onClick={() => handleProfileImageClick(index)}
               />
             );
