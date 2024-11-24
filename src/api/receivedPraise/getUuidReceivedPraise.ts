@@ -1,8 +1,8 @@
-import axios from '../basicAxios';
+import { authAxios as axios } from '../authAxios';
 import {
   UuidReceivedPraiseParams,
   UuidReceivePraiseInfo,
-} from './interfaces/ReceivedPraise';
+} from './types/ReceivedPraise';
 
 export const getUuidReceivedPraise = async ({
   uuid,

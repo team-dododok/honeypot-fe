@@ -1,4 +1,4 @@
-import axios from '../basicAxios';
+import { authAxios as axios } from '../authAxios';
 
 export const deleteReceivedPraise = async () => {
   const response = await axios.delete(`/api/receive-praise`);
