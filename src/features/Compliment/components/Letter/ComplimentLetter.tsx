@@ -8,6 +8,7 @@ interface ComplimentLetterProps {
   receiver: string;
   sender: string;
   content: string;
+  honeyStampImage: string;
   onClick?: () => void;
   children?: React.ReactNode;
   readOnly?: boolean;
@@ -18,6 +19,7 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
     receiver,
     sender,
     content,
+    honeyStampImage,
     onClick,
     children,
     readOnly = true,
@@ -26,7 +28,10 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
   return (
     <Container>
       <Stamp onClick={onClick}>
-        <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
+        <Image
+          src={honeyStampImage || '/assets/images/stamp/stamp-select.svg'}
+          alt="꿀도장"
+        />
       </Stamp>
       {children}
       <Letter
@@ -65,5 +70,4 @@ const Stamp = styled.button`
 const Image = styled.img`
   width: 137px;
   height: 137px;
-  background-color: gray;
 `;

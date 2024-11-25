@@ -4,7 +4,7 @@ import React from 'react';
 
 interface StampLabel {
   id: number;
-  image: string; // S3 이미지
+  image: string;
   stampName: string;
   selected: number | null;
   onClick: () => void;
@@ -15,12 +15,10 @@ const StampLabel = (props: StampLabel) => {
   const handleStampClick = () => {
     onClick();
   };
+
   return (
     <StampLabelBox $selected={id === selected} onClick={handleStampClick}>
-      <StampImage
-        src={image || '/assets/images/stamp/stamp-example.svg'}
-        alt="stamp"
-      />
+      <StampImage src={image} alt="꿀도장" />
       {stampName}
     </StampLabelBox>
   );
@@ -46,5 +44,4 @@ const StampLabelBox = styled.button<{ $selected: boolean }>`
 const StampImage = styled.img`
   width: 41px;
   height: 41px;
-  background-color: gray;
 `;

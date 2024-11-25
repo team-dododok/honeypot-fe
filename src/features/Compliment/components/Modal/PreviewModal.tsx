@@ -10,10 +10,9 @@ interface PreviewModalProps {
   receiver: string;
   sender: string;
   content: string;
-  stampId: number | null;
 }
 const PreviewModal = (props: PreviewModalProps) => {
-  const { showModal, onClose, receiver, sender, content, stampId } = props;
+  const { showModal, onClose, receiver, sender, content } = props;
 
   if (!showModal) return null;
 
@@ -23,12 +22,7 @@ const PreviewModal = (props: PreviewModalProps) => {
         <Description>
           {`카카오톡으로 칭찬을 보내면,\n아래와 같은 메시지가 전송됩니다.`}
         </Description>
-        <KakaoPreview
-          receiver={receiver}
-          sender={sender}
-          content={content}
-          stampId={stampId}
-        />
+        <KakaoPreview receiver={receiver} sender={sender} content={content} />
       </PreviewContainer>
     </CenterModal>
   );

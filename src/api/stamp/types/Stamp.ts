@@ -1,4 +1,5 @@
 type StampDto = {
+  id: number;
   imageUrl: string;
   stampName: string;
 };

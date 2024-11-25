@@ -19,8 +19,15 @@ import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
-  const { receiverName, content, groupId, ongoing, honeyStampId, clearState } =
-    useSendComplimentStore();
+  const {
+    receiverName,
+    content,
+    groupId,
+    ongoing,
+    honeyStampId,
+    honeyStampImage,
+    clearState,
+  } = useSendComplimentStore();
   const sender = '형준';
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
@@ -86,6 +93,7 @@ const ComplimentSendContentPage = () => {
           receiver={receiverName}
           sender={sender}
           content={content}
+          honeyStampImage={honeyStampImage}
           onClick={handleSelectedStamp}
           readOnly={false}
         />
@@ -117,7 +125,6 @@ const ComplimentSendContentPage = () => {
         receiver={receiverName}
         sender={sender}
         content={content}
-        stampId={honeyStampId}
       />
     </CommonLayout>
   );

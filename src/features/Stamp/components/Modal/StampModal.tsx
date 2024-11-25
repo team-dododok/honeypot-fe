@@ -2,8 +2,8 @@ import React from 'react';
 import CenterModal from '@/components/Modal/CenterModal';
 import StampLabel from '@/features/Stamp/components/Stamp/StampLabel';
 import styled from '@emotion/styled';
-import { STAMP } from '../../constants/dummy/stamp';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
+import { useStampImage } from '@/hooks/stamp/useStampImage';
 
 interface StampModalProps {
   showModal: boolean;
@@ -12,9 +12,12 @@ interface StampModalProps {
 
 const StampModal = (props: StampModalProps) => {
   const { showModal, onClose } = props;
-  const { honeyStampId, setHoneyStampId } = useSendComplimentStore();
-
+  const { honeyStampId, setHoneyStampId, setHoneyStampImage } =
+    useSendComplimentStore();
+  const { data } = useStampImage();
   if (!showModal) return null;
+
+  const stampList = data?.stampDtos || [];
 
   return (
     <CenterModal
@@ -24,18 +27,20 @@ const StampModal = (props: StampModalProps) => {
       disabled={honeyStampId === null}
     >
       <GridContainer>
-        {STAMP.map((item) => (
+        {stampList.map((item) => (
           <StampLabel
             key={item.id}
             id={item.id}
-            image={item.image}
+            image={item.imageUrl}
             stampName={item.stampName}
             selected={honeyStampId}
             onClick={() => {
               if (item.id === honeyStampId) {
                 setHoneyStampId(null);
+                setHoneyStampImage('');
               } else {
                 setHoneyStampId(item.id);
+                setHoneyStampImage(item.imageUrl);
               }
             }}
           />
