@@ -4,12 +4,18 @@ import { KAKAO_AUTH_URL } from '../services/oauth';
 
 interface KakaoButtonProps {
   text?: string;
+  onClick?: () => void;
 }
 
 const KakaoButton = (props: KakaoButtonProps) => {
-  const { text = '카카오톡으로 로그인' } = props;
+  const { text = '카카오톡으로 로그인', onClick } = props;
+
   const handleButtonClick = () => {
-    window.location.href = KAKAO_AUTH_URL;
+    if (onClick) {
+      onClick();
+    } else {
+      window.location.href = KAKAO_AUTH_URL;
+    }
   };
 
   return (
