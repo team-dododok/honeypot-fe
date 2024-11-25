@@ -11,7 +11,8 @@ export const usePostSendPraise = () => {
         handleMutationError(error);
         showToast(`칭찬을 전송에 실패했습니다. 다시 시도해주세요.`);
       },
-        onSuccess: () => {
+      onSuccess: (data) => {
+          return data;
       },
     });
 };

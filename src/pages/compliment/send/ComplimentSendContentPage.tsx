@@ -16,6 +16,7 @@ import StampModal from '@/features/Stamp/components/Modal/StampModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
+import useKakaoSDK from '@/hooks/useKakaoSDK';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const ComplimentSendContentPage = () => {
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
   const { mutate: sendPraise } = usePostSendPraise();
+  const isKakaoLoaded = useKakaoSDK();
 
   const handleSelectedStamp = () => {
     setShowSelectedStampModal(true);
@@ -55,12 +57,12 @@ const ComplimentSendContentPage = () => {
   };
 
   const handleSendCompliment = () => {
-    /* 칭찬 보내기 (카카오 공유하기) - 추후 구현 */
     if (!receiverName || !content || !honeyStampId) {
       alert('필수 정보를 모두 입력해주세요.');
       return;
     }
 
+    /* 1. 칭찬 보내기 */
     sendPraise(
       {
         title: '', // 나중에 request body 바뀌면 제거
@@ -71,7 +73,29 @@ const ComplimentSendContentPage = () => {
         honeyStampId: honeyStampId,
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          const uuid = data?.uuid;
+          if (!uuid) {
+            console.error('UUID가 없습니다.');
+            return;
+          }
+
+          console.log('uuid', uuid);
+          /* 2. 카카오 공유 */
+          if (isKakaoLoaded) {
+            const { Kakao, location } = window;
+            Kakao.Share.sendScrap({
+              requestUrl: location.origin + location.pathname,
+              templateId: 114602,
+              templateArgs: {
+                senderName: sender,
+                receiverName: receiverName,
+                content: content,
+                id: uuid,
+              },
+            });
+          }
+
           clearState();
           navigate('/compliment/send/complete');
         },

@@ -5,5 +5,5 @@ export const postSendPraise = async (
   sendParise: PostSendPraise
 ) => {
   const response = await axios.post(`/api/send-praise`, sendParise);
-  return response.data;
+  return response.data.data;
 };
