@@ -113,7 +113,6 @@ const ComplimentSendContentPage = () => {
       </ProgressBarWrapper>
       <Container>
         <ComplimentLetter
-          stampType={honeyStampId}
           receiver={receiverName}
           sender={sender}
           content={content}

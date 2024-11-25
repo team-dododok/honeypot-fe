@@ -4,7 +4,6 @@ import React from 'react';
 import Letter from './Letter';
 
 interface ComplimentLetterProps {
-  stampType: number | null;
   receiver: string;
   sender: string;
   content: string;
