@@ -12,6 +12,8 @@ import { BottomWrapper, CommonLayout, Label } from '@/layouts/FormLayoutStyles';
 
 const SignUpAgreePage = () => {
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(location.search);
+  const uuid = urlParams.get('uuid');
   const { pathname } = useLocation();
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false);
   const { isCheckedTerms, setIsCheckedTerms, setIsCheckedTerm } =
@@ -47,7 +49,11 @@ const SignUpAgreePage = () => {
 
   const handleButtonClick = () => {
     if (isNextButtonActive) {
-      navigate('/signup/name');
+      if (uuid) {
+        navigate(`/signup/name?uuid=${uuid}`);
+      } else {
+        navigate(`/signup/name?`);
+      }
     }
   };
 

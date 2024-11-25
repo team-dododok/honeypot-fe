@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpNamePage = () => {
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(location.search);
+  const uuid = urlParams.get('uuid');
   const { name, setName } = useSignUpStore();
   const [errorMsg, setErrorMsg] = useState<string>('');
 
@@ -26,7 +28,11 @@ const SignUpNamePage = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/signup/email');
+    if (uuid) {
+      navigate(`/signup/email?uuid=${uuid}`);
+    } else {
+      navigate(`/signup/email?`);
+    }
   };
 
   return (
