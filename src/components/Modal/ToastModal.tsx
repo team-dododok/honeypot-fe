@@ -83,13 +83,11 @@ const ModalContainer = styled.div<{
 `;
 
 const Gif = styled.img`
-  width: 1200px;
-  height: 600px;
-  max-width: 424px;
-  position: absolute;
-  top: 50%;
+  max-width: 480px;
+  position: fixed;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, calc(-50% - 50px));
+  transform: translateX(-50%);
   z-index: 100;
 `;
 
