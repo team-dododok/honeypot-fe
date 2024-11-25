@@ -8,14 +8,14 @@ const YellowBackgroundLayout = () => {
   return (
     <Layout>
       <BongBongFace
-        src="/assets/images/compliment/img-bongbong-background-face.svg"
+        src="/assets/images/compliment/bongbong-background-face.svg"
         alt="봉봉이"
         top="50px"
         left="-60px"
         rotate="-30deg"
       />
       <BongBongFace
-        src="/assets/images/compliment/img-bongbong-background-face.svg"
+        src="/assets/images/compliment/bongbong-background-face.svg"
         width={265}
         height={221}
         alt="봉봉이"
