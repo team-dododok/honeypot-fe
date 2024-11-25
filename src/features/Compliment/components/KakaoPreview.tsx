@@ -6,19 +6,22 @@ interface KakaoPreviewProps {
   receiver: string;
   sender: string;
   content: string;
-  stampId: number | null;
 }
 
 const KakaoPreview = (props: KakaoPreviewProps) => {
-  const { receiver, sender, content, stampId } = props;
-
-  console.log(stampId); // 추후 이미지 불러오기
+  const { receiver, sender, content } = props;
 
   return (
     <KakaoPreviewBox>
-      <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
+      <Image src="/assets/images/compliment/kakao-example.svg" alt="stamp" />
       <PreviewContainer>
-        <Team>꿀단지</Team>
+        <Team>
+          <ProfileImage
+            src="/assets/images/compliment/kakao-profile.svg"
+            alt="stamp"
+          />
+          꿀단지
+        </Team>
         <Divider />
         <Title>{`['${sender}'님으로부터 꿀(칭찬) 도착]`}</Title>
         <Content>{`TO. ${receiver}\n${content}`}</Content>
@@ -45,8 +48,6 @@ const KakaoPreviewBox = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 161px;
-  background-color: gray;
 `;
 
 const PreviewContainer = styled.div`
@@ -67,6 +68,11 @@ const Team = styled.div`
   ${theme.typography.subtitle4};
 `;
 
+const ProfileImage = styled.img`
+  width: 28px;
+  height: 28px;
+`;
+
 const Divider = styled.div`
   width: 100%;
   height: 1px;
@@ -79,14 +85,15 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  color: ${theme.colors.gray50};
+  color: ${theme.colors.kakao};
   ${theme.typography.detail5};
+  white-space: pre-wrap;
 `;
 
 const CheckButton = styled.div`
   width: 100%;
   height: 37px;
-  padding: 10px 85px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,4 +103,5 @@ const CheckButton = styled.div`
   background: ${theme.colors.gray05};
   color: ${theme.colors.gray90};
   ${theme.typography.body5};
+  white-space: nowrap;
 `;
