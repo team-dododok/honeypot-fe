@@ -1,7 +1,6 @@
 import Button from '@/components/Button/Button';
 import ComplimentLetter from '@/features/Compliment/components/Letter/ComplimentLetter';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
-import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
 import KakaoButton from '@/features/Login/components/KakaoButton';
 import { theme } from '@/styles/theme';
 import { getAccessToken } from '@/utils/storage';
@@ -13,73 +12,73 @@ const ComplimentDetailPage = () => {
   const navigate = useNavigate();
   const [sender] = useState('박형준');
   const [receiver] = useState('오진영');
+  const [groupId, setGroupId] = useState<number | null>(null);
   const content =
     "Baby got passion, ambition 난 보란 듯이Look at that 온몸으로 느끼는 내 몸짓 Baby got Drip, drip, drip, drip, drip, drip, drip Baby got Drip, drip, drip, drip, drip, drip, drip Let 'em out";
   const stampType = 0;
-  const saved = false; // 이미 저장된 편지인지 여부
-  const groupId = 1;
   const accessToken = getAccessToken();
 
-  // const [group, setGroup] = useState<string>('');
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
 
   const handleClickButton = () => {
-    if (saved && groupId !== null) {
-      // navigate(`/group/${groupId}`);
+    if (groupId !== null) {
+      /* 이미 저장된 칭찬일 경우, 해당 그룹으로 이동 */
+      navigate(`/group/${groupId}`);
     } else {
+      /* 아직 저장되지 않았을 경우, 저장을 위한 그룹 선택 모달 띄우기 */
       setShowGroupModal(true);
     }
   };
 
-  const handleSelectedGroup = () => {
+  const handleSelectedGroup = (groupName: string, selectedGroupId: number) => {
     setShowGroupModal(false);
-    const selectedGroupName = GROUP_LIST_DUMMY.find(
-      (group) => group.id === selectedGroup
-    )?.groupName;
-    if (selectedGroupName) {
-      // setGroup(selectedGroupName);
-      navigate(`/group/${groupId}`, { state: { showToast: true } });
-    }
+    setGroupId(selectedGroupId);
+    navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
   };
 
   return (
-    <CenterLayout>
-      <Content>
-        <Title>
-          <img
-            src="/assets/images/logo-typo.svg"
-            width={68}
-            height={24}
-            alt="꿀단지"
-          />
-          <Text>
-            <Strong>{sender}</Strong>님이 <Strong>{receiver}</Strong>
-            님에게 보낸 꿀이에요!
-            <br />
-            꿀단지에서 팀원들과 꿀 같은 칭찬을 주고받아볼까요?
-          </Text>
-        </Title>
-        <ComplimentLetter
-          stampType={stampType}
-          receiver={receiver}
-          sender={sender}
-          content={content}
-        >
-          <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
-        </ComplimentLetter>
-      </Content>
-      {saved && <Message>이미 저장된 꿀이에요</Message>}
-      <ButtonWrapper>
-        {accessToken ? (
-          <Button
-            text={saved ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'}
-            onClick={handleClickButton}
-          />
-        ) : (
-          <KakaoButton text="카카오 로그인하고 꿀 저장하기" />
-        )}
-      </ButtonWrapper>
+    <>
+      <CenterLayout>
+        <Content>
+          <Title>
+            <img
+              src="/assets/images/logo-typo.svg"
+              width={68}
+              height={24}
+              alt="꿀단지"
+            />
+            <Text>
+              <Strong>{sender}</Strong>님이 <Strong>{receiver}</Strong>
+              님에게 보낸 꿀이에요!
+              <br />
+              꿀단지에서 팀원들과 꿀 같은 칭찬을 주고받아볼까요?
+            </Text>
+          </Title>
+          <ComplimentLetter
+            stampType={stampType}
+            receiver={receiver}
+            sender={sender}
+            content={content}
+            honeyStampImage={''}
+          >
+            <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
+          </ComplimentLetter>
+        </Content>
+        {groupId !== null && <Message>이미 저장된 꿀이에요</Message>}
+        <ButtonWrapper>
+          {accessToken ? (
+            <Button
+              text={
+                groupId !== null ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
+              }
+              onClick={handleClickButton}
+            />
+          ) : (
+            <KakaoButton text="카카오 로그인하고 꿀 저장하기" />
+          )}
+        </ButtonWrapper>
+      </CenterLayout>
       <GroupModal
         isVisible={showGroupModal}
         placeholder="꿀을 저장할 그룹 이름을 작성해주세요"
@@ -88,7 +87,7 @@ const ComplimentDetailPage = () => {
         selectedGroup={selectedGroup}
         setSelectedGroup={setSelectedGroup}
       />
-    </CenterLayout>
+    </>
   );
 };
 
@@ -96,13 +95,13 @@ export default ComplimentDetailPage;
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: 20px;
   position: relative;
+  overflow-y: scroll;
 `;
 
 const Content = styled.div`
