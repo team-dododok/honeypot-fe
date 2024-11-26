@@ -1,12 +1,18 @@
 import { postKakaoLogin } from '@/features/Login/api/kakao';
 import { getKakaoAccessTokenUrl } from '@/features/Login/services/oauthToken';
-import { setAccessToken, setRefreshToken } from '@/utils/storage';
+import {
+  getUuid,
+  removeUuid,
+  setAccessToken,
+  setRefreshToken,
+} from '@/utils/storage';
 import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const KakaoPage = () => {
   const navigate = useNavigate();
+  const uuid = getUuid();
 
   useEffect(() => {
     const CODE = new URL(window.location.href).searchParams.get('code');
@@ -27,13 +33,22 @@ const KakaoPage = () => {
           const response = await postKakaoLogin(kakao_accessToken);
           setAccessToken(response.data.accessToken);
           setRefreshToken(response.data.refreshToken);
-          navigate('/');
+          if (uuid) {
+            navigate(`/compliment/${uuid}`);
+            removeUuid();
+          } else {
+            navigate('/');
+          }
 
           // params에 칭찬 글 id가 있을 경우 해당 편지 주소로 이동하기
           // 추후 작성
         } catch (error) {
           if ((error as AxiosError).response?.status === 404) {
-            navigate('/signup/agree');
+            if (uuid) {
+              navigate(`/signup/agree?uuid=${uuid}`);
+            } else {
+              navigate('/signup/agree');
+            }
           }
         }
       } catch (error) {

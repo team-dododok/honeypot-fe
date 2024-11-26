@@ -29,18 +29,19 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   background: ${theme.colors.gradient02_1};
-
   border-radius: 24px;
   box-shadow: 0px 0px 8px 0px rgba(201, 201, 201, 0.25);
-  padding: 4px 24px;
-  margin-top: 60px;
+  padding: 20px 24px;
   margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
 `;
 
 const MainLeft = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+  z-index: 5;
 
   h1 {
     ${theme.typography.subtitle2};
@@ -48,11 +49,15 @@ const MainLeft = styled.div`
   h2 {
     ${theme.typography.body4};
     color: ${theme.colors.gray80};
+    white-space: nowrap;
   }
 `;
 
 const MainImage = styled.img`
   width: 116px;
   height: 150px;
-  transform: translate(25px, 4px);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
 `;

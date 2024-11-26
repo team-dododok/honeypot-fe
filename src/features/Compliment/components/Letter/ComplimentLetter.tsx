@@ -4,30 +4,41 @@ import React from 'react';
 import Letter from './Letter';
 
 interface ComplimentLetterProps {
-  stampType: number | null;
   receiver: string;
   sender: string;
   content: string;
-  setContent?: React.Dispatch<React.SetStateAction<string>>;
+  honeyStampImage: string;
   onClick?: () => void;
   children?: React.ReactNode;
+  readOnly?: boolean;
 }
 
 const ComplimentLetter = (props: ComplimentLetterProps) => {
-  const { receiver, sender, content, setContent, onClick, children } = props;
+  const {
+    receiver,
+    sender,
+    content,
+    honeyStampImage,
+    onClick,
+    children,
+    readOnly = true,
+  } = props;
 
   return (
     <Container>
       <Stamp onClick={onClick}>
-        <Image src="/assets/images/stamp/stamp-select.svg" alt="stamp" />
+        <Image
+          src={honeyStampImage || '/assets/images/stamp/stamp-select.svg'}
+          alt="꿀도장"
+        />
       </Stamp>
       {children}
       <Letter
         receiver={receiver}
         sender={sender}
         content={content}
-        setContent={setContent}
         totalLength={180}
+        readOnly={readOnly}
       />
     </Container>
   );
@@ -58,5 +69,4 @@ const Stamp = styled.button`
 const Image = styled.img`
   width: 137px;
   height: 137px;
-  background-color: gray;
 `;

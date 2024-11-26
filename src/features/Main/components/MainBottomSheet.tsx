@@ -1,7 +1,7 @@
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HonyeBlank from './HoneyBlank';
 import HoneyGroup from './HoneyGroup';
 import GroupList from './GroupList';
@@ -14,8 +14,24 @@ const MainBottomSheet = () => {
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
 
+  const [bottomSheetHeight, setBottomSheetHeight] = useState(
+    window.innerHeight - 200
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setBottomSheetHeight(window.innerHeight - 235);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <Container>
+    <Container $height={bottomSheetHeight}>
       <Header>
         <Title>
           <p>나의 꿀단지 ({count})</p>
@@ -34,36 +50,43 @@ const MainBottomSheet = () => {
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>
-      {count === 0 ? (
-        <HonyeBlank />
-      ) : selectedGroupToggle === 'card' ? (
-        <HoneyGroup />
-      ) : (
-        <GroupList />
-      )}
+
+      <Content>
+        {count === 0 ? (
+          <HonyeBlank />
+        ) : selectedGroupToggle === 'card' ? (
+          <HoneyGroup />
+        ) : (
+          <GroupList />
+        )}
+      </Content>
     </Container>
   );
 };
 
 export default MainBottomSheet;
 
-const Container = styled.div`
+const Container = styled.div<{ $height: number }>`
   display: flex;
   flex-direction: column;
-
-  width: calc(100% + 52px);
-  height: calc(100vh - 60px - 12px - 20px);
+  width: 100%;
+  height: ${({ $height }) => ($height ? `${$height}px` : '100%')};
+  max-width: 480px;
   padding: 0 26px;
   border-radius: 24px 24px 0px 0px;
-  margin: 0 -26px;
   background: ${theme.colors.gray00};
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: height 0.3s ease;
 `;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 19px 0;
   margin-bottom: 10px;
 `;
 
@@ -80,4 +103,11 @@ const Title = styled.h1`
     cursor: pointer;
     transform: translateY(1.8px);
   }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
 `;

@@ -2,6 +2,7 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
 import { postSignUp } from '@/features/Login/api/kakao';
+import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
 import {
   ProgressBarWrapper,
   BottomWrapper,
@@ -15,8 +16,15 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const { isCheckedTerms, name, email, profileIdx, setProfileIdx } =
+  const urlParams = new URLSearchParams(location.search);
+  const uuid = urlParams.get('uuid');
+  const { isCheckedTerms, name, email, profileIdx, setProfileIdx, clearState } =
     useSignUpStore();
+  const { data } = useMemberProfileImage();
+
+  const profileImages = data?.data.profileImageUrl
+    ? Object.entries(data.data.profileImageUrl as Record<string, string>)
+    : [];
 
   const handleProfileImageClick = (index: number) => {
     setProfileIdx(index);
@@ -31,12 +39,19 @@ const SignUpProfilePage = () => {
         name,
         email,
         imageUrl:
-          'https://aws-artview-bucket.s3.ap-northeast-2.amazonaws.com/a2853240-10fb-47fe-9675-e0bbbe083b47_%EB%AC%BC%EA%B3%A0%EA%B8%B0%EB%A7%B9%EA%B5%AC.jpg', // 이미지 URL
+          profileImages.find(
+            ([key]) => parseInt(key, 10) === profileIdx
+          )?.[1] || '',
         onboarding: 0,
       };
 
       await postSignUp(requestBody);
-      navigate('/signup/complete');
+      if (uuid) {
+        navigate(`/compliment/${uuid}?name=${name}`);
+        clearState();
+      } else {
+        navigate('/signup/complete');
+      }
     } catch (error) {
       console.error('회원가입 실패:', error);
     }
@@ -54,17 +69,19 @@ const SignUpProfilePage = () => {
 
       <ProfileGridWrapper>
         <ProfileGrid>
-          {[0, 1, 2, 3, 4, 5].map((index) => (
-            <ProfileImage
-              key={index}
-              // 서버로부터 이미지 받아오기
-              // src={`/assets/images/profile/${index}.svg`}
-              alt={`프로필${index}`}
-              isSelected={profileIdx === index}
-              index={index}
-              onClick={() => handleProfileImageClick(index)}
-            />
-          ))}
+          {profileImages.map(([key, url]: [string, string]) => {
+            const index = parseInt(key, 10);
+            return (
+              <ProfileImage
+                key={index}
+                src={url}
+                alt={`프로필${index}`}
+                isSelected={profileIdx === index}
+                index={index - 1}
+                onClick={() => handleProfileImageClick(index)}
+              />
+            );
+          })}
         </ProfileGrid>
       </ProfileGridWrapper>
       <BottomWrapper>
@@ -103,7 +120,6 @@ const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
   border-radius: 40px;
   border: ${({ isSelected, index }) =>
     isSelected ? `5px solid ${PROFILE_COLORS[index]}` : 'none'};
-  background-color: gray;
   padding: ${({ isSelected }) => (isSelected ? '0px' : '5px')};
   box-sizing: border-box;
 `;

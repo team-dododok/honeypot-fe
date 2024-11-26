@@ -1,6 +1,6 @@
-import { authAxios as axios } from '../authAxios';
+import basicAxios from "../basicAxios";
 
 export const getMemberProfileImage = async () => {
-  const response = await axios.get(`/api/member/profile_image`);
+  const response = await basicAxios.get(`/api/member/profile_image`);
   return response.data;
 };

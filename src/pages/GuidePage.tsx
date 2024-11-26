@@ -47,7 +47,6 @@ const GuidePage = () => {
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-  const [stampType, setStampType] = useState<number | null>(null);
   const [showSelectedStampModal, setShowSelectedStampModal] =
     useState<boolean>(false);
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
@@ -530,8 +529,6 @@ const GuidePage = () => {
         <StampModal
           showModal={showSelectedStampModal}
           onClose={handleShowSelectedStamp}
-          stampType={stampType}
-          setStampType={setStampType}
         />
         <PreviewModal
           showModal={showPreviewModal}
