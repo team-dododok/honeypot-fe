@@ -8,28 +8,28 @@ import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useToast } from '@/store/useToast';
+import { useGroup } from '@/hooks/group/useGroup';
 
-const GroupManagementPage: React.FC = () => {
+const GroupManagementPage = () => {
   const { showToast } = useToast();
-  const [hasGroup] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
-  const [groupItems, setGroupItems] = useState([
-    { id: 1, name: 'A그룹A그룹A그룹' },
-    { id: 2, name: 'B그룹B그룹B그룹' },
-    { id: 3, name: 'C그룹C그룹C그룹' },
-    { id: 4, name: 'D그룹D그룹D그룹' },
-  ]);
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+  const { data: groupData } = useGroup();
+
+  const groupItems =
+    groupData?.groupWithMembersInfos.map((group) => ({
+      id: group.groupId,
+      name: group.groupName,
+    })) || [];
 
   const moveGroup = (dragIndex: number, hoverIndex: number) => {
     const draggedItem = groupItems[dragIndex];
     const updatedItems = [...groupItems];
     updatedItems.splice(dragIndex, 1);
     updatedItems.splice(hoverIndex, 0, draggedItem);
-    setGroupItems(updatedItems);
   };
 
   const toggleModal = () => {
@@ -38,10 +38,6 @@ const GroupManagementPage: React.FC = () => {
 
   const handleConfirmModal = () => {
     if (groupName) {
-      setGroupItems((prev) => [
-        ...prev,
-        { id: groupItems.length + 1, name: groupName },
-      ]);
       setGroupName('');
     }
     setIsVisible(false);
@@ -49,9 +45,6 @@ const GroupManagementPage: React.FC = () => {
 
   const handleDeleteGroup = () => {
     if (deleteTargetId !== null) {
-      setGroupItems((prev) =>
-        prev.filter((group) => group.id !== deleteTargetId)
-      );
       setDeleteTargetId(null);
     }
     setShowGroupDeleteModal(false);
@@ -66,7 +59,7 @@ const GroupManagementPage: React.FC = () => {
   return (
     <>
       <DndProvider backend={HTML5Backend}>
-        {hasGroup ? (
+        {groupItems.length > 0 ? (
           <FullContainer>
             <Button text="새 그룹 생성하기" onClick={toggleModal} />
             <GroupList>

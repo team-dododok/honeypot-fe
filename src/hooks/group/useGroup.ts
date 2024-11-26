@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useToast } from '@/store/useToast';
 
 export const useGroup = () => {
-  const { showToast } = useToast.getState();
+  const { showToast } = useToast();
 
   return useQuery(['group'], getGroup, {
     onError: (error) => {

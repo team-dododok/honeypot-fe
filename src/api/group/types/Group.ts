@@ -22,13 +22,13 @@ export type PatchGroupParams = {
 
 export type GroupSearchParams = {
   groupName: string;
-}
+};
 
 type GroupMember = {
   id: number;
 };
 
-type GroupWithMembersInfo = {
+export type GroupWithMembersInfo = {
   groupId: number;
   groupName: string;
   orderIdx: number;
@@ -41,11 +41,10 @@ export type GroupResponse = {
   groupWithMembersInfos: GroupWithMembersInfo[];
 };
 
-
 type GroupInfo = {
   groupId: number;
   groupName: string;
-}
+};
 
 export type GroupSearchResponse = {
   groupInfos: GroupInfo[];
