@@ -14,19 +14,30 @@ import { useNavigate } from 'react-router-dom';
 import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
 import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
+import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
+import useKakaoSDK from '@/hooks/useKakaoSDK';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
-
-  const [stampType, setStampType] = useState<number | null>(null);
-  const receiver = '진주';
+  const {
+    receiverName,
+    content,
+    groupId,
+    ongoing,
+    honeyStampId,
+    honeyStampImage,
+    clearState,
+  } = useSendComplimentStore();
   const sender = '형준';
-  const [content, setContent] = useState<string>('');
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showSelectedStampModal, setShowSelectedStampModal] =
     useState<boolean>(false);
   const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
+
+  const { mutate: sendPraise } = usePostSendPraise();
+  const isKakaoLoaded = useKakaoSDK();
 
   const handleSelectedStamp = () => {
     setShowSelectedStampModal(true);
@@ -46,8 +57,50 @@ const ComplimentSendContentPage = () => {
   };
 
   const handleSendCompliment = () => {
-    /* 칭찬 보내기 (카카오 공유하기) - 추후 구현 */
-    navigate('/compliment/send/complete');
+    if (!receiverName || !content || !honeyStampId) {
+      alert('필수 정보를 모두 입력해주세요.');
+      return;
+    }
+
+    /* 1. 칭찬 보내기 */
+    sendPraise(
+      {
+        title: '', // 나중에 request body 바뀌면 제거
+        content: content,
+        projectStatus: ongoing === 1,
+        receiverName: receiverName,
+        groupId: groupId || 0,
+        honeyStampId: honeyStampId,
+      },
+      {
+        onSuccess: (data) => {
+          const uuid = data?.uuid;
+          if (!uuid) {
+            console.error('UUID가 없습니다.');
+            return;
+          }
+
+          console.log('uuid', uuid);
+          /* 2. 카카오 공유 */
+          if (isKakaoLoaded) {
+            const { Kakao, location } = window;
+            Kakao.Share.sendScrap({
+              requestUrl: location.origin + location.pathname,
+              templateId: 114602,
+              templateArgs: {
+                senderName: sender,
+                receiverName: receiverName,
+                content: content,
+                id: uuid,
+              },
+            });
+          }
+
+          clearState();
+          navigate('/compliment/send/complete');
+        },
+      }
+    );
   };
 
   return (
@@ -60,12 +113,12 @@ const ComplimentSendContentPage = () => {
       </ProgressBarWrapper>
       <Container>
         <ComplimentLetter
-          stampType={stampType}
-          receiver={receiver}
+          receiver={receiverName}
           sender={sender}
           content={content}
-          setContent={setContent}
+          honeyStampImage={honeyStampImage}
           onClick={handleSelectedStamp}
+          readOnly={false}
         />
       </Container>
       <BottomWrapper>
@@ -73,14 +126,14 @@ const ComplimentSendContentPage = () => {
           text="미리보기"
           variant="warning"
           onClick={handleShowPreview}
-          disabled={!receiver || !sender || !content}
+          disabled={!receiverName || !sender || !content}
           disabledColor={theme.colors.gray10}
         />
         <Button
           text="칭찬 보내기"
           variant="activate"
           onClick={handleSendCompliment}
-          disabled={!receiver || !sender || !content}
+          disabled={!receiverName || !sender || !content}
         />
       </BottomWrapper>
       {/* 모달 */}
@@ -88,13 +141,11 @@ const ComplimentSendContentPage = () => {
       <StampModal
         showModal={showSelectedStampModal}
         onClose={handleShowSelectedStamp}
-        stampType={stampType}
-        setStampType={setStampType}
       />
       <PreviewModal
         showModal={showPreviewModal}
         onClose={handleShowPreview}
-        receiver={receiver}
+        receiver={receiverName}
         sender={sender}
         content={content}
       />

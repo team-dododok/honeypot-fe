@@ -16,7 +16,9 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpProfilePage = () => {
   const navigate = useNavigate();
-  const { isCheckedTerms, name, email, profileIdx, setProfileIdx } =
+  const urlParams = new URLSearchParams(location.search);
+  const uuid = urlParams.get('uuid');
+  const { isCheckedTerms, name, email, profileIdx, setProfileIdx, clearState } =
     useSignUpStore();
   const { data } = useMemberProfileImage();
 
@@ -44,7 +46,12 @@ const SignUpProfilePage = () => {
       };
 
       await postSignUp(requestBody);
-      navigate('/signup/complete');
+      if (uuid) {
+        navigate(`/compliment/${uuid}?name=${name}`);
+        clearState();
+      } else {
+        navigate('/signup/complete');
+      }
     } catch (error) {
       console.error('회원가입 실패:', error);
     }

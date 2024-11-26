@@ -1,6 +1,5 @@
 export type PostReceivedPraise = {
-  recievedId: string;
-  parsiedUuid: string;
+  praiseUuid: string;
 };
 
 export type GroupReceivedPraiseParams = {

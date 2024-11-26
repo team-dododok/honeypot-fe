@@ -19,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpEmailPage = () => {
   const navigate = useNavigate();
+  const urlParams = new URLSearchParams(location.search);
+  const uuid = urlParams.get('uuid');
   const showToast = useToast((state) => state.showToast);
 
   const { email, setEmail } = useSignUpStore();
@@ -100,7 +102,11 @@ const SignUpEmailPage = () => {
   };
 
   const handleNextButtonClick = () => {
-    navigate('/signup/profile');
+    if (uuid) {
+      navigate(`/signup/profile?uuid=${uuid}`);
+    } else {
+      navigate(`/signup/profile?`);
+    }
   };
 
   /* 타이머 */

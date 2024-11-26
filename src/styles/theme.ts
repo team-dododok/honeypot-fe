@@ -43,6 +43,7 @@ const colors = {
   success90: '#5378FB',
 
   black: '#000000',
+  kakao: "#A9ABB5",
 
   gradient01: 'linear-gradient(122deg, #FFEEC6 9.54%, #FFDA82 89.25%)',
   gradient02: 'linear-gradient(360deg, #FFF 39.29%, #FFF1CE 100%)',

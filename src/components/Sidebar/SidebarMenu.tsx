@@ -4,6 +4,7 @@ import { MENU } from '@/constants/menu';
 import { theme } from '@/styles/theme';
 import MenuSection from './MenuSection';
 import { useNavigate } from 'react-router-dom';
+import { removeAccessToken, removeRefreshToken } from '@/utils/storage';
 
 interface SidebarMenuProps {
   isOpen: boolean;
@@ -15,6 +16,8 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
 
   const handleLogout = () => {
     navigate('/login');
+    removeAccessToken();
+    removeRefreshToken();
   };
 
   return (

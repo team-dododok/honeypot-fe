@@ -2,9 +2,9 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Check from '@/components/Check/Check';
 import Input from '@/components/Input/Input';
+import WarningModal from '@/components/Modal/WarningModal';
 import { CHECK_COMPLIMENT_OPTIONS } from '@/constants/check';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
-import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
 import {
   CommonLayout,
   BottomWrapper,
@@ -12,47 +12,75 @@ import {
   Label,
   ProgressBarWrapper,
 } from '@/layouts/FormLayoutStyles';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { history } from '@/utils/history';
 
 const ComplimentSendTargetPage = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState<string>('');
-  const [group, setGroup] = useState<string>('');
-  const [state, setState] = useState<number>();
+  const { pathname } = useLocation();
+  const {
+    receiverName,
+    setReceiverName,
+    groupName,
+    setGroupName,
+    setGroupId,
+    ongoing,
+    setOngoing,
+    clearState,
+  } = useSendComplimentStore();
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const unlistenHistoryEvent = history.listen(({ action }) => {
+      if (action !== 'POP') return;
+      if (receiverName || groupName || ongoing !== null) {
+        setShowModal(true);
+        history.push(pathname);
+      }
+    });
+    return unlistenHistoryEvent;
+  }, [receiverName, groupName, ongoing]);
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setReceiverName(e.target.value);
   };
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGroup(e.target.value);
+    setGroupName(e.target.value);
   };
 
   const handleGroupClick = () => {
     setShowGroupModal(true);
   };
 
-  const handleSelectedGroup = () => {
+  const handleGroupConfirm = (
+    selectedGroupName: string,
+    selectedGroupId: number
+  ) => {
+    setGroupName(selectedGroupName);
+    setGroupId(selectedGroupId);
     setShowGroupModal(false);
-    const selectedGroupName = GROUP_LIST_DUMMY.find(
-      (group) => group.id === selectedGroup
-    )?.groupName;
-    if (selectedGroupName) {
-      setGroup(selectedGroupName);
-    }
   };
 
   const handleCheck = (id: number) => {
-    setState(id);
+    setOngoing(id);
   };
 
   const handleButtonClick = () => {
     navigate('/compliment/send/content');
+  };
+
+  const handleModalCancel = () => {
+    setShowModal(false);
+    clearState();
+    navigate(-1);
   };
 
   return (
@@ -70,7 +98,7 @@ const ComplimentSendTargetPage = () => {
             width="100%"
             placeholder="ex. 도도독사우루스"
             clear={true}
-            value={name}
+            value={receiverName}
             onChange={handleNameChange}
           />
         </LabelWrapper>
@@ -83,7 +111,7 @@ const ComplimentSendTargetPage = () => {
             width="100%"
             placeholder="ex. 꿀단지 만들기 프로젝트"
             clear={true}
-            value={group}
+            value={groupName}
             onChange={handleGroupChange}
             onClick={handleGroupClick}
             readOnly={true}
@@ -99,7 +127,7 @@ const ComplimentSendTargetPage = () => {
                 key={option.id}
                 variant="circle"
                 label={option.label}
-                isChecked={state === option.id}
+                isChecked={ongoing === option.id}
                 onChange={() => handleCheck(option.id)}
               />
             ))}
@@ -111,16 +139,27 @@ const ComplimentSendTargetPage = () => {
           text="다음"
           variant="activate"
           onClick={handleButtonClick}
-          disabled={!name || !group || state === null}
+          disabled={!receiverName || !groupName || ongoing === null}
         />
       </BottomWrapper>
       <GroupModal
         isVisible={showGroupModal}
         onClose={() => setShowGroupModal(false)}
-        onConfirm={handleSelectedGroup}
+        onConfirm={handleGroupConfirm}
         selectedGroup={selectedGroup}
         setSelectedGroup={setSelectedGroup}
       />
+      {showModal && (
+        <WarningModal
+          title="정말 나가시겠어요?"
+          description="지금 나가면 작성한 내용은 저장되지 않아요."
+          cancelText="나가기"
+          confirmText="계속 작성하기"
+          image={true}
+          onCancel={handleModalCancel}
+          onConfirm={() => setShowModal(false)}
+        />
+      )}
     </CommonLayout>
   );
 };
