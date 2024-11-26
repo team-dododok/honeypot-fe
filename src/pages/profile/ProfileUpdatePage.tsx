@@ -9,22 +9,37 @@ import styled from '@emotion/styled';
 import { history } from '@/utils/history';
 import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
 import { PROFILE_COLORS } from '@/constants/colors';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
+import { usePatchMember } from '@/hooks/user/usePatchMember';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { showToast } = useToast();
-  const [name, setName] = useState('형준동료');
-  const [email] = useState('phjung1216@naver.com');
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const { data } = useMemberProfileImage();
+
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
-  const { data } = useMemberProfileImage();
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const { data: member } = useMemberInfo();
+
   const profileImages = data?.profileImageUrl
     ? Object.entries(data.profileImageUrl as Record<string, string>)
     : [];
 
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const { mutate } = usePatchMember();
+
+  useEffect(() => {
+    if (member) {
+      setName(member.name);
+      setEmail(member.email);
+    }
+  }, [member]);
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
@@ -46,7 +61,6 @@ const ProfileUpdatePage = () => {
     if (newName.length <= 8) {
       setName(newName);
     }
-
     if (newName === '') {
       setNameError('이름을 입력해주세요.');
     } else if (newName.length > 8) {
@@ -57,8 +71,16 @@ const ProfileUpdatePage = () => {
   };
 
   const handleSaveButtonClick = () => {
-    showToast('변경된 내용을 저장했어요');
-    navigate('/');
+    if (!name || selectedImage === null) {
+      showToast('이름과 프로필 이미지를 모두 선택해 주세요.');
+      return;
+    }
+    const updatedData = {
+      name,
+      profileImageId: selectedImage,
+    };
+
+    mutate(updatedData);
   };
 
   const handleModalCancel = () => {
