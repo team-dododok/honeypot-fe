@@ -1,24 +1,24 @@
 import Info from '@/components/Info/Info';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const BEST_STAMP_COMMENT = [
+  '꿀도장을 3개 이상 받으면 팀원들에게',
+  '가장 많이 받은 꿀도장을 볼 수 있어요',
+];
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [name] = useState('민혜린');
-  const [email] = useState('team.dododok@gmail.com');
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-
-  const toggleTooltip = () => {
-    setIsTooltipVisible(!isTooltipVisible);
-  };
+  const { data: member } = useMemberInfo();
 
   return (
     <Container>
       <ProfileContainer>
         <ProfileBox>
-          <ProfileImg src="/assets/images/profile/profile.svg" alt="profile" />
+          <ProfileImg src={member && member.imageUrl} alt="profile" />
           <ProfileEdit
             src="/assets/icons/profile-edit.svg"
             alt="profileedit"
@@ -27,30 +27,39 @@ const Profile = () => {
             }}
           />
         </ProfileBox>
-        <ProfileInfo>
-          <h1>{name}</h1>
-          <p>{email}</p>
-        </ProfileInfo>
+        {member && (
+          <ProfileInfo>
+            <h1>{member.name}</h1>
+            <p>{member.email}</p>
+          </ProfileInfo>
+        )}
       </ProfileContainer>
 
       <ProfileDesc>
         <Section>
           <Label>받은 꿀</Label>
-          <Value>40</Value>
+          <Value>{member ? member.receivePraiseCount : 0}</Value>
         </Section>
         <Divider />
         <Section>
           <Label>보낸 꿀</Label>
-          <Value>27</Value>
+          <Value>{member ? member.sendPraiseCount : 0}</Value>
         </Section>
         <Divider />
         <Section>
           <Label>Best 꿀도장</Label>
-          <Icon onClick={toggleTooltip}>
+          <Icon>
             <Info>
-              꿀도장을 3개 이상 받으면 팀원들에게
-              <br />
-              가장 많이 받은 꿀도장을 볼 수 있어요
+              {member && member.bestStamp ? (
+                <img src={`${member.bestStamp}`} alt={member.bestStamp} />
+              ) : (
+                BEST_STAMP_COMMENT.map((line, index) => (
+                  <Fragment key={index}>
+                    {line}
+                    {index < BEST_STAMP_COMMENT.length - 1 && <br />}
+                  </Fragment>
+                ))
+              )}
             </Info>
           </Icon>
         </Section>

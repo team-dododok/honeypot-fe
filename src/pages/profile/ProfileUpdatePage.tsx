@@ -7,23 +7,47 @@ import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { history } from '@/utils/history';
+import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
+import { PROFILE_COLORS } from '@/constants/colors';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
+import { usePatchMember } from '@/hooks/user/usePatchMember';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { showToast } = useToast();
-  const [name, setName] = useState('형준동료');
-  const [email] = useState('phjung1216@naver.com');
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
-
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const profileImages = Array.from(
-    { length: 6 },
-    (_, i) => `/assets/images/profile/profile-${i + 1}-120.svg`
-  );
+  const { data } = useMemberProfileImage();
+  const { data: member } = useMemberInfo();
+  const { mutate } = usePatchMember();
+
+  const profileImages = data?.profileImageUrl
+    ? Object.entries(data.profileImageUrl as Record<string, string>)
+    : [];
+
+  useEffect(() => {
+    if (member) {
+      setName(member.name);
+      setEmail(member.email);
+
+      if (selectedImage === null) {
+        const matchingImage = profileImages.find(
+          ([, url]) => url === member.imageUrl
+        );
+        if (matchingImage) {
+          setSelectedImage(parseInt(matchingImage[0], 10));
+        }
+      }
+    }
+  }, [member]);
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
@@ -37,7 +61,9 @@ const ProfileUpdatePage = () => {
   }, [name, email, selectedImage]);
 
   const handleImageClick = (index: number) => {
-    setSelectedImage(index);
+    setSelectedImage((prevSelectedImage) =>
+      prevSelectedImage === index ? null : index
+    );
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +71,6 @@ const ProfileUpdatePage = () => {
     if (newName.length <= 8) {
       setName(newName);
     }
-
     if (newName === '') {
       setNameError('이름을 입력해주세요.');
     } else if (newName.length > 8) {
@@ -56,8 +81,16 @@ const ProfileUpdatePage = () => {
   };
 
   const handleSaveButtonClick = () => {
-    showToast('변경된 내용을 저장했어요');
-    navigate('/');
+    if (!name || selectedImage === null) {
+      showToast('이름과 프로필 이미지를 모두 선택해 주세요.');
+      return;
+    }
+    const updatedData = {
+      name,
+      profileImageId: selectedImage,
+    };
+
+    mutate(updatedData);
   };
 
   const handleModalCancel = () => {
@@ -75,21 +108,22 @@ const ProfileUpdatePage = () => {
         <div>
           <SubTitle>프로필 이미지 수정</SubTitle>
           <ProfileImageGrid>
-            {profileImages.map((src, index) => (
-              <ProfileImageBox
-                key={index}
-                onClick={() => handleImageClick(index)}
-              >
-                <ProfileImage
-                  src={
-                    selectedImage === index
-                      ? src.replace('-120.svg', '-120-varient.svg')
-                      : src
-                  }
-                  alt={`Profile image ${index + 1}`}
-                />
-              </ProfileImageBox>
-            ))}
+            {profileImages.map(([key, url]: [string, string]) => {
+              const index = parseInt(key, 10);
+              return (
+                <ProfileImageBox
+                  key={index}
+                  onClick={() => handleImageClick(index)}
+                >
+                  <ProfileImage
+                    src={url}
+                    alt={`프로필 이미지 ${index}`}
+                    isSelected={selectedImage === index}
+                    index={index - 1}
+                  />
+                </ProfileImageBox>
+              );
+            })}
           </ProfileImageGrid>
         </div>
 
@@ -151,20 +185,27 @@ const ProfileImageGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 24px;
-  margin: 0 auto;
   width: 100%;
+  gap: 12px;
 `;
 
 const ProfileImageBox = styled.div`
-  width: 100%;
-`;
-
-const ProfileImage = styled.img`
-  width: 120px;
-  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 40px;
+  border: ${({ isSelected, index }) =>
+    isSelected ? `5px solid ${PROFILE_COLORS[index]}` : 'none'};
+  padding: ${({ isSelected }) => (isSelected ? '0px' : '5px')};
+  box-sizing: border-box;
   cursor: pointer;
 `;
 

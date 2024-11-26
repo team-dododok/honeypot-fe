@@ -22,8 +22,8 @@ const SignUpProfilePage = () => {
     useSignUpStore();
   const { data } = useMemberProfileImage();
 
-  const profileImages = data?.data.profileImageUrl
-    ? Object.entries(data.data.profileImageUrl as Record<string, string>)
+  const profileImages = data?.profileImageUrl
+    ? Object.entries(data.profileImageUrl as Record<string, string>)
     : [];
 
   const handleProfileImageClick = (index: number) => {
