@@ -6,8 +6,8 @@ import Button from '../Button/Button';
 interface WaringModal {
   width?: string;
   height?: string;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   cancelText: string;
   confirmText: string;
   image?: boolean;

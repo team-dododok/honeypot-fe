@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/Button/Button';
 import DraggableButton from '@/components/Button/DraggableButton';
 import CreateGroupModal from '@/features/Group/components/Modal/CreateGroupModal';
@@ -9,6 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useToast } from '@/store/useToast';
 import { useGroup } from '@/hooks/group/useGroup';
+import { usePatchGroupOrder } from '@/hooks/group/usePatchGroupOrder';
 
 const GroupManagementPage = () => {
   const { showToast } = useToast();
@@ -19,17 +20,33 @@ const GroupManagementPage = () => {
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
   const { data: groupData } = useGroup();
 
-  const groupItems =
-    groupData?.groupWithMembersInfos.map((group) => ({
-      id: group.groupId,
-      name: group.groupName,
-    })) || [];
+  const [groupItems, setGroupItems] = useState<
+    { groupId: number; groupName: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (groupData?.groupWithMembersInfos) {
+      setGroupItems(
+        groupData.groupWithMembersInfos.map((group) => ({
+          groupId: group.groupId,
+          groupName: group.groupName,
+        }))
+      );
+    }
+  }, [groupData]);
+
+  const { mutate: updateGroupOrder } = usePatchGroupOrder();
 
   const moveGroup = (dragIndex: number, hoverIndex: number) => {
-    const draggedItem = groupItems[dragIndex];
     const updatedItems = [...groupItems];
-    updatedItems.splice(dragIndex, 1);
+    const [draggedItem] = updatedItems.splice(dragIndex, 1);
     updatedItems.splice(hoverIndex, 0, draggedItem);
+    setGroupItems(updatedItems);
+
+    updateGroupOrder({
+      groupId: draggedItem.groupId,
+      groupName: draggedItem.groupName,
+    });
   };
 
   const toggleModal = () => {
@@ -65,12 +82,12 @@ const GroupManagementPage = () => {
             <GroupList>
               {groupItems.map((item, index) => (
                 <DraggableButton
-                  key={item.id}
+                  key={item.groupId}
                   index={index}
-                  id={item.id}
-                  text={item.name}
+                  id={item.groupId}
+                  text={item.groupName}
                   moveGroup={moveGroup}
-                  onTrashClick={() => handleOpenDeleteModal(item.id)}
+                  onTrashClick={() => handleOpenDeleteModal(item.groupId)}
                 />
               ))}
             </GroupList>
@@ -95,8 +112,22 @@ const GroupManagementPage = () => {
       />
       {showGroupDeleteModal && (
         <WarningModal
-          title={`정말 '${groupItems.find((g) => g.id === deleteTargetId)?.name}'을\n삭제하시겠어요?`}
-          description={`받은 꿀, 보낸 꿀도 모두 함께 삭제되며,\n복구할 수 없어요.`}
+          title={
+            <>
+              정말{' '}
+              {groupItems.find((g) => g.groupId === deleteTargetId)?.groupName}{' '}
+              그룹을
+              <br />
+              삭제하시겠어요?
+            </>
+          }
+          description={
+            <>
+              받은 꿀, 보낸 꿀도 모두 함께 삭제되며,
+              <br />
+              복구할 수 없어요.
+            </>
+          }
           image={true}
           cancelText="취소"
           confirmText="확인"
