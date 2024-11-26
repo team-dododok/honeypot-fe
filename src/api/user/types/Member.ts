@@ -7,3 +7,9 @@ export type Member = {
   sendPraiseCount: number;
   bestStamp: string;
 };
+
+export type ProfileImage = {
+  profileImageUrl: {
+    [key: string]: string;
+  };
+};

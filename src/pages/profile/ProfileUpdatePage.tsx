@@ -7,6 +7,8 @@ import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { history } from '@/utils/history';
+import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
+import { PROFILE_COLORS } from '@/constants/colors';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
@@ -17,13 +19,12 @@ const ProfileUpdatePage = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const { data } = useMemberProfileImage();
+  const profileImages = data?.profileImageUrl
+    ? Object.entries(data.profileImageUrl as Record<string, string>)
+    : [];
 
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  const profileImages = Array.from(
-    { length: 6 },
-    (_, i) => `/assets/images/profile/profile-${i + 1}-120.svg`
-  );
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
@@ -75,21 +76,22 @@ const ProfileUpdatePage = () => {
         <div>
           <SubTitle>프로필 이미지 수정</SubTitle>
           <ProfileImageGrid>
-            {profileImages.map((src, index) => (
-              <ProfileImageBox
-                key={index}
-                onClick={() => handleImageClick(index)}
-              >
-                <ProfileImage
-                  src={
-                    selectedImage === index
-                      ? src.replace('-120.svg', '-120-varient.svg')
-                      : src
-                  }
-                  alt={`Profile image ${index + 1}`}
-                />
-              </ProfileImageBox>
-            ))}
+            {profileImages.map(([key, url]: [string, string]) => {
+              const index = parseInt(key, 10);
+              return (
+                <ProfileImageBox
+                  key={index}
+                  onClick={() => handleImageClick(index)}
+                >
+                  <ProfileImage
+                    src={url}
+                    alt={`프로필 이미지 ${index}`}
+                    isSelected={selectedImage === index}
+                    index={index - 1}
+                  />
+                </ProfileImageBox>
+              );
+            })}
           </ProfileImageGrid>
         </div>
 
@@ -160,11 +162,14 @@ const ProfileImageBox = styled.div`
   width: 100%;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
   width: 120px;
   height: 120px;
-  width: 100%;
-  height: 100%;
+  border-radius: 40px;
+  border: ${({ isSelected, index }) =>
+    isSelected ? `5px solid ${PROFILE_COLORS[index]}` : 'none'};
+  padding: ${({ isSelected }) => (isSelected ? '0px' : '5px')};
+  box-sizing: border-box;
   cursor: pointer;
 `;
 
