@@ -20,19 +20,18 @@ const ProfileUpdatePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const { data } = useMemberProfileImage();
 
   const [nameError, setNameError] = useState('');
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  const { data } = useMemberProfileImage();
   const { data: member } = useMemberInfo();
+  const { mutate } = usePatchMember();
 
   const profileImages = data?.profileImageUrl
     ? Object.entries(data.profileImageUrl as Record<string, string>)
     : [];
-
-  const { mutate } = usePatchMember();
 
   useEffect(() => {
     if (member) {

@@ -1,15 +1,14 @@
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import { usePatchMember } from '@/hooks/user/usePatchMember';
 import { BottomWrapper } from '@/layouts/FormLayoutStyles';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const EmailUpdatePage = () => {
   const { showToast } = useToast();
-  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,6 +20,7 @@ const EmailUpdatePage = () => {
     useState('인증번호');
   const [timer, setTimer] = useState(300);
   const [isTimerActive, setIsTimerActive] = useState(false);
+  const { mutate: patchMemberEmail } = usePatchMember();
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | undefined;
@@ -89,6 +89,14 @@ const EmailUpdatePage = () => {
       setVerificationError('인증번호가 일치하지 않아요.');
       setVerificationSuccess(false);
     }
+  };
+
+  const handleSaveEmail = () => {
+    const updatedData = {
+      email: inputValue,
+    };
+
+    patchMemberEmail(updatedData);
   };
 
   const validateEmail = (email: string) => {
@@ -168,9 +176,7 @@ const EmailUpdatePage = () => {
             text="다음"
             variant={verificationSuccess ? 'activate' : 'deactivate'}
             disabled={!verificationSuccess}
-            onClick={() => {
-              navigate('/profile/update');
-            }}
+            onClick={handleSaveEmail}
           />
         </BottomWrapper>
       </Container>
