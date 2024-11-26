@@ -3,7 +3,7 @@ export type Member = {
   name: string;
   email: string;
   imageUrl: string;
-  receivedPraiseCount: number;
+  receivePraiseCount: number;
   sendPraiseCount: number;
   bestStamp: string;
 };

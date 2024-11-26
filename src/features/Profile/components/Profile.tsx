@@ -2,8 +2,13 @@ import Info from '@/components/Info/Info';
 import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const BEST_STAMP_COMMENT = [
+  '꿀도장을 3개 이상 받으면 팀원들에게',
+  '가장 많이 받은 꿀도장을 볼 수 있어요',
+];
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -33,7 +38,7 @@ const Profile = () => {
       <ProfileDesc>
         <Section>
           <Label>받은 꿀</Label>
-          <Value>{member ? member.receivedPraiseCount : 0}</Value>
+          <Value>{member ? member.receivePraiseCount : 0}</Value>
         </Section>
         <Divider />
         <Section>
@@ -45,9 +50,16 @@ const Profile = () => {
           <Label>Best 꿀도장</Label>
           <Icon>
             <Info>
-              {member && member.bestStamp
-                ? `${member.bestStamp} 꿀도장을 가장 많이 받았습니다.`
-                : '아직 베스트 꿀도장이 없습니다.'}
+              {member && member.bestStamp ? (
+                <img src={`${member.bestStamp}`} alt={member.bestStamp} />
+              ) : (
+                BEST_STAMP_COMMENT.map((line, index) => (
+                  <Fragment key={index}>
+                    {line}
+                    {index < BEST_STAMP_COMMENT.length - 1 && <br />}
+                  </Fragment>
+                ))
+              )}
             </Info>
           </Icon>
         </Section>
