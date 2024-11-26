@@ -12,7 +12,7 @@ export const usePatchMember = () => {
     mutationFn: (updatedData: unknown) => patchMember(updatedData),
     onSuccess: () => {
       showToast('변경된 내용을 저장했어요');
-      navigate('/');
+      navigate('/profile');
     },
     onError: () => {
       showToast('변경 사항을 저장하는 중 오류가 발생했어요.');

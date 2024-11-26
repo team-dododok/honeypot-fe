@@ -37,6 +37,15 @@ const ProfileUpdatePage = () => {
     if (member) {
       setName(member.name);
       setEmail(member.email);
+
+      if (selectedImage === null) {
+        const matchingImage = profileImages.find(
+          ([, url]) => url === member.imageUrl
+        );
+        if (matchingImage) {
+          setSelectedImage(parseInt(matchingImage[0], 10));
+        }
+      }
     }
   }, [member]);
 
@@ -52,7 +61,9 @@ const ProfileUpdatePage = () => {
   }, [name, email, selectedImage]);
 
   const handleImageClick = (index: number) => {
-    setSelectedImage(index);
+    setSelectedImage((prevSelectedImage) =>
+      prevSelectedImage === index ? null : index
+    );
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
