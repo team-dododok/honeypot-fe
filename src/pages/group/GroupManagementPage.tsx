@@ -7,12 +7,11 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useToast } from '@/store/useToast';
 import { useGroup } from '@/hooks/group/useGroup';
 import { usePatchGroupOrder } from '@/hooks/group/usePatchGroupOrder';
+import { useDeleteGroup } from '@/hooks/group/useDeleteGroup';
 
 const GroupManagementPage = () => {
-  const { showToast } = useToast();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [groupName, setGroupName] = useState<string>('');
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
@@ -36,6 +35,7 @@ const GroupManagementPage = () => {
   }, [groupData]);
 
   const { mutate: updateGroupOrder } = usePatchGroupOrder();
+  const { mutate: groupDelete } = useDeleteGroup();
 
   const moveGroup = (dragIndex: number, hoverIndex: number) => {
     const updatedItems = [...groupItems];
@@ -63,9 +63,9 @@ const GroupManagementPage = () => {
   const handleDeleteGroup = () => {
     if (deleteTargetId !== null) {
       setDeleteTargetId(null);
+      setShowGroupDeleteModal(false);
+      groupDelete(deleteTargetId.toString());
     }
-    setShowGroupDeleteModal(false);
-    showToast('그룹을 삭제했어요');
   };
 
   const handleOpenDeleteModal = (id: number) => {
