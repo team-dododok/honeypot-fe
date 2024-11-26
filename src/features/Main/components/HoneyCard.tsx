@@ -10,15 +10,18 @@ interface HoneyCardProps {
 const HoneyCard = (prop: HoneyCardProps) => {
   const { type, count } = prop;
 
+  const titleText = `내가 ${type ? '받은' : '보낸'} 꿀`;
+  const imagePosition = type ? 'right' : 'left';
+
   return (
     <Container>
-      <Title>내가 {type ? '받은' : '보낸'} 꿀</Title>
+      <Title>{titleText}</Title>
       <Number>{count}</Number>
-      {type ? (
-        <ReceivedImg src="/assets/images/main/received-honey.svg" alt="honey" />
-      ) : (
-        <SentImg src="/assets/images/main/sent-honey.svg" alt="honey" />
-      )}
+      <HoneyImg
+        src="/assets/images/main/honey-map.svg"
+        alt="honey"
+        $position={imagePosition}
+      />
     </Container>
   );
 };
@@ -28,35 +31,37 @@ export default HoneyCard;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 
   border-radius: 8px;
   border: 1px solid ${theme.colors.gray10};
   background: ${theme.colors.gray00};
 
   width: 100%;
-  height: 100%;
-  padding: 16px 16px 0 16px;
+  min-height: 173px;
+  max-height: 250px;
+  padding: 16px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 `;
 
 const Title = styled.div`
   ${theme.typography.body3};
   color: ${theme.colors.gray80};
+  white-space: nowrap;
+  z-index: 10;
 `;
 
 const Number = styled.div`
   ${theme.typography.heading3};
   color: ${theme.colors.gray80};
+  z-index: 10;
 `;
 
-const ReceivedImg = styled.img`
-  width: 100%;
-  height: 100%;
-  transform: translate(22px, 12px);
-`;
-
-const SentImg = styled.img`
-  width: 100%;
-  height: 100%;
-  transform: translate(-18px, 6px);
+const HoneyImg = styled.img<{ $position: 'left' | 'right' }>`
+  position: absolute;
+  bottom: -30px;
+  ${({ $position }) => $position}: -95px;
+  z-index: 1;
 `;

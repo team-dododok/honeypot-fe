@@ -43,15 +43,15 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 export default Header;
 
 const HeaderContainer = styled.header`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 26px 16px 26px;
+  padding: 18px 26px;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  width: 100%;
 `;
 
 const LogoWrapper = styled.div`
