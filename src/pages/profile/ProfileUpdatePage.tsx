@@ -175,18 +175,22 @@ const ProfileImageGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 24px;
-  margin: 0 auto;
   width: 100%;
+  gap: 12px;
 `;
 
 const ProfileImageBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 40px;
   border: ${({ isSelected, index }) =>
     isSelected ? `5px solid ${PROFILE_COLORS[index]}` : 'none'};
