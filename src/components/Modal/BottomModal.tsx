@@ -10,6 +10,7 @@ interface BottomModal {
   cancelText?: string;
   confirmText?: string;
   children?: React.ReactNode;
+  bongbong?: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   confirmDisabled?: boolean;
@@ -23,6 +24,7 @@ const BottomModal = (props: BottomModal) => {
     cancelText = '취소',
     confirmText = '완료',
     children,
+    bongbong = false,
     onCancel,
     onConfirm,
     confirmDisabled = false,
@@ -32,26 +34,34 @@ const BottomModal = (props: BottomModal) => {
 
   return (
     <ModalOverlay>
-      <ModalContainer width={width} height={height}>
-        <ModalTop>
-          <Title>{title}</Title>
-          <ModalContent>{children}</ModalContent>
-        </ModalTop>
-        <ButtonWrapper>
-          <Button
-            variant="deactivate"
-            text={cancelText}
-            onClick={onCancel}
-            background={theme.colors.gray10}
-          />
-          <Button
-            variant="activate"
-            text={confirmText}
-            onClick={onConfirm}
-            disabled={confirmDisabled}
-          />
-        </ButtonWrapper>
-      </ModalContainer>
+      <ModalImageContainer height={height}>
+        {bongbong && (
+          <>
+            <BongBongFace src="/assets/images/group/stamp/stamp-modal-bongbong-face.svg" />
+            <BongBongHands src="/assets/images/group/stamp/stamp-modal-bongbong-hands.svg" />
+          </>
+        )}
+        <ModalContainer width={width} height={height}>
+          <ModalTop>
+            <Title>{title}</Title>
+            <ModalContent>{children}</ModalContent>
+          </ModalTop>
+          <ButtonWrapper>
+            <Button
+              variant="deactivate"
+              text={cancelText}
+              onClick={onCancel}
+              background={theme.colors.gray10}
+            />
+            <Button
+              variant="activate"
+              text={confirmText}
+              onClick={onConfirm}
+              disabled={confirmDisabled}
+            />
+          </ButtonWrapper>
+        </ModalContainer>
+      </ModalImageContainer>
     </ModalOverlay>
   );
 };
@@ -71,6 +81,18 @@ const ModalOverlay = styled.div`
   z-index: 20;
 `;
 
+const ModalImageContainer = styled.div<{ height?: string }>`
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: ${({ height }) => height};
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: fixed;
+  z-index: 5;
+`;
+
 const ModalContainer = styled.div<{ width?: string; height?: string }>`
   display: flex;
   width: ${({ width }) => width || '100%'};
@@ -84,6 +106,29 @@ const ModalContainer = styled.div<{ width?: string; height?: string }>`
   border-radius: 24px 24px 0 0;
   background: ${theme.colors.gray00};
   position: relative;
+  z-index: 25;
+`;
+
+const BongBongFace = styled.img`
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-user-drag: none;
+`;
+
+const BongBongHands = styled.img`
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-user-drag: none;
 `;
 
 const ModalTop = styled.div`

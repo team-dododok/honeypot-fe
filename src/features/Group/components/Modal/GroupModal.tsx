@@ -62,6 +62,7 @@ const GroupModal: React.FC<GroupModalProps> = ({
     <BottomModal
       height="516px"
       title="그룹 추가 및 선택"
+      bongbong={true}
       onCancel={onClose}
       onConfirm={handleConfirm}
       confirmDisabled={selectedGroup === null}
