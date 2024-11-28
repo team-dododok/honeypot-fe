@@ -604,18 +604,15 @@ const GuidePage = () => {
         <Badge
           id={0}
           name={'뱃지명'}
-          goal={'달성 조건'}
-          image=""
-          isObtain={false}
-          date=""
+          description={'달성 조건'}
+          completedDate={null}
         />
         <Badge
           id={0}
           name={'뱃지명'}
-          goal={'달성 조건'}
+          description={'달성 조건'}
           image="/assets/images/badge/badge-get-1.svg"
-          isObtain={true}
-          date="2024-11-10"
+          completedDate={'2024-11-22T16:32:58.853979'}
         />
       </Elements>
     </Container>

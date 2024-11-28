@@ -1,7 +1,7 @@
+import { postSignUp } from '@/api/auth/postSignUp';
 import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import { PROFILE_COLORS } from '@/constants/colors';
-import { postSignUp } from '@/features/Login/api/kakao';
 import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
 import {
   ProgressBarWrapper,
