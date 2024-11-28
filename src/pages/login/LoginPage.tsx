@@ -14,12 +14,15 @@ const LoginPage = () => {
 
   return (
     <PageContainer>
-      <Logo src="/assets/images/logo-typo.svg" alt="logo" />
+      <LogoWrapper>
+        <Icon src="/assets/images/logo-icon.svg" alt="icon" />
+        <Logo src="/assets/images/logo-typo.svg" alt="logo" />
+      </LogoWrapper>
       <Title>
         함께한 팀원들에게 따뜻한 칭찬을 전하며
         <br /> 서로 응원해보는 건 어떠세요?
       </Title>
-      <Image src="/assets/images/login/login-01.svg" alt="team" />
+      <Image src="/assets/images/login/login.svg" alt="team" />
       <BottomWrapper>
         <Bubble>⚡️ 3초만에 가입하고 칭찬 보내기 ⚡️</Bubble>
         <KakaoButton />
@@ -32,6 +35,7 @@ export default LoginPage;
 
 const PageContainer = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,26 +44,37 @@ const PageContainer = styled.div`
   color: ${theme.colors.gray80};
 `;
 
-const Logo = styled.img`
-  height: 60px;
-  margin-top: 60px;
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
-  width: 150px;
+`;
+
+const Icon = styled.img`
+  width: 64px;
+  height: 64px;
+  transform: rotate(-20deg);
+`;
+
+const Logo = styled.img`
+  width: 112px;
+  height: 40px;
 `;
 
 const Title = styled.h1`
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
   ${theme.typography.body3};
+
+  @media screen and (max-height: 700px) {
+    margin-bottom: 0;
+  }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 280px;
-  margin-bottom: 48px;
-  width: 100%;
-  max-width: 300px;
-  background-color: gray;
+  margin-bottom: 80px;
 `;
 
 const BottomWrapper = styled.div`
