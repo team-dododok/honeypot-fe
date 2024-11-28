@@ -36,7 +36,7 @@ const StyledButton = styled.button<ButtonProps>`
   justify-content: center;
   width: ${(props) => props.width || '100%'};
   height: ${(props) => props.height || '54px'};
-  padding: ${(props) => props.padding || '10px 20px'};
+  padding: ${(props) => props.padding || '10px'};
   border-radius: ${(props) => props.borderRadius || '16px'};
 
   background-color: ${(props) =>
