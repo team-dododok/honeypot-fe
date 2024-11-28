@@ -26,6 +26,7 @@ import YellowBackgroundLayout from '@/layouts/YellowBackgroundLayout';
 import ProfilePage from '@/pages/profile/ProfilePage';
 import EmailUpdatePage from '@/pages/profile/EmailUpdatePage';
 import { theme } from '@/styles/theme';
+import SettingTermsPage from '@/pages/setting/SettingTermsPage';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,16 @@ const router = createBrowserRouter([
           {
             path: 'update',
             element: <EmailUpdatePage />,
+          },
+        ],
+      },
+      {
+        path: 'setting',
+        element: <SubLayout title="서비스 이용 약관" padding="0px" />,
+        children: [
+          {
+            path: 'terms',
+            element: <SettingTermsPage />,
           },
         ],
       },

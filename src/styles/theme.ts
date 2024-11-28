@@ -1,4 +1,4 @@
-import { Theme } from '@emotion/react';
+import { css, SerializedStyles, Theme } from '@emotion/react';
 
 const colors = {
   brand05: '#FFF7E5',
@@ -51,20 +51,27 @@ const colors = {
   gradient03: 'linear-gradient(180deg, #FFF7E5 0%, #FFE5A4 41.56%)',
 } as const;
 
+
 interface Font {
   weight: number;
   size: number;
 }
 
+const breakpoints = {
+  mobile: '360px',
+  pc: '480px',
+};
+
 const FONT = ({
   weight,
   size,
-}: Font): {
+}: Font & { mobileSize?: number }): {
   fontFamily: string;
   fontStyle: string;
   fontWeight: number;
   fontSize: string;
   lineHeight: string;
+  responsive: SerializedStyles;
 } => {
   return {
     fontFamily: 'Pretendard',
@@ -72,6 +79,12 @@ const FONT = ({
     fontWeight: weight,
     fontSize: `${size}px`,
     lineHeight: `${size * 1.6}px`,
+    responsive: css`
+      @media (max-width: ${breakpoints.mobile}) {
+        font-size: ${size * 0.8}px;
+        line-height: ${size * 0.8 * 1.6}px;
+      }
+    `,
   };
 };
 
@@ -101,7 +114,7 @@ const typography = {
 export type ColorsTypes = typeof colors;
 export type TypoGraphysTypes = typeof typography;
 
-export const theme: Theme = {
+export const theme: Theme & { typography: typeof typography } = {
   colors,
   typography,
 };
