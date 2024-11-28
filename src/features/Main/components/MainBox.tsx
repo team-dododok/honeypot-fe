@@ -16,7 +16,7 @@ const MainBox = () => {
         </div>
         <MainButton />
       </MainLeft>
-      <MainImage src="/assets/images/main/group.png" alt="Group" />
+      <MainImage src="/assets/images/main/smile-bongbong.png" alt="Group" />
     </Container>
   );
 };
@@ -57,7 +57,8 @@ const MainImage = styled.img`
   width: 116px;
   height: 150px;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -20px;
+  right: -10px;
+  transform: rotate(-8deg);
   z-index: 1;
 `;
