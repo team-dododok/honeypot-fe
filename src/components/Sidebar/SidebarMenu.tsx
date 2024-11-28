@@ -26,8 +26,8 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
   };
 
   return (
-    <SidebarOverlay isOpen={isOpen}>
-      <SidebarContainer isOpen={isOpen}>
+    <SidebarOverlay isOpen={isOpen} onClick={onClose}>
+      <SidebarContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
         <div>
           <IconsWrapper>
             <IconWrapper onClick={onClose}>
