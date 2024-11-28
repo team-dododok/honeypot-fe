@@ -15,7 +15,7 @@ const MainBottomSheet = () => {
     useState<ToggleType>('card');
 
   const [bottomSheetHeight, setBottomSheetHeight] = useState(
-    window.innerHeight - 200
+    window.innerHeight - 235
   );
 
   useEffect(() => {
