@@ -2,31 +2,29 @@ import useAnimation from '@/hooks/useAnimation';
 import { theme } from '@/styles/theme';
 import { MenuItem } from '@/types/constants/MenuItem';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface MenuSectionProps {
   menu: MenuItem;
+  isOpen: boolean;
+  onMenuClick: () => void;
   onClose: () => void;
 }
 
-const MenuSection = ({ menu, onClose }: MenuSectionProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const MenuSection = ({
+  menu,
+  isOpen,
+  onMenuClick,
+  onClose,
+}: MenuSectionProps) => {
   const useAnimatedMenu = useAnimation;
-  const { isVisible } = useAnimatedMenu(isOpen, 100);
-
-  const handleMenuClick = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const hadleMenuClose = () => {
-    onClose();
-  };
+  const { isVisible } = useAnimatedMenu(isOpen, 200);
 
   return (
     <MenuSectionWrapper>
-      <MenuTitle onClick={handleMenuClick}>{menu.title}</MenuTitle>
-      <SubMenu isOpen={isOpen} isVisible={isVisible}>
+      <MenuTitle onClick={onMenuClick}>{menu.title}</MenuTitle>
+      <SubMenu isOpen={isOpen}>
         {isVisible &&
           menu.tab.map((subMenu) => (
             <SubMenuLink
@@ -35,7 +33,7 @@ const MenuSection = ({ menu, onClose }: MenuSectionProps) => {
               current={
                 window.location.pathname === subMenu.path ? 'true' : 'false'
               }
-              onClick={hadleMenuClose}
+              onClick={onClose}
             >
               {subMenu.subTitle}
             </SubMenuLink>
@@ -58,7 +56,7 @@ const MenuTitle = styled.h5`
   cursor: pointer;
 `;
 
-const SubMenu = styled.div<{ isOpen: boolean; isVisible: boolean }>`
+const SubMenu = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: auto;
   display: flex;

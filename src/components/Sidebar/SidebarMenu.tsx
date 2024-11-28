@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { MENU } from '@/constants/menu';
 import { theme } from '@/styles/theme';
@@ -13,6 +13,11 @@ interface SidebarMenuProps {
 
 const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
   const navigate = useNavigate();
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
+  const handleMenuClick = (menuId: string) => {
+    setOpenMenuId((prev) => (prev === menuId ? null : menuId));
+  };
 
   const handleLogout = () => {
     navigate('/login');
@@ -28,16 +33,27 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
             <IconWrapper onClick={onClose}>
               <img src="/assets/icons/menu.svg" alt="header-menu" />
             </IconWrapper>
-            <IconWrapper>
-              <img
-                src="/assets/icons/notification.svg"
-                alt="header-notification"
-              />
-            </IconWrapper>
+            <RightIconsWrapper>
+              <IconWrapper>
+                <img src="/assets/icons/profile.svg" alt="header-profile" />
+              </IconWrapper>
+              <IconWrapper>
+                <img
+                  src="/assets/icons/notification.svg"
+                  alt="header-notification"
+                />
+              </IconWrapper>
+            </RightIconsWrapper>
           </IconsWrapper>
           <MenuWrapper>
             {MENU.map((menu) => (
-              <MenuSection key={menu.id} menu={menu} onClose={onClose} />
+              <MenuSection
+                key={menu.id}
+                menu={menu}
+                isOpen={openMenuId === menu.id}
+                onMenuClick={() => handleMenuClick(menu.id)}
+                onClose={onClose}
+              />
             ))}
           </MenuWrapper>
         </div>
@@ -112,6 +128,13 @@ const IconWrapper = styled.div`
   align-items: center;
   gap: 16px;
   cursor: pointer;
+`;
+
+const RightIconsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
 `;
 
 const MenuWrapper = styled.div`
