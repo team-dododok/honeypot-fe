@@ -14,6 +14,10 @@ export const setUuid = (uuid: string) => {
   localStorage.setItem('uuid', uuid);
 };
 
+export const setUserName = (userName: string) => {
+  localStorage.setItem('userName', userName);
+};
+
 export const getAccessToken = () => {
     return (localStorage.getItem('accessToken'));
 };
@@ -28,6 +32,10 @@ export const getKakaoAccessToken = () => {
 
 export const getUuid = () => {
   return localStorage.getItem('uuid');
+};
+
+export const getUserName = () => {
+  return localStorage.getItem('userName');
 };
 
 export const removeAccessToken = () => {

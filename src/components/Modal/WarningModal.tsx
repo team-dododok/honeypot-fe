@@ -49,6 +49,7 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -58,7 +59,8 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   display: flex;
-  width: 308px;
+  width: 100%;
+  max-width: 306px;
   padding: 16px 20px;
   flex-direction: column;
   align-items: center;

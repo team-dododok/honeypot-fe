@@ -30,7 +30,6 @@ const CenterLayout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 `;
 
 const Container = styled.div`

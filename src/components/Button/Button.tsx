@@ -52,7 +52,7 @@ const StyledButton = styled.button<ButtonProps>`
     props.typography
       ? theme.typography[props.typography]
       : theme.typography.body3};
-  white-space: pre-line;
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.3s;
 

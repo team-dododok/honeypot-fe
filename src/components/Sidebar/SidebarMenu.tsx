@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { MENU } from '@/constants/menu';
 import { theme } from '@/styles/theme';
 import MenuSection from './MenuSection';
 import { useNavigate } from 'react-router-dom';
-import { removeAccessToken, removeRefreshToken } from '@/utils/storage';
+import {
+  getUserName,
+  removeAccessToken,
+  removeRefreshToken,
+} from '@/utils/storage';
+import WarningModal from '../Modal/WarningModal';
 
 interface SidebarMenuProps {
   isOpen: boolean;
@@ -13,36 +18,69 @@ interface SidebarMenuProps {
 
 const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
   const navigate = useNavigate();
+  const name = getUserName();
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [showWithdrawModal, setShowWithdrawModal] = useState<boolean>(false);
+
+  const handleMenuClick = (menuId: string) => {
+    setOpenMenuId((prev) => (prev === menuId ? null : menuId));
+  };
 
   const handleLogout = () => {
+    /* 로그아웃 API 연동 */
+    navigate('/login');
+    removeAccessToken();
+    removeRefreshToken();
+  };
+
+  const handleShowWithdrawModal = () => {
+    setShowWithdrawModal(!showWithdrawModal);
+  };
+
+  const handleWithdraw = () => {
+    /* 탈퇴 API 연동 */
     navigate('/login');
     removeAccessToken();
     removeRefreshToken();
   };
 
   return (
-    <SidebarOverlay isOpen={isOpen}>
-      <SidebarContainer isOpen={isOpen}>
+    <SidebarOverlay isOpen={isOpen} onClick={onClose}>
+      <SidebarContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
         <div>
           <IconsWrapper>
             <IconWrapper onClick={onClose}>
               <img src="/assets/icons/menu.svg" alt="header-menu" />
             </IconWrapper>
-            <IconWrapper>
-              <img
-                src="/assets/icons/notification.svg"
-                alt="header-notification"
-              />
-            </IconWrapper>
+            <RightIconsWrapper>
+              <IconWrapper>
+                <img src="/assets/icons/profile.svg" alt="header-profile" />
+              </IconWrapper>
+              <IconWrapper>
+                <img
+                  src="/assets/icons/notification.svg"
+                  alt="header-notification"
+                />
+              </IconWrapper>
+            </RightIconsWrapper>
           </IconsWrapper>
           <MenuWrapper>
             {MENU.map((menu) => (
-              <MenuSection key={menu.id} menu={menu} onClose={onClose} />
+              <MenuSection
+                key={menu.id}
+                menu={menu}
+                isOpen={openMenuId === menu.id}
+                onMenuClick={() => handleMenuClick(menu.id)}
+                onClose={onClose}
+              />
             ))}
           </MenuWrapper>
         </div>
         <BottomWrapper>
-          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          <ButtonWrapper>
+            <Button onClick={handleLogout}>로그아웃</Button>
+            <Button onClick={handleShowWithdrawModal}>회원탈퇴</Button>
+          </ButtonWrapper>
           <LinkWrapper>
             <a
               href="https://www.instagram.com/team.dododok/?hl=ko"
@@ -61,6 +99,19 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
           </LinkWrapper>
         </BottomWrapper>
       </SidebarContainer>
+      {showWithdrawModal && (
+        <WarningModal
+          title={`정말 ‘꿀단지’를 탈퇴하시겠어요?`}
+          description={`${name ? `‘${name}'님` : `유저`}과 관련된 모든 정보들이 삭제되며,\n복구가 불가능합니다.`}
+          image={true}
+          cancelText="취소"
+          confirmText="탈퇴"
+          onCancel={() => {
+            setShowWithdrawModal(false);
+          }}
+          onConfirm={handleWithdraw}
+        />
+      )}
     </SidebarOverlay>
   );
 };
@@ -114,6 +165,13 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `;
 
+const RightIconsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+`;
+
 const MenuWrapper = styled.div`
   padding-top: 20px;
 `;
@@ -126,7 +184,13 @@ const BottomWrapper = styled.div`
   gap: 20px;
 `;
 
-const LogoutButton = styled.button`
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+`;
+
+const Button = styled.button`
   text-align: left;
   color: ${theme.colors.gray50};
   ${theme.typography.body5}

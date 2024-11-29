@@ -5,6 +5,7 @@ import {
   removeUuid,
   setAccessToken,
   setRefreshToken,
+  setUserName,
 } from '@/utils/storage';
 import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
@@ -33,6 +34,7 @@ const KakaoPage = () => {
           const response = await postKakaoLogin(kakao_accessToken);
           setAccessToken(response.data.accessToken);
           setRefreshToken(response.data.refreshToken);
+          setUserName(response.data.memberName);
           if (uuid) {
             navigate(`/compliment/${uuid}`);
             removeUuid();
