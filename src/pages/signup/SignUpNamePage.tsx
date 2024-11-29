@@ -35,6 +35,12 @@ const SignUpNamePage = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleButtonClick();
+    }
+  };
+
   return (
     <CommonLayout>
       <ProgressBarWrapper>
@@ -48,6 +54,7 @@ const SignUpNamePage = () => {
         value={name}
         onChange={handleNameChange}
         errorMsg={errorMsg}
+        onKeyDown={handleKeyDown}
       />
       <BottomWrapper>
         <Button

@@ -10,6 +10,7 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   onClick,
+  onKeyDown,
   successMsg,
   errorMsg,
   readOnly = false,
@@ -29,6 +30,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         hasValue={!!value}
         placeholder={placeholder}
         readOnly={readOnly}
