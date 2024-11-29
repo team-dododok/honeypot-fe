@@ -112,22 +112,9 @@ const GroupManagementPage = () => {
       />
       {showGroupDeleteModal && (
         <WarningModal
-          title={
-            <>
-              정말{' '}
-              {groupItems.find((g) => g.groupId === deleteTargetId)?.groupName}{' '}
-              그룹을
-              <br />
-              삭제하시겠어요?
-            </>
-          }
-          description={
-            <>
-              받은 꿀, 보낸 꿀도 모두 함께 삭제되며,
-              <br />
-              복구할 수 없어요.
-            </>
-          }
+          title={`정말 ${groupItems.find((g) => g.groupId === deleteTargetId)?.groupName} 그룹을\n 삭제하시겠어요?
+        `}
+          description={`받은 꿀, 보낸 꿀도 모두 함께 삭제되며,\n복구할 수 없어요.`}
           image={true}
           cancelText="취소"
           confirmText="확인"

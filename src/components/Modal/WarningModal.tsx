@@ -6,8 +6,8 @@ import Button from '../Button/Button';
 interface WaringModal {
   width?: string;
   height?: string;
-  title: React.ReactNode;
-  description: React.ReactNode;
+  title: string;
+  description: string;
   cancelText: string;
   confirmText: string;
   image?: boolean;
@@ -79,12 +79,14 @@ const Title = styled.div`
   color: ${theme.colors.error60};
   ${theme.typography.subtitle1};
   text-align: center;
+  white-space: pre-line;
 `;
 
 const Description = styled.div`
   color: ${theme.colors.gray60};
   ${theme.typography.detail4}
   text-align: center;
+  white-space: pre-line;
 `;
 
 const ButtonWrapper = styled.div`
