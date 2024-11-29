@@ -43,10 +43,14 @@ const GroupManagementPage = () => {
     updatedItems.splice(hoverIndex, 0, draggedItem);
     setGroupItems(updatedItems);
 
-    updateGroupOrder({
-      groupId: draggedItem.groupId,
-      groupName: draggedItem.groupName,
-    });
+    const patchData = {
+      groupOrderList: updatedItems.map((item, index) => ({
+        groupId: item.groupId,
+        orderIdx: index + 1,
+      })),
+    };
+
+    updateGroupOrder(patchData);
   };
 
   const toggleModal = () => {

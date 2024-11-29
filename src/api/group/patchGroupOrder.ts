@@ -1,13 +1,9 @@
 import { authAxios as axios } from '../authAxios';
-import { PatchGroupParams } from './types/Group';
+import { PatchGroupOrder } from './types/Group';
 
-export const patchGroupOrder = async ({
-  groupId,
-  groupName,
-}: PatchGroupParams) => {
+export const patchGroupOrder = async ({ groupOrderList }: PatchGroupOrder) => {
   const response = await axios.patch(`/api/group/order`, {
-    groupId,
-    groupName,
+    groupOrderList,
   });
   return response.data;
 };
