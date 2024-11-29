@@ -2,17 +2,26 @@ import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import HonyeBlank from './HoneyBlank';
+import HoneyBlank from './HoneyBlank';
 import HoneyGroup from './HoneyGroup';
 import GroupList from './GroupList';
 import { useNavigate } from 'react-router-dom';
+import { useGroup } from '@/hooks/group/useGroup';
+import { GroupWithMembersInfo } from '@/api/group/types/Group';
 
 const MainBottomSheet = () => {
   // TODO : 꿀단지 개수 연동
   const navigate = useNavigate();
-  const [count] = useState(6);
+  const [count, setCount] = useState(0);
+  const [groups, setGroups] = useState<GroupWithMembersInfo[]>([]);
   const [selectedGroupToggle, setSelectedGroupToggle] =
     useState<ToggleType>('card');
+  const { data: groupData } = useGroup();
+
+  useEffect(() => {
+    setGroups(groupData?.groupWithMembersInfos || []);
+    setCount(groupData?.groupWithMembersInfos?.length || 0);
+  }, [groupData]);
 
   const [bottomSheetHeight, setBottomSheetHeight] = useState(
     window.innerHeight - 200
@@ -22,9 +31,7 @@ const MainBottomSheet = () => {
     const handleResize = () => {
       setBottomSheetHeight(window.innerHeight - 235);
     };
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -53,11 +60,11 @@ const MainBottomSheet = () => {
 
       <Content>
         {count === 0 ? (
-          <HonyeBlank />
+          <HoneyBlank />
         ) : selectedGroupToggle === 'card' ? (
-          <HoneyGroup />
+          <HoneyGroup group={groups} />
         ) : (
-          <GroupList />
+          <GroupList group={groups} />
         )}
       </Content>
     </Container>

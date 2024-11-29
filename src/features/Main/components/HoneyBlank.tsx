@@ -1,9 +1,23 @@
 import Button from '@/components/Button/Button';
+import CreateGroupModal from '@/features/Group/components/Modal/CreateGroupModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 
 const HonyeBlank = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [groupName, setGroupName] = useState<string>('');
+  const handleConfirmModal = () => {
+    if (groupName) {
+      setGroupName('');
+    }
+    setIsVisible(false);
+  };
+
+  const toggleModal = () => {
+    setIsVisible((prev) => !prev);
+  };
+
   return (
     <Container>
       <img src="/assets/images/main/none-stamp.svg" alt="nonestamp" />
@@ -11,7 +25,14 @@ const HonyeBlank = () => {
         <p>아직 그룹이 없어요.</p>
         <p>새 그룹을 생성해 볼까요?</p>
       </div>
-      <Button text="새 그룹 생성하기" />
+      <Button text="새 그룹 생성하기" onClick={toggleModal} />
+      <CreateGroupModal
+        isVisible={isVisible}
+        Group={groupName}
+        setGroup={setGroupName}
+        onClose={toggleModal}
+        onConfirm={handleConfirmModal}
+      />
     </Container>
   );
 };

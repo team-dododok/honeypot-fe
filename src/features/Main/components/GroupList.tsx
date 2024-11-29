@@ -1,18 +1,19 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { GROUP_LIST } from '../constants/GroupList';
 import GroupBox from './GroupBox';
 import GroupPagination from './GroupPagination';
+import { GroupWithMembersInfo } from '@/api/group/types/Group';
 
-const GroupList = () => {
+interface GroupListProps {
+  group: GroupWithMembersInfo[];
+}
+
+const GroupList = ({ group }: GroupListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const groupsPerPage = 3;
+  const totalGroups = group.length || 0;
 
-  const startIndex = (currentPage - 1) * groupsPerPage;
-  const currentGroups = GROUP_LIST.slice(
-    startIndex,
-    startIndex + groupsPerPage
-  );
+  const startIndex = (currentPage - 1) * totalGroups;
+  const currentGroups = group.slice(startIndex, startIndex + totalGroups);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -22,12 +23,12 @@ const GroupList = () => {
     <>
       <Container>
         {currentGroups.map((group) => (
-          <GroupBox key={group.id} group={group} />
+          <GroupBox key={group.groupId} group={group} />
         ))}
       </Container>
       <GroupPagination
         currentPage={currentPage}
-        totalGroups={Math.ceil(GROUP_LIST.length / groupsPerPage)}
+        totalGroups={Math.ceil(group.length / totalGroups)}
         onPageChange={handlePageChange}
         type="list"
       />

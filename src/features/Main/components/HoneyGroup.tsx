@@ -4,19 +4,18 @@ import React, { useState } from 'react';
 import HoneyCard from './HoneyCard';
 import Button from '@/components/Button/Button';
 import GroupPagination from './GroupPagination';
-import { GROUP_LIST } from '../constants/GroupList';
 import { useNavigate } from 'react-router-dom';
+import { GroupWithMembersInfo } from '@/api/group/types/Group';
 
-const HoneyGroup = () => {
+interface HoneyGroupProps {
+  group: GroupWithMembersInfo[];
+}
+
+const HoneyGroup = ({ group }: HoneyGroupProps) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const totalGroups = GROUP_LIST.length;
-
-  const currentGroup = GROUP_LIST[currentPage - 1];
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+  const totalGroups = group.length || 0;
+  const currentGroup = group[currentPage - 1];
 
   const displayedMembers =
     currentGroup.groupMembers.length > 2
@@ -24,6 +23,10 @@ const HoneyGroup = () => {
           currentGroup.groupMembers.length - 2
         }명`
       : currentGroup.groupMembers.join(', ');
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <>
@@ -37,13 +40,13 @@ const HoneyGroup = () => {
             src="/assets/icons/right-ward-arrow.svg"
             alt="groupedit"
             onClick={() => {
-              navigate(`/group/${currentGroup.id}`);
+              navigate(`/group/${currentGroup.groupId}`);
             }}
           />
         </Header>
         <CardBox>
-          <HoneyCard type={true} count={currentGroup.receivedHoney} />
-          <HoneyCard type={false} count={currentGroup.sentHoney} />
+          <HoneyCard type={true} count={currentGroup.receiveCount} />
+          <HoneyCard type={false} count={currentGroup.sendCount} />
         </CardBox>
         <Button
           text="이 그룹에 꿀 보내기"
