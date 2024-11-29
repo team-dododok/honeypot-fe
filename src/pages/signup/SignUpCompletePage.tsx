@@ -18,7 +18,7 @@ const SignUpCompletePage = () => {
   return (
     <CenterLayout>
       <Title>{`반가워요${name && `, '${name}'님`}!`}</Title>
-      <Image src="/assets/images/signup/signup.svg" alt="bongbong" />
+      <Image data="/assets/images/signup/signup.svg" />
       <Text>
         꿀단지에서 팀원들과 칭찬을 주고받으며
         <br />
@@ -44,7 +44,7 @@ const Title = styled.h1`
   ${theme.typography.heading3};
 `;
 
-const Image = styled.img`
+const Image = styled.object`
   width: 100%;
   margin-bottom: 48px;
 `;

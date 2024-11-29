@@ -22,7 +22,7 @@ const LoginPage = () => {
         함께한 팀원들에게 따뜻한 칭찬을 전하며
         <br /> 서로 응원해보는 건 어떠세요?
       </Title>
-      <Image src="/assets/images/login/login.svg" alt="team" />
+      <Image data="/assets/images/login/login.svg" />
       <BottomWrapper>
         <Bubble>⚡️ 3초만에 가입하고 칭찬 보내기 ⚡️</Bubble>
         <KakaoButton />
@@ -72,7 +72,7 @@ const Title = styled.h1`
   }
 `;
 
-const Image = styled.img`
+const Image = styled.object`
   width: 100%;
   margin-bottom: 80px;
 `;
