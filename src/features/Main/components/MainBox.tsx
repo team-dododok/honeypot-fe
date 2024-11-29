@@ -1,17 +1,17 @@
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 import MainButton from './MainButton';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 
 const MainBox = () => {
-  // TODO: user 이름 연동
-  const [name] = useState('도도독사우루스');
+  const { data: member } = useMemberInfo();
 
   return (
     <Container>
       <MainLeft>
         <div>
-          <h1>{name} 님,</h1>
+          <h1>{member && member.name} 님,</h1>
           <h2>팀원들에게 꿀을 보내보세요!</h2>
         </div>
         <MainButton />

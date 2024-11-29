@@ -14,7 +14,7 @@ export const useDeleteGroup = () => {
     },
     onSuccess: () => {
       showToast('그룹을 성공적으로 삭제하였습니다.');
-      queryClient.invalidateQueries(['groupData']);
+      queryClient.invalidateQueries(['group']);
     },
   });
 };

@@ -26,6 +26,16 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
     setOpenMenuId((prev) => (prev === menuId ? null : menuId));
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+    onClose();
+  };
+
+  const handleNotificationClick = () => {
+    navigate('/announcement');
+    onClose();
+  };
+
   const handleLogout = () => {
     /* 로그아웃 API 연동 */
     navigate('/login');
@@ -54,12 +64,17 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
             </IconWrapper>
             <RightIconsWrapper>
               <IconWrapper>
-                <img src="/assets/icons/profile.svg" alt="header-profile" />
+                <img
+                  src="/assets/icons/profile.svg"
+                  alt="header-profile"
+                  onClick={() => handleProfileClick()}
+                />
               </IconWrapper>
               <IconWrapper>
                 <img
                   src="/assets/icons/notification.svg"
                   alt="header-notification"
+                  onClick={() => handleNotificationClick()}
                 />
               </IconWrapper>
             </RightIconsWrapper>

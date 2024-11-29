@@ -15,8 +15,16 @@ export const MENU: MenuItem[] = [
     id: 'intro',
     title: '서비스 소개',
     tab: [
-      { id: 3, subTitle: `'꿀단지'가 뭐예요?`, path: '/intro/service' },
-      { id: 4, subTitle: '어떻게 사용하나요?', path: '/intro/instruction' },
+      {
+        id: 3,
+        subTitle: `'꿀단지'가 뭐예요?`,
+        path: 'https://www.notion.so/465162159795401992a62e5cc0c00309',
+      },
+      {
+        id: 4,
+        subTitle: '어떻게 사용하나요?',
+        path: 'https://www.notion.so/98c911aa99fd473dbff2e80517f2faa2',
+      },
     ],
   },
 ];

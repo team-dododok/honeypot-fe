@@ -3,14 +3,21 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 
 interface ToggleProps {
+  disabled?: boolean;
   isChecked: boolean;
   onChange: () => void;
 }
 
-const Toggle = ({ isChecked, onChange }: ToggleProps) => {
+const Toggle = ({ disabled = false, isChecked, onChange }: ToggleProps) => {
+  const handleClick = () => {
+    if (!disabled) {
+      onChange();
+    }
+  };
+
   return (
-    <ToggleWrapper onClick={onChange}>
-      <ToggleButton isChecked={isChecked}>
+    <ToggleWrapper onClick={handleClick} disabled={disabled}>
+      <ToggleButton isChecked={isChecked} disabled={disabled}>
         <ToggleCircle isChecked={isChecked} />
       </ToggleButton>
     </ToggleWrapper>
@@ -19,16 +26,21 @@ const Toggle = ({ isChecked, onChange }: ToggleProps) => {
 
 export default Toggle;
 
-const ToggleWrapper = styled.div`
+const ToggleWrapper = styled.div<{ disabled: boolean }>`
   display: inline-block;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
-const ToggleButton = styled.div<{ isChecked: boolean }>`
+const ToggleButton = styled.div<{ isChecked: boolean; disabled: boolean }>`
   width: 54px;
   height: 30px;
-  background-color: ${({ isChecked }) =>
-    isChecked ? theme.colors.brand50 : theme.colors.gray30};
+  background-color: ${({ isChecked, disabled }) =>
+    disabled
+      ? theme.colors.brand10
+      : isChecked
+        ? theme.colors.brand50
+        : theme.colors.gray30};
   border-radius: 15px;
   position: relative;
   transition: background-color 0.3s ease;

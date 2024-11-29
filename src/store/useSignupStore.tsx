@@ -12,6 +12,7 @@ interface SignUpState {
   profileIdx: number | null;
   setIsCheckedTerms: (terms: IsCheckedTermsType) => void;
   setIsCheckedTerm: (id: 0 | 1 | 2, checked: boolean) => void;
+  setAllTerms: (terms: IsCheckedTermsType) => void;
   setName: (name: string) => void;
   setEmail: (email: string) => void;
   setEmailAuth: (auth: string) => void;
@@ -39,6 +40,8 @@ export const useSignUpStore = create<SignUpState>()(
           const updatedTerms = { ...state.isCheckedTerms, [id]: checked };
           return { isCheckedTerms: updatedTerms };
         }),
+      setAllTerms: (terms: IsCheckedTermsType) =>
+        set({ isCheckedTerms: terms }),
       setName: (name) => set({ name }),
       setEmail: (email) => set({ email }),
       setEmailAuth: (auth) => set({ emailAuth: auth }),

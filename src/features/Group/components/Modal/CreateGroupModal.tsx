@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '@/components/Input/Input';
 import BottomModal from '@/components/Modal/BottomModal';
 import { useToast } from '@/store/useToast';
+import { usePostGroup } from '@/hooks/group/usePostGroup';
 
 interface CreateGroupModalProps {
   isVisible: boolean;
@@ -19,8 +20,9 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   onConfirm,
 }) => {
   const { showToast } = useToast();
-  const [CreateGroup, setCreateGroup] = useState(Group);
+  const [createGroup, setCreateGroup] = useState(Group);
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const { mutate: postGroup } = usePostGroup();
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: 그룹명 중복 API로 체크
@@ -38,9 +40,11 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   };
 
   const handleSaveGroup = () => {
-    setGroup(CreateGroup);
+    setGroup(createGroup);
     onConfirm();
+    postGroup({ groupName: createGroup });
     showToast('새 그룹을 생성했어요');
+    setCreateGroup('');
   };
 
   return (
@@ -51,14 +55,14 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
         confirmText="저장"
         onCancel={handleCancelCreate}
         onConfirm={handleSaveGroup}
-        confirmDisabled={CreateGroup.length === 0}
+        confirmDisabled={createGroup.length === 0}
         isVisible={isVisible}
       >
         <Input
           width="100%"
           placeholder="추가할 그룹명을 입력해주세요"
           clear={true}
-          value={CreateGroup}
+          value={createGroup}
           onChange={handleGroupChange}
           errorMsg={errorMsg}
         />
