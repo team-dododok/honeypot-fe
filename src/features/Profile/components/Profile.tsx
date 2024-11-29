@@ -14,7 +14,7 @@ const Profile = () => {
     <Container>
       <ProfileContainer>
         <ProfileBox>
-          <ProfileImg src="/assets/images/profile/profile.svg" alt="profile" />
+          <ProfileImg src={member && member.imageUrl} alt="profile" />
           <ProfileEdit
             src="/assets/icons/profile-edit.svg"
             alt="profileedit"
