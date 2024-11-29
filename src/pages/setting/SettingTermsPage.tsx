@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { TERMS } from '@/constants/terms';
 import { useSignUpStore } from '@/store/useSignupStore';
 import Toggle from '@/components/Toggle/Toggle';
+import { useServiceConsent } from '@/hooks/user/useServiceConsent';
 
 const SettingTermsPage: React.FC = () => {
-  // 추후 서버에서 상태 가져오기
-  const { isCheckedTerms, setIsCheckedTerm } = useSignUpStore();
+  const { isCheckedTerms, setIsCheckedTerm, setAllTerms } = useSignUpStore();
+  const { data } = useServiceConsent();
+
+  useEffect(() => {
+    if (data) {
+      setAllTerms({
+        0: data.serviceTerm,
+        1: data.personalInfo,
+        2: data.emailMarketing,
+      });
+    }
+  }, [data, setAllTerms]);
 
   const handleCheck = (id: 0 | 1 | 2) => {
     setIsCheckedTerm(id, !isCheckedTerms[id]);
