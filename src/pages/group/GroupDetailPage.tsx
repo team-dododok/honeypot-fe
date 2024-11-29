@@ -14,6 +14,7 @@ import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModa
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
+import { usePatchGroup } from '@/hooks/group/usePatchGroup';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useToast } from '@/store/useToast';
@@ -26,7 +27,7 @@ const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-  const { showToast, showMoveToast } = useToast();
+  const { showMoveToast } = useToast();
   const { isDetailModalOpen, modalContent, closeDetailModal } =
     useDetailHoneyModalStore();
 
@@ -75,10 +76,24 @@ const GroupDetailPage = () => {
     setShowEditGroupNameModal(true);
   };
 
+  const { mutate } = usePatchGroup();
+
   const handleEditGroupName = () => {
-    // 그룹명 수정 API
-    setShowEditGroupNameModal(false);
-    showToast('그룹명 변경이 완료되었어요');
+    /* 그룹명 수정 API */
+
+    console.log('그룹명 수정');
+    if (!id) {
+      return;
+    }
+
+    mutate(
+      { groupId: Number(id), groupName },
+      {
+        onSuccess: () => {
+          setShowEditGroupNameModal(false);
+        },
+      }
+    );
   };
 
   const handleWriteCompliment = () => {

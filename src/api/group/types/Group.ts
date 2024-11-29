@@ -7,7 +7,6 @@ export type DeleteGroupParams = {
 };
 
 export type GroupCheckParams = {
-  id: number;
   groupName: string;
 };
 

@@ -10,7 +10,7 @@ import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { theme } from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GroupTabContainerProps {
@@ -20,7 +20,7 @@ interface GroupTabContainerProps {
   onSelectedChange: (count: number) => void;
 }
 
-const GroupTabContainer = (props: GroupTabContainerProps) => {
+const GroupTabContainer = memo((props: GroupTabContainerProps) => {
   const { type, displayType, isSelectMode, onSelectedChange } = props;
 
   const navigate = useNavigate();
@@ -31,9 +31,17 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
   /* React Query 호출 */
   const queryHook =
     type === 'receive'
-      ? useGroupReceivedPraise({ groupId, size: pageSize, page: 0 })
+      ? useGroupReceivedPraise({
+          groupId,
+          size: pageSize,
+          page: 0,
+        })
       : type === 'send'
-        ? useGroupSendPraise({ groupId, size: pageSize, page: 0 })
+        ? useGroupSendPraise({
+            groupId,
+            size: pageSize,
+            page: 0,
+          })
         : null;
 
   const data = queryHook?.data;
@@ -110,7 +118,9 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
       )}
     </Container>
   );
-};
+});
+
+GroupTabContainer.displayName = 'GroupTabContainer';
 
 export default GroupTabContainer;
 
