@@ -14,6 +14,7 @@ import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModa
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
+import { useGroupDetail } from '@/hooks/group/useGroupDetail';
 import { usePatchGroup } from '@/hooks/group/usePatchGroup';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
@@ -33,9 +34,12 @@ const GroupDetailPage = () => {
 
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
+  const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
-  const [groupName, setGroupName] = useState<string>('A그룹');
+  const initGroupName = groupInfo?.groupName;
+  const [groupName, setGroupName] = useState<string>(initGroupName || '');
+  const praiseCount = groupInfo?.praiseCount;
 
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedCount, setSelectedCount] = useState<number>(0);
@@ -70,7 +74,7 @@ const GroupDetailPage = () => {
     }
   };
 
-  const title = `${groupName} (11)`;
+  const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
 
   const handleShowEditModal = () => {
     setShowEditGroupNameModal(true);

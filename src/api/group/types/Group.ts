@@ -40,6 +40,12 @@ export type GroupResponse = {
   groupWithMembersInfos: GroupWithMembersInfo[];
 };
 
+export type GroupDetailResponse = {
+  groupId: number;
+  groupName: string;
+  praiseCount: number;
+};
+
 
 type GroupInfo = {
   groupId: number;
