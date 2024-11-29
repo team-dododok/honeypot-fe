@@ -25,7 +25,7 @@ export type GroupSearchParams = {
 };
 
 type GroupMember = {
-  id: number;
+  name: string;
 };
 
 export type GroupWithMembersInfo = {

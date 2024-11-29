@@ -10,7 +10,6 @@ import { useGroup } from '@/hooks/group/useGroup';
 import { GroupWithMembersInfo } from '@/api/group/types/Group';
 
 const MainBottomSheet = () => {
-  // TODO : 꿀단지 개수 연동
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [groups, setGroups] = useState<GroupWithMembersInfo[]>([]);
