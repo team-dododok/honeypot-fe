@@ -43,8 +43,9 @@ const GroupModal: React.FC<GroupModalProps> = ({
     addGroup(
       { groupName: localGroupName },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           refetch();
+          setSelectedGroup(data.groupId);
           setLocalGroupName('');
         },
       }

@@ -12,9 +12,10 @@ export const usePostGroup = () => {
     //   handleMutationError(error);
     //   showToast(`그룹을 추가하는 데 실패했습니다.`);
     // },
-    // onSuccess: () => {
-    //   showToast('그룹이 성공적으로 추가되었습니다.');
-    //   queryClient.invalidateQueries(['group']);
-    // },
+    onSuccess: (data) => {
+      return data;
+      // showToast('그룹이 성공적으로 추가되었습니다.');
+      // queryClient.invalidateQueries(['group']);
+    },
   });
 };

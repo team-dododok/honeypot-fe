@@ -2,13 +2,11 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { usePatchMember } from '@/hooks/user/usePatchMember';
 import { BottomWrapper } from '@/layouts/FormLayoutStyles';
-import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
 
 const EmailUpdatePage = () => {
-  const { showToast } = useToast();
   const [inputValue, setInputValue] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
