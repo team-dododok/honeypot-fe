@@ -1,3 +1,5 @@
+import { GroupReceivePraiseInfo } from '@/api/receivedPraise/types/ReceivedPraise';
+import { GroupSendPraiseInfo } from '@/api/sendPraise/types/SendPraise';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
@@ -7,7 +9,7 @@ import ToastModal from '@/components/Modal/ToastModal';
 import WarningModal from '@/components/Modal/WarningModal';
 import DisplayToggle, { ToggleType } from '@/components/Toggle/DisplayToggle';
 import TabToggle from '@/components/Toggle/TabToggle';
-import { HONEY_TOGGLE } from '@/constants/toggle';
+// import { HONEY_TOGGLE } from '@/constants/toggle';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import HoneyMoveCheckModal from '@/features/Compliment/components/Modal/HoneyMoveCheckModal';
 import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModal';
@@ -16,6 +18,8 @@ import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameM
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
 import { useGroupDetail } from '@/hooks/group/useGroupDetail';
 import { usePatchGroup } from '@/hooks/group/usePatchGroup';
+import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedPraise';
+import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useToast } from '@/store/useToast';
@@ -31,8 +35,33 @@ const GroupDetailPage = () => {
   const { showMoveToast } = useToast();
   const { isDetailModalOpen, modalContent, closeDetailModal } =
     useDetailHoneyModalStore();
+  const searchParams = new URLSearchParams(location.search);
+  const tabValue = searchParams.get('tab') || 'send';
 
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const { data: receivedPraiseData } = useGroupReceivedPraise({
+    groupId: parseInt(id || '0'),
+    size: 10,
+    page: 0,
+  });
+
+  const { data: sendPraiseData } = useGroupSendPraise({
+    groupId: parseInt(id || '0'),
+    size: 10,
+    page: 0,
+  });
+
+  const receivedPraiseCount = receivedPraiseData
+    ? receivedPraiseData.pages.flatMap(
+        (page) => (page as GroupReceivePraiseInfo).receivePraiseInfos
+      ).length
+    : 0;
+
+  const sendPraiseCount = sendPraiseData
+    ? sendPraiseData.pages.flatMap(
+        (page) => (page as GroupSendPraiseInfo).sendPraiseInfos
+      ).length
+    : 0;
+
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
@@ -84,7 +113,6 @@ const GroupDetailPage = () => {
 
   const handleEditGroupName = () => {
     /* 그룹명 수정 API */
-
     console.log('그룹명 수정');
     if (!id) {
       return;
@@ -104,16 +132,6 @@ const GroupDetailPage = () => {
     // 칭찬 작성하기 페이지 이동
     navigate('/compliment/send/target');
   };
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const tab = urlParams.get('tab');
-    if (tab === 'receive') {
-      setSelectedTab(0);
-    } else if (tab === 'send') {
-      setSelectedTab(1);
-    }
-  }, [location.search]);
 
   useEffect(() => {}, [isSelectMode]);
 
@@ -173,6 +191,10 @@ const GroupDetailPage = () => {
 
   const handleShowHoneyDeleteModal = () => {
     closeDetailModal();
+  };
+
+  const handleTabClick = (id: string) => {
+    navigate(`/group/${id}?tab=${id}`, { replace: true });
   };
 
   return (
@@ -238,12 +260,19 @@ const GroupDetailPage = () => {
         background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
       >
         <TabToggle
-          tabs={HONEY_TOGGLE}
-          selected={selectedTab}
+          // tabs={HONEY_TOGGLE}
+          tabs={[
+            { id: 0, tabName: '보낸 꿀', path: 'send', count: sendPraiseCount },
+            {
+              id: 1,
+              tabName: '받은 꿀',
+              path: 'receive',
+              count: receivedPraiseCount,
+            },
+          ]}
+          selected={tabValue === 'send' ? 0 : 1}
           originalPath={`/group/${1}`}
-          onClick={(id) => {
-            setSelectedTab(id);
-          }}
+          onClick={(id) => handleTabClick(id === 0 ? 'send' : 'receive')}
         />
         <DisplayToggleWrapper>
           <SelectButton selected={isSelectMode} onClick={handleToggle} />
@@ -254,7 +283,7 @@ const GroupDetailPage = () => {
           />
         </DisplayToggleWrapper>
         <GroupTabContainer
-          type={selectedTab === 0 ? 'send' : 'receive'}
+          type={tabValue === 'send' ? 'send' : 'receive'}
           displayType={selectedDisplay}
           isSelectMode={isSelectMode}
           onSelectedChange={(count: number) => setSelectedCount(count)}
@@ -319,7 +348,7 @@ const GroupDetailPage = () => {
       {isDetailModalOpen && (
         <DetailHoneyModal
           profileImg={modalContent.profileImg}
-          groupName="groupName"
+          groupName={groupInfo?.groupName || ''}
           date={modalContent.date}
           nameType={modalContent.nameType}
           name={modalContent.name}
