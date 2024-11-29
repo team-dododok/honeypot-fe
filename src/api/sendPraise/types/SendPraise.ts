@@ -14,7 +14,7 @@ export type GroupSendPraiseParams = {
 };
 
 export type sendPraiseInfo = {
-  sendPariseId: number;
+  sendPraiseId: number;
   name: string;
   content: string;
   stampUrl: string;

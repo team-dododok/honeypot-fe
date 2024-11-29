@@ -1,5 +1,6 @@
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { theme } from '@/styles/theme';
+import { formatDate } from '@/utils/format';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -53,25 +54,22 @@ const HoneyStamp = (props: HoneyStamp) => {
         {selected && <CheckIcon src="/assets/icons/stamp-check.svg" />}
         {selected && (
           <OverlayImage
-            src={imgUrl || '/assets/images/stamp/stamp-overlay.svg'}
+            src={'/assets/images/stamp/stamp-overlay.svg'}
             width={144}
             height={125}
             alt="꿀도장"
           />
         )}
         <HoneyStampImage
-          src={
-            imgUrl ||
-            `/assets/images/stamp/stamp-polygon${readOnly ? '-border' : ''}.svg`
-          }
+          src={`/assets/images/stamp/stamp-polygon${readOnly ? '-border' : ''}.svg`}
           width={144}
           height={125}
           alt="꿀도장"
           $isSelectMode={!readOnly}
         />
         <HoneyStampContent $isSelectMode={!readOnly}>
-          <Date>{date}</Date>
-          <StampImage src={'/assets/images/stamp/stamp-example.svg'} />
+          <Date>{formatDate(date)}</Date>
+          <StampImage src={imgUrl} />
           <Sender>
             {' '}
             {nameType === 'receiver' ? 'From. ' : 'To. '}
@@ -137,7 +135,8 @@ const Date = styled.div`
 `;
 
 const StampImage = styled.img`
-  background-color: gray;
+  width: 55px;
+  height: 55px;
 `;
 
 const Sender = styled.div`

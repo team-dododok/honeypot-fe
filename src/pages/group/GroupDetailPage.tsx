@@ -14,7 +14,7 @@ import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModa
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
-import { TOTAL_STAMP_DUMMY } from '@/features/Stamp/constants/dummy/stampDefault';
+import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
@@ -32,9 +32,8 @@ const GroupDetailPage = () => {
 
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
-  // 추후 서버로부터 받아올 데이터
-  // const [totalStamp, setTotalStamp] =
-  //   useState<StampCardProps[]>(TOTAL_STAMP_DUMMY);
+  const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
+  const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const [groupName, setGroupName] = useState<string>('A그룹');
 
   const [isSelectMode, setIsSelectMode] = useState(false);
@@ -186,10 +185,10 @@ const GroupDetailPage = () => {
           </Info>
         </Label>
         <TotalStampList>
-          {TOTAL_STAMP_DUMMY.map((item, index) => (
+          {totalStampList.map((item, index) => (
             <StampCard
               key={index}
-              imgUrl={item.imgUrl || '/assets/images/stamp/stamp-example.svg'}
+              imgUrl={item.imageUrl}
               stampName={item.stampName}
               count={item.count}
               totalCount={item.totalCount}

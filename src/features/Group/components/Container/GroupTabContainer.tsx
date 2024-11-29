@@ -1,16 +1,16 @@
+import { GroupReceivePraiseInfo } from '@/api/receivedPraise/types/ReceivedPraise';
+import { GroupSendPraiseInfo } from '@/api/sendPraise/types/SendPraise';
 import Button from '@/components/Button/Button';
 import { ToggleType } from '@/components/Toggle/DisplayToggle';
-import {
-  RECEIVE_HONEY,
-  SEND_HONEY,
-} from '@/features/Compliment/constants/dummy/honey';
 import { HoneyLetter } from '@/features/Compliment/types/HoneyLetter';
 import HoneyView from '@/features/Stamp/components/Stamp/StampView/Honey/HoneyView';
 import ListView from '@/features/Stamp/components/Stamp/StampView/List/ListView';
+import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedPraise';
+import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { theme } from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GroupTabContainerProps {
@@ -25,12 +25,57 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
 
   const navigate = useNavigate();
 
+  const groupId = 1;
+  const pageSize = 10;
+
+  /* React Query 호출 */
+  const queryHook =
+    type === 'receive'
+      ? useGroupReceivedPraise({ groupId, size: pageSize, page: 0 })
+      : type === 'send'
+        ? useGroupSendPraise({ groupId, size: pageSize, page: 0 })
+        : null;
+
+  const data = queryHook?.data;
+  console.log('data', data);
+  const fetchNextPage = queryHook?.fetchNextPage;
+  const hasNextPage = queryHook?.hasNextPage;
+  const isFetching = queryHook?.isFetching;
+
+  /* 페이지 끝까지 데이터 가져오기 */
+  useEffect(() => {
+    if (hasNextPage && !isFetching) {
+      fetchNextPage?.();
+    }
+  }, [hasNextPage, isFetching]);
+
   let letters: HoneyLetter[] = [];
   if (type === 'send') {
-    letters = SEND_HONEY;
-    // letters = [];
+    letters = data
+      ? data.pages.flatMap((page) =>
+          (page as GroupSendPraiseInfo).sendPraiseInfos.map((praise) => ({
+            id: praise.sendPraiseId,
+            sender: praise.name,
+            receiver: praise.name,
+            content: praise.content,
+            stampUrl: praise.stampUrl,
+            date: praise.sendDate,
+          }))
+        )
+      : [];
   } else if (type === 'receive') {
-    letters = RECEIVE_HONEY;
+    letters = data
+      ? data.pages.flatMap((page) =>
+          (page as GroupReceivePraiseInfo).receivePraiseInfos.map((praise) => ({
+            id: praise.receivedPraiseId,
+            sender: praise.name,
+            receiver: praise.name,
+            content: praise.content,
+            stampUrl: praise.stampUrl,
+            date: praise.receiveDate,
+          }))
+        )
+      : [];
   }
 
   const handleWriteCompliment = () => {
@@ -42,7 +87,7 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
     <Container $isStamp={letters.length === 0}>
       {letters.length === 0 ? (
         <NoStamp>
-          <img src="/assets/images/group/stamp/img-none-stamp.svg" />
+          <img src="/assets/images/group/stamp/none-stamp.svg" />
           <div>아직 받은 꿀도장이 없어요.</div>
           <Button
             text="친구에게 꿀 보내기"

@@ -13,12 +13,7 @@ const ReadLetter = (props: ReadLetterProps) => {
   return (
     <Container>
       <Content>{content}</Content>
-      <StampImage
-        src={stampImage || '/assets/images/stamp/stamp-example.svg'}
-        width={55}
-        height={55}
-        alt="꿀도장"
-      />
+      <StampImage src={stampImage} width={55} height={55} alt="꿀도장" />
     </Container>
   );
 };
@@ -46,6 +41,5 @@ const StampImage = styled.img`
   position: absolute;
   bottom: 16px;
   right: 16px;
-  background: gray;
   z-index: 0;
 `;
