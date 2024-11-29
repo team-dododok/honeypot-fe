@@ -73,11 +73,15 @@ const SignUpEmailPage = () => {
 
   const handleEmailAuthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     /* 인증 완료 상태에서 인증번호 변경 시 인증 상태 초기화 */
-    if (isAuthCompleted) {
-      setIsAuthCompleted(false);
-      setSuccessEmailAuth('');
+    const inputValue = e.target.value;
+    // 숫자만 입력되도록
+    if (/^\d*$/.test(inputValue)) {
+      if (isAuthCompleted) {
+        setIsAuthCompleted(false);
+        setSuccessEmailAuth('');
+      }
+      setEmailAuth(e.target.value);
     }
-    setEmailAuth(e.target.value);
   };
 
   const handleSendButtonClick = () => {
