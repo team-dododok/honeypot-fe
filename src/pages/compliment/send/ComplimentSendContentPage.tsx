@@ -17,6 +17,7 @@ import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
 import useKakaoSDK from '@/hooks/useKakaoSDK';
+import { getUserName } from '@/utils/storage';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const ComplimentSendContentPage = () => {
     honeyStampImage,
     clearState,
   } = useSendComplimentStore();
-  const sender = '형준';
+  const sender = getUserName() || '';
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showSelectedStampModal, setShowSelectedStampModal] =
