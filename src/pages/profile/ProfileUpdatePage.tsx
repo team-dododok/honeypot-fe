@@ -85,9 +85,16 @@ const ProfileUpdatePage = () => {
       showToast('이름과 프로필 이미지를 모두 선택해 주세요.');
       return;
     }
+    const selectedImageUrl = profileImages.find(
+      ([key]) => parseInt(key, 10) === selectedImage
+    )?.[1];
+    if (!selectedImageUrl) {
+      showToast('선택한 프로필 이미지를 확인해 주세요.');
+      return;
+    }
     const updatedData = {
       name,
-      profileImageId: selectedImage,
+      profileImageUrl: selectedImageUrl,
     };
 
     mutate(updatedData);
