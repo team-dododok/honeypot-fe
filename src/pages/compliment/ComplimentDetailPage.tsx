@@ -46,7 +46,7 @@ const ComplimentDetailPage = () => {
     }
   };
 
-  const handleSelectedGroup = (groupName: string, selectedGroupId: number) => {
+  const handleSelectedGroup = (_groupName: string, selectedGroupId: number) => {
     setShowGroupModal(false);
     // setGroupId(selectedGroupId);
 
