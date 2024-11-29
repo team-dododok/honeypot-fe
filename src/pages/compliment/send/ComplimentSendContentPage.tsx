@@ -65,7 +65,6 @@ const ComplimentSendContentPage = () => {
     /* 1. 칭찬 보내기 */
     sendPraise(
       {
-        title: '', // 나중에 request body 바뀌면 제거
         content: content,
         projectStatus: ongoing === 1,
         receiverName: receiverName,

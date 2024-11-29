@@ -1,5 +1,4 @@
 export type PostSendPraise = {
-  title: string;
   content: string;
   projectStatus: boolean;
   receiverName: string;
