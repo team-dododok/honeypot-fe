@@ -5,23 +5,35 @@ import { TERMS } from '@/constants/terms';
 import { useSignUpStore } from '@/store/useSignupStore';
 import Toggle from '@/components/Toggle/Toggle';
 import { useServiceConsent } from '@/hooks/user/useServiceConsent';
+import { usePatchServiceConsent } from '@/hooks/user/usePatchServiceConsent';
 
-const SettingTermsPage: React.FC = () => {
+const SettingTermsPage = () => {
   const { isCheckedTerms, setIsCheckedTerm, setAllTerms } = useSignUpStore();
-  const { data } = useServiceConsent();
+  const { data: serviceConsent } = useServiceConsent();
+  const { mutate: serviceConsentMutate } = usePatchServiceConsent();
 
   useEffect(() => {
-    if (data) {
+    if (serviceConsent) {
       setAllTerms({
-        0: data.serviceTerm,
-        1: data.personalInfo,
-        2: data.emailMarketing,
+        0: serviceConsent.serviceTerm,
+        1: serviceConsent.personalInfo,
+        2: serviceConsent.emailMarketing,
       });
     }
-  }, [data, setAllTerms]);
+  }, [serviceConsent, setAllTerms]);
 
   const handleCheck = (id: 0 | 1 | 2) => {
-    setIsCheckedTerm(id, !isCheckedTerms[id]);
+    const key =
+      id === 0 ? 'serviceTerm' : id === 1 ? 'personalInfo' : 'emailMarketing';
+
+    const newValue = !isCheckedTerms[id];
+
+    const updatedConsent = {
+      [key]: newValue,
+    };
+
+    setIsCheckedTerm(id, newValue);
+    serviceConsentMutate(updatedConsent);
   };
 
   return (
