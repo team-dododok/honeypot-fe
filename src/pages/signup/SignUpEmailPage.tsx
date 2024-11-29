@@ -2,6 +2,8 @@ import ProgressBar from '@/components/Bar/ProgressBar';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { EMAIL_REGEX } from '@/constants/regEx';
+import { useSendEmail } from '@/hooks/email/useSendEmail';
+import { useVerifyEmail } from '@/hooks/email/useVerifyEmail';
 import {
   BottomWrapper,
   CommonLayout,
@@ -10,7 +12,6 @@ import {
   ProgressBarWrapper,
 } from '@/layouts/FormLayoutStyles';
 import { useSignUpStore } from '@/store/useSignupStore';
-import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import { formatTime } from '@/utils/format';
 import styled from '@emotion/styled';
@@ -21,7 +22,9 @@ const SignUpEmailPage = () => {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(location.search);
   const uuid = urlParams.get('uuid');
-  const showToast = useToast((state) => state.showToast);
+
+  const { mutate: sendEmailMutate, isLoading: isSending } = useSendEmail();
+  const { mutate: verifyEmailMutate } = useVerifyEmail();
 
   const { email, setEmail } = useSignUpStore();
   const { emailAuth, setEmailAuth } = useSignUpStore();
@@ -37,7 +40,6 @@ const SignUpEmailPage = () => {
   /* 인증 메일 전송 완료 (타이머, 재전송과 인증번호 버튼 텍스트 결정) */
   const [isSend, setIsSend] = useState<boolean>(false);
   const [leftTime, setLeftTime] = useState<number>(300);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (isAuthCompleted) {
@@ -73,32 +75,41 @@ const SignUpEmailPage = () => {
   };
 
   const handleSendButtonClick = () => {
-    if (!isLoading) {
-      setIsLoading(true);
+    if (!isSending) {
       /* 인증 번호 전송 API */
-      setIsLoading(false);
-      setEmailAuth('');
-      setSuccessEmailAuth('');
-      setErrorEmailAuth('');
-      showToast('인증번호가 전송되었어요.', 3000, {
-        bottom: '81px',
+      sendEmailMutate(email, {
+        onSuccess: () => {
+          setEmailAuth('');
+          setSuccessEmailAuth('');
+          setErrorEmailAuth('');
+          setIsSend(true);
+          setIsShowAuthInput(true);
+          setLeftTime(300);
+        },
       });
-      setIsSend(true);
-      setIsShowAuthInput(true);
-      setLeftTime(300);
     }
   };
 
   const handleAuthButtonClick = () => {
     /* 인증 번호 검증 API */
-    // 성공 시
-    setSuccessEmailAuth('인증되었어요.');
-    setIsAuthCompleted(true);
-    setErrorEmailAuth('');
-    // 실패 시
-    // setSuccessEmailAuth('');
-    // setErrorEmailAuth('인증번호가 일치하지 않아요.');
-    // setErrorEmailAuth('유효시간이 만료되었어요.');
+    verifyEmailMutate(
+      { email, code: emailAuth },
+      {
+        onSuccess: () => {
+          setSuccessEmailAuth('인증되었어요.');
+          setIsAuthCompleted(true);
+          setErrorEmailAuth('');
+        },
+        onError: () => {
+          setSuccessEmailAuth('');
+          if (leftTime === 0) {
+            setErrorEmailAuth('유효시간이 만료되었어요.');
+          } else {
+            setErrorEmailAuth('인증번호가 일치하지 않아요.');
+          }
+        },
+      }
+    );
   };
 
   const handleNextButtonClick = () => {
@@ -149,7 +160,7 @@ const SignUpEmailPage = () => {
               variant="activate"
               onClick={handleSendButtonClick}
               disabled={!email || errorEmail !== ''}
-              loading={isLoading}
+              loading={isSending}
             />
           </InputWrapper>
         </LabelWrapper>

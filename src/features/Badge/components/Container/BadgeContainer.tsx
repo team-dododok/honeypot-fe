@@ -1,20 +1,23 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { BADGES } from '../../constants/badge';
 import Badge from '../Badge';
+import { useBadge } from '@/hooks/badge/useBadge';
 
 const BadgeContainer = () => {
+  const { data: badgeData } = useBadge();
+
+  const badgeList = badgeData?.allBadgeInfos || [];
+
   return (
     <BadgeGrid>
-      {BADGES.map((item) => (
+      {badgeList.map((item, index) => (
         <Badge
-          key={item.id}
-          id={item.id}
+          key={index}
+          id={index}
           name={item.name}
-          image={item.image || ''}
-          goal={item.goal}
-          isObtain={item.isObtain}
-          date={item.date}
+          image={item.imageUrl || ''}
+          description={item.description}
+          completedDate={item.completedDate}
         />
       ))}
     </BadgeGrid>

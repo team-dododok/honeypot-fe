@@ -6,7 +6,7 @@ import BadgeModal from './BadgeModal';
 import { saveImageFromRef } from '@/utils/saveImage';
 
 const Badge = (props: BadgeType) => {
-  const { id, image, name, goal, isObtain, date } = props;
+  const { id, image, name, description, completedDate } = props;
   const [isBadgeModal, setIsBadgeModal] = useState<boolean>(false);
   const badgeBoxRef = useRef<HTMLDivElement>(null);
 
@@ -29,10 +29,12 @@ const Badge = (props: BadgeType) => {
   return (
     <>
       <BadgeBox onClick={handleClickBadge}>
-        <BadgeImage src={image || '/assets/images/badge/badge.svg'} />
+        <BadgeImage
+          src={completedDate ? image : '/assets/images/badge/badge.svg'}
+        />
         <BadgeInfo>
           {name}
-          <Goal>{goal}</Goal>
+          <Goal>{description}</Goal>
         </BadgeInfo>
       </BadgeBox>
       {isBadgeModal && (
@@ -40,9 +42,8 @@ const Badge = (props: BadgeType) => {
           id={id}
           name={name}
           image={image}
-          goal={goal}
-          isObtain={isObtain}
-          date={date}
+          description={description}
+          completedDate={completedDate}
           onClose={handleClickBadge}
           onConfirm={handleSaveBadge}
           ref={badgeBoxRef}

@@ -4,9 +4,8 @@ export interface Badge {
   id: number;
   name: string;
   image?: string;
-  goal: string;
-  isObtain?: boolean;
-  date?: string;
+  description: string;
+  completedDate: string | null;
 }
 
 export interface BadgeModal extends Badge {

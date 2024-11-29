@@ -6,25 +6,29 @@ import { theme } from '@/styles/theme';
 import { formatDateToKorean } from '@/utils/format';
 
 const BadgeModal = forwardRef<HTMLDivElement, BadgeModalType>((props, ref) => {
-  const { name, image, goal, isObtain, date, onClose, onConfirm } = props;
+  const { name, image, description, completedDate, onClose, onConfirm } = props;
 
   return (
     <CloseModal
-      height={isObtain ? '400px' : '330px'}
-      gap={isObtain ? '8px' : '0px'}
-      confirmText={isObtain ? '저장' : ''}
+      height={completedDate ? '400px' : '330px'}
+      gap={completedDate ? '8px' : '0px'}
+      confirmText={completedDate ? '저장' : ''}
       buttonIcon={<img src="/assets/icons/download.svg" alt="저장" />}
       onConfirm={onConfirm}
       onClose={onClose}
     >
       <BadgeBox ref={ref}>
         <Date>
-          {isObtain && date ? `${formatDateToKorean(date)} 획득` : '미획득'}
+          {completedDate
+            ? `${formatDateToKorean(completedDate)} 획득`
+            : '미획득'}
         </Date>
-        <BadgeImage src={image || '/assets/images/badge/badge.svg'} />
+        <BadgeImage
+          src={completedDate ? image : '/assets/images/badge/badge.svg'}
+        />
         <BadgeInfo>
           {name}
-          <Goal>{goal}</Goal>
+          <Goal>{description}</Goal>
         </BadgeInfo>
       </BadgeBox>
     </CloseModal>

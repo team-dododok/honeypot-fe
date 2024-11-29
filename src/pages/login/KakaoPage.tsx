@@ -1,4 +1,4 @@
-import { postKakaoLogin } from '@/features/Login/api/kakao';
+import { postKakaoLogin } from '@/api/auth/postKakaoLogin';
 import { getKakaoAccessTokenUrl } from '@/features/Login/services/oauthToken';
 import {
   getUuid,

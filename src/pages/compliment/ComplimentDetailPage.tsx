@@ -48,10 +48,9 @@ const ComplimentDetailPage = () => {
 
   const handleSelectedGroup = (_groupName: string, selectedGroupId: number) => {
     setShowGroupModal(false);
-    // setGroupId(selectedGroupId);
 
     savePraise(
-      { praiseUuid: uuid! },
+      { praiseUuid: uuid!, groupId: selectedGroupId },
       {
         onSuccess: () => {
           navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
