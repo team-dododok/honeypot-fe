@@ -1,24 +1,19 @@
-import AlarmContainer from '@/features/Alarm/components/Container/AlarmContainer';
+// import AlarmContainer from '@/features/Alarm/components/Container/AlarmContainer';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 const AnnouncementPage = () => {
   // TODO: 공지사항 목록 API 연동
-  const [announcementList] = useState([]);
+  // const [announcementList] = useState([]);
 
   return (
     <>
-      <AlarmContainer />
-      {announcementList.length === 0 && (
-        <NoneAnnouncement>
-          <img
-            src="/assets/images/announcement/none-alarm.svg"
-            alt="공지없음"
-          />
-          <Text>새로운 공지가 없어요.</Text>
-        </NoneAnnouncement>
-      )}
+      {/* <AlarmContainer /> */}
+      <NoneAnnouncement>
+        <img src="/assets/images/announcement/none-alarm.svg" alt="공지없음" />
+        <Text>새로운 공지가 없어요.</Text>
+      </NoneAnnouncement>
     </>
   );
 };
@@ -35,6 +30,9 @@ const NoneAnnouncement = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 24px;
-  height: calc(100% - 164px);
+  text-align: center;
+  width: 100%;
+  height: 100%;
 `;

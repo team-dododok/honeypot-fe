@@ -81,6 +81,7 @@ const Title = styled.div`
   color: ${theme.colors.error60};
   ${theme.typography.subtitle1};
   text-align: center;
+  white-space: pre-line;
 `;
 
 const Description = styled.div`
