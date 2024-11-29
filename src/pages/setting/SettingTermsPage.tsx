@@ -58,6 +58,7 @@ const SettingTermsPage = () => {
               </DetailButton>
             </TermsText>
             <Toggle
+              disabled={term.id === 0 || term.id === 1}
               isChecked={isCheckedTerms[term.id as 0 | 1 | 2]}
               onChange={() => handleCheck(term.id as 0 | 1 | 2)}
             />
