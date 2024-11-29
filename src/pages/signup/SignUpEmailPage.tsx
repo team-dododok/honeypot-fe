@@ -57,6 +57,12 @@ const SignUpEmailPage = () => {
       setSuccessEmailAuth('');
       setErrorEmailAuth('');
     }
+    /* 인증 완료 상태에서 인증번호 변경 시 인증 상태 초기화 */
+    if (isAuthCompleted) {
+      setIsAuthCompleted(false);
+      setEmailAuth('');
+      setSuccessEmailAuth('');
+    }
     setEmail(e.target.value);
     if (EMAIL_REGEX.test(e.target.value) || e.target.value.length === 0) {
       setErrorEmail('');
@@ -99,6 +105,7 @@ const SignUpEmailPage = () => {
           setSuccessEmailAuth('인증되었어요.');
           setIsAuthCompleted(true);
           setErrorEmailAuth('');
+          setIsSend(false);
         },
         onError: () => {
           setSuccessEmailAuth('');
@@ -175,6 +182,7 @@ const SignUpEmailPage = () => {
                 onChange={handleEmailAuthChange}
                 successMsg={successEmailAuth}
                 errorMsg={errorEmailAuth}
+                disabled={isAuthCompleted}
               />
               <Button
                 width="120px"
