@@ -68,7 +68,6 @@ const EmailUpdatePage = () => {
   const handleVerificationButtonClick = () => {
     setIsVerificationVisible(true);
     setVerificationButtonText('재전송');
-    showToast('인증번호가 전송되었어요.');
     setTimer(300);
     setIsTimerActive(true);
     setVerificationError('');
