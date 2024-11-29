@@ -64,12 +64,7 @@ const StampList = (props: StampListProps) => {
               marginRight="0px"
             />
           )}
-          <ProfileImage
-            src={profileImg || '/assets/images/profile/profile-1-120.svg'}
-            width={48}
-            height={48}
-            alt="꿀도장"
-          />
+          <ProfileImage src={profileImg} width={48} height={48} alt="꿀도장" />
           <TextBox>
             <Name>
               {nameType === 'receiver' ? 'From. ' : 'To. '} {name}
@@ -77,12 +72,7 @@ const StampList = (props: StampListProps) => {
             <Content>{content}</Content>
           </TextBox>
         </LeftElement>
-        <StampImage
-          src={imgUrl || '/assets/images/stamp/stamp-example.svg'}
-          width={55}
-          height={55}
-          alt="꿀도장"
-        />
+        <StampImage src={imgUrl} width={55} height={55} alt="꿀도장" />
       </StampListBox>
       {showDetailHoneyModal && (
         <DetailHoneyModal
@@ -125,9 +115,7 @@ const LeftElement = styled.div`
   gap: 14px;
 `;
 
-const ProfileImage = styled.img`
-  background: gray;
-`;
+const ProfileImage = styled.img``;
 
 const TextBox = styled.div`
   display: flex;
@@ -150,6 +138,4 @@ const Content = styled.div`
   text-overflow: ellipsis;
 `;
 
-const StampImage = styled.img`
-  background: gray;
-`;
+const StampImage = styled.img``;

@@ -66,7 +66,7 @@ const HoneyView = (props: HoneyViewProps) => {
                   nameType={nameType}
                   name={letter.sender}
                   content={letter.content}
-                  imgUrl=""
+                  imgUrl={letter.stampUrl}
                   date={letter.date}
                   selected={selected.includes(letter.id)}
                   readOnly={!isSelectMode}

@@ -1,5 +1,4 @@
 export type PostSendPraise = {
-  title: string;
   content: string;
   projectStatus: boolean;
   receiverName: string;
@@ -14,7 +13,7 @@ export type GroupSendPraiseParams = {
 };
 
 export type sendPraiseInfo = {
-  sendPariseId: number;
+  sendPraiseId: number;
   name: string;
   content: string;
   stampUrl: string;

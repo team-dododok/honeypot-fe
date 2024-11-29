@@ -17,6 +17,7 @@ import PreviewModal from '@/features/Compliment/components/Modal/PreviewModal';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
 import useKakaoSDK from '@/hooks/useKakaoSDK';
+import { getUserName } from '@/utils/storage';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const ComplimentSendContentPage = () => {
     honeyStampImage,
     clearState,
   } = useSendComplimentStore();
-  const sender = '형준';
+  const sender = getUserName() || '';
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showSelectedStampModal, setShowSelectedStampModal] =
@@ -65,7 +66,6 @@ const ComplimentSendContentPage = () => {
     /* 1. 칭찬 보내기 */
     sendPraise(
       {
-        title: '', // 나중에 request body 바뀌면 제거
         content: content,
         projectStatus: ongoing === 1,
         receiverName: receiverName,

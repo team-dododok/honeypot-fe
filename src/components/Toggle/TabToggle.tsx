@@ -7,6 +7,7 @@ export interface Tabs {
   id: number;
   tabName: string;
   path: string;
+  count: number;
 }
 
 interface TabToggleProps {
@@ -33,7 +34,7 @@ const TabToggle = (props: TabToggleProps) => {
           $isSelected={selected === item.id}
           onClick={() => handleTabClick(item.id, item.path)}
         >
-          {item.tabName}
+          {`${item.tabName} (${item.count})`}
         </TabToggleButton>
       ))}
     </TabToggleContainer>

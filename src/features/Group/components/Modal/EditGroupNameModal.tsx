@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '@/components/Input/Input';
 import BottomModal from '@/components/Modal/BottomModal';
 import styled from '@emotion/styled';
@@ -6,6 +6,7 @@ import { theme } from '@/styles/theme';
 import WarningModal from '@/components/Modal/WarningModal';
 import { useToast } from '@/store/useToast';
 import { useNavigate } from 'react-router-dom';
+import { useGroupCheck } from '@/hooks/group/useGroupCheck';
 
 interface EditGroupNameModalProps {
   isVisible: boolean;
@@ -29,10 +30,35 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
 
+  useEffect(() => {
+    console.log(editGroupName);
+  }, [editGroupName]);
+
+  const {
+    data: groupCheckResponse,
+    refetch: checkGroupName,
+    isFetching,
+  } = useGroupCheck({
+    groupName: editGroupName,
+  });
+
+  useEffect(() => {
+    if (editGroupName.trim() !== '') {
+      checkGroupName();
+    }
+  }, [editGroupName, checkGroupName]);
+
+  useEffect(() => {
+    if (!isFetching && groupCheckResponse?.isDuplicate) {
+      setErrorMsg('이미 존재하는 그룹이에요');
+    } else {
+      setErrorMsg('');
+    }
+  }, [groupCheckResponse, isFetching]);
+
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 그룹명 중복 API로 체크
-    //   setErrorMsg('이미 존재하는 그룹이에요');
-    if (e.target.value.length <= 15) {
+    const newGroupName = e.target.value;
+    if (newGroupName.length <= 15) {
       setEditGroupName(e.target.value);
       setErrorMsg('');
     } else {

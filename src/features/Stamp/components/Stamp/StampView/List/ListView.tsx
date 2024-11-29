@@ -54,7 +54,7 @@ const ListView = (props: ListViewProps) => {
           nameType={nameType}
           name={letter[nameType]}
           content={letter.content}
-          imgUrl=""
+          imgUrl={letter.stampUrl}
           date={letter.date}
           selected={selected.includes(letter.id)}
           readOnly={!isSelectMode}

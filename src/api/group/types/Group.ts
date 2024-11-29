@@ -7,7 +7,6 @@ export type DeleteGroupParams = {
 };
 
 export type GroupCheckParams = {
-  id: number;
   groupName: string;
 };
 
@@ -39,6 +38,12 @@ export type GroupWithMembersInfo = {
 
 export type GroupResponse = {
   groupWithMembersInfos: GroupWithMembersInfo[];
+};
+
+export type GroupDetailResponse = {
+  groupId: number;
+  groupName: string;
+  praiseCount: number;
 };
 
 type GroupInfo = {
