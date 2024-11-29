@@ -19,10 +19,11 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
 
   const displayedMembers =
     currentGroup.groupMembers.length > 2
-      ? `${currentGroup.groupMembers.slice(0, 2).join(', ')} 외 ${
-          currentGroup.groupMembers.length - 2
-        }명`
-      : currentGroup.groupMembers.join(', ');
+      ? `${currentGroup.groupMembers
+          .map((member) => member.name)
+          .slice(0, 2)
+          .join(', ')} 외 ${currentGroup.groupMembers.length - 2}명`
+      : currentGroup.groupMembers.map((member) => member.name).join(', ');
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);

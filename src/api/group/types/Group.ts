@@ -14,9 +14,11 @@ export type GroupCheckResponse = {
   isDuplicate: boolean;
 };
 
-export type PatchGroupParams = {
-  groupId: number;
-  groupName: string;
+export type PatchGroupOrder = {
+  groupOrderList: Array<{
+    groupId: number;
+    orderIdx: number;
+  }>;
 };
 
 export type GroupSearchParams = {
@@ -24,7 +26,7 @@ export type GroupSearchParams = {
 };
 
 type GroupMember = {
-  id: number;
+  name: string;
 };
 
 export type GroupWithMembersInfo = {

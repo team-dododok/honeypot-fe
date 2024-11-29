@@ -11,17 +11,19 @@ interface GroupBoxProps {
 const GroupBox = ({ group }: GroupBoxProps) => {
   const navigate = useNavigate();
 
+  const displayedMembers =
+    group.groupMembers.length > 2
+      ? `${group.groupMembers
+          .map((member) => member.name)
+          .slice(0, 2)
+          .join(', ')} 외 ${group.groupMembers.length - 2}명`
+      : group.groupMembers.map((member) => member.name).join(', ');
+
   return (
     <Container>
       <div>
         <h1>{group.groupName} 그룹</h1>
-        <p>
-          {group.groupMembers.length > 2
-            ? `${group.groupMembers.slice(0, 2).join(', ')} 외 ${
-                group.groupMembers.length - 2
-              }명`
-            : group.groupMembers.join(', ')}
-        </p>
+        <p>{displayedMembers}</p>
       </div>
       <img
         src="/assets/icons/right-ward-arrow.svg"
