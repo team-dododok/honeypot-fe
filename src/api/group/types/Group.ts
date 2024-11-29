@@ -15,6 +15,11 @@ export type GroupCheckResponse = {
   isDuplicate: boolean;
 };
 
+export type PatchGroupParams = {
+  groupId: number;
+  groupName: string;
+};
+
 export type PatchGroupOrder = {
   groupOrderList: Array<{
     groupId: number;
