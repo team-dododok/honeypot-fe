@@ -39,7 +39,7 @@ const SignUpEmailPage = () => {
   const [isShowAuthInput, setIsShowAuthInput] = useState<boolean>(false);
   /* 인증 메일 전송 완료 (타이머, 재전송과 인증번호 버튼 텍스트 결정) */
   const [isSend, setIsSend] = useState<boolean>(false);
-  const [leftTime, setLeftTime] = useState<number>(10);
+  const [leftTime, setLeftTime] = useState<number>(300);
 
   useEffect(() => {
     if (isAuthCompleted) {
@@ -94,7 +94,7 @@ const SignUpEmailPage = () => {
           setErrorEmailAuth('');
           setIsSend(true);
           setIsShowAuthInput(true);
-          setLeftTime(10);
+          setLeftTime(300);
         },
       });
     }
