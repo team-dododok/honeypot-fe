@@ -56,9 +56,9 @@ const HoneyView = (props: HoneyViewProps) => {
         {columns.map((columnLetters, index) => (
           <Column key={index} $isEven={index % 2 !== 0} $index={index}>
             {columnLetters.map((letter) => (
-              <>
+              <React.Fragment key={letter.id}>
                 <HoneyStamp
-                  key={letter.id}
+                  id={letter.id}
                   profileImg={letter.profileImageUrl}
                   nameType={nameType}
                   name={letter.sender}
@@ -69,7 +69,7 @@ const HoneyView = (props: HoneyViewProps) => {
                   readOnly={!isSelectMode}
                   onClick={() => handleCheckHoneyStamp(letter.id)}
                 />
-              </>
+              </React.Fragment>
             ))}
           </Column>
         ))}
