@@ -44,8 +44,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 24px;
+  padding: 16px 0;
 
   ${theme.typography.detail4};
   color: ${theme.colors.gray50};
