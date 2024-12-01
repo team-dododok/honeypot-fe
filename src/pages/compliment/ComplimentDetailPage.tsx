@@ -67,7 +67,7 @@ const ComplimentDetailPage = () => {
             {name ? (
               <HelloText>반가워요, {name} 님!</HelloText>
             ) : (
-              <img
+              <LogoImage
                 src="/assets/images/logo-typo.svg"
                 width={68}
                 height={24}
@@ -163,6 +163,10 @@ const Content = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 14px;
+`;
+
+const LogoImage = styled.img`
+  cursor: pointer;
 `;
 
 const Title = styled.div`
