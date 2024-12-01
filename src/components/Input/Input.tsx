@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const Input: React.FC<InputProps> = ({
+  type,
   width,
   placeholder,
   clear = false,
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   readOnly = false,
   disabled = false,
   style,
+  pattern,
 }) => {
   const handleClear = () => {
     onChange({
@@ -26,7 +28,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <InputContainer width={width}>
       <StyledInput
-        type="text"
+        type={type ? type : 'text'}
         value={value}
         onChange={onChange}
         onClick={onClick}
@@ -36,6 +38,7 @@ const Input: React.FC<InputProps> = ({
         readOnly={readOnly}
         disabled={disabled}
         style={style}
+        pattern={pattern}
       />
       {clear && (
         <ClearIconContainer onClick={handleClear} hasValue={!!value}>

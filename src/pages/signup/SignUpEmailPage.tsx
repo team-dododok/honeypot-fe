@@ -188,6 +188,8 @@ const SignUpEmailPage = () => {
                 successMsg={successEmailAuth}
                 errorMsg={errorEmailAuth}
                 disabled={isAuthCompleted}
+                type="tel"
+                pattern="[0-9]*"
               />
               <Button
                 width="120px"
