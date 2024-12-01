@@ -133,7 +133,7 @@ const EmailUpdatePage = () => {
 
         {isVerificationVisible && (
           <>
-            <Text>인증번호를 입력해 주세요.</Text>
+            <Text>인증번호를 입력해주세요.</Text>
             <InputContainer>
               <InputBox>
                 <Input

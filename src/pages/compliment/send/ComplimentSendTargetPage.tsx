@@ -53,7 +53,7 @@ const ComplimentSendTargetPage = () => {
       setReceiverName(e.target.value);
       setErrorMsg('');
     } else {
-      setErrorMsg('8자 이내로 입력해 주세요.');
+      setErrorMsg('8자 이내로 입력해주세요.');
     }
   };
 

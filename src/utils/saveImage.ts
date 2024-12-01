@@ -2,11 +2,13 @@ import html2canvas from 'html2canvas';
 import saveAs from 'file-saver';
 
 export const saveImageFromRef = async (
-    ref: React.RefObject<HTMLElement>,
-    fileName: string,
-    width: string | null,
-    padding: string | null,
-    borderRadius: string | null,
+  ref: React.RefObject<HTMLElement>,
+  fileName: string,
+  width: string | null,
+  height: number | null,
+  padding: string | null,
+  background: string | null,
+  borderRadius: string | null
 ) => {
   if (!ref.current) return;
 
@@ -20,9 +22,9 @@ export const saveImageFromRef = async (
     virtualContainer.style.left = '-9999px';
     virtualContainer.style.padding = padding || '0px';
     virtualContainer.style.borderRadius = borderRadius || '0px';
-    virtualContainer.style.backgroundColor = '#FBFAF9';
+    virtualContainer.style.backgroundColor = background || '#FBFAF9';
     virtualContainer.style.width = width || `${div.offsetWidth + 40}px`;
-      virtualContainer.style.height = `${div.offsetHeight + 40}px`;
+    virtualContainer.style.height = `${div.offsetHeight + (height || 40)}px`;
     virtualContainer.style.overflow = 'hidden';
 
     /* 실제 내용을 복사하여 가상 컨테이너에 추가 */

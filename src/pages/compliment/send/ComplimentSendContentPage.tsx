@@ -58,7 +58,6 @@ const ComplimentSendContentPage = () => {
 
   const handleSendCompliment = () => {
     if (!receiverName || !content || !honeyStampId) {
-      alert('필수 정보를 모두 입력해주세요.');
       return;
     }
 

@@ -91,9 +91,11 @@ const ComplimentDetailPage = () => {
             <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
           </ComplimentLetter>
         </Content>
-        {groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>}
+        {groupId !== null && groupId !== -1 && (
+          <Message>이미 저장된 꿀이에요</Message>
+        )}
         <ButtonWrapper>
-          {accessToken ? (
+          {accessToken && groupId !== null ? (
             <Button
               text={
                 groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'

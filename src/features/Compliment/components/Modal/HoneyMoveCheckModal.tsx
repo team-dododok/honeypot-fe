@@ -1,7 +1,7 @@
 import ProcessModal from '@/components/Modal/ProcessModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 interface HoneyMoveCheckModalProps {
   isVisible: boolean;
@@ -46,19 +46,12 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
     },
   ];
 
-  useEffect(() => {
-    // 현재 그룹 정보 반환 (API)
-    console.log(selectedGroup);
-    // 이동 그룹 정보 반환 (API)
-    console.log(groupId);
-  }, []);
-
   if (!isVisible) return;
   return (
     <ProcessModal
       height="400px"
       title={`총 ${selectedCount}개의 꿀을 옮기시겠어요?`}
-      description="선택한 그룹이 맞는지 다시 한번 확인해 주세요!"
+      description="선택한 그룹이 맞는지 다시 한번 확인해주세요!"
       onCancel={onClose}
       onConfirm={onConfirm}
       confirmText="확인"

@@ -41,7 +41,7 @@ const GroupDetailPage = () => {
   const { id } = useParams();
   const groupId = Number(id) || 0;
   const pageSize = 10;
-  const { isDetailModalOpen, modalContent, closeDetailModal } =
+  const { isDetailModalOpen, modalContent, openDetailModal, closeDetailModal } =
     useDetailHoneyModalStore();
 
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
@@ -96,6 +96,11 @@ const GroupDetailPage = () => {
   /* 그룹명 편집 모달 */
   const [showEditGroupNameModal, setShowEditGroupNameModal] =
     useState<boolean>(false);
+
+  /* 꿀 삭제 모달 */
+  const [showDeleteWarningModal, setShowDeleteWarningModal] =
+    useState<boolean>(false);
+  const [isDetail, setIsDetail] = useState<boolean>(false);
 
   /* 받은 꿀 저장 완료 모달 */
   const [showToastModal, setShowToastModal] = useState<boolean>(false);
@@ -261,7 +266,7 @@ const GroupDetailPage = () => {
           // 받은 꿀과 보낸 꿀 갯수 업데이트
           refetchReceivedPraise();
           refetchSendPraise();
-          showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
+          showMoveToast('성공적으로 꿀을 옮겼어요', `/group/${selectedGroup}`);
         },
       });
     } else if (tabValue === 'receive') {
@@ -274,7 +279,7 @@ const GroupDetailPage = () => {
           // 받은 꿀과 보낸 꿀 갯수 업데이트
           refetchReceivedPraise();
           refetchSendPraise();
-          showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
+          showMoveToast('성공적으로 꿀을 옮겼어요', `/group/${selectedGroup}`);
         },
       });
     }
@@ -289,12 +294,29 @@ const GroupDetailPage = () => {
     setIsSelectMode(false);
   };
 
-  /* 꿀 삭제하기 */
+  /* 꿀 삭제하기 관련 함수*/
+  const handleWarningDelete = () => {
+    setShowDeleteWarningModal(true);
+    closeDetailModal();
+  };
+
+  const handleCancelWarningDelete = (isDetail: boolean) => {
+    if (isDetail) {
+      setShowDeleteWarningModal(false);
+      setSelectedIds([]);
+      openDetailModal(modalContent);
+    } else {
+      setShowDeleteWarningModal(false);
+    }
+  };
+
   const handleHoneyDelete = () => {
     if (selectedIds.length > 0) {
       deletePraise(selectedIds, {
         onSuccess: () => {
           setIsSelectMode(false);
+          setShowDeleteWarningModal(false);
+          setSelectedIds([]);
           setLetters((prevLetters) =>
             prevLetters.filter((letter) => !selectedIds.includes(letter.id))
           );
@@ -308,11 +330,6 @@ const GroupDetailPage = () => {
   };
 
   /* 꿀 상세보기 관련 함수*/
-  const handleSaveDetailHoney = () => {
-    // 이미지 저장하기
-    closeDetailModal();
-  };
-
   const handleCloseDetailHoney = () => {
     closeDetailModal();
   };
@@ -322,24 +339,6 @@ const GroupDetailPage = () => {
     setSelectedIds([id]);
     setHoneyMoveModalOpen(true);
     closeDetailModal();
-  };
-
-  /* 꿀 상세보기 > 꿀 삭제하기 */
-  const handleShowHoneyDeleteModal = (id: number) => {
-    deletePraise([id], {
-      onSuccess: () => {
-        setIsSelectMode(false);
-        setLetters((prevLetters) =>
-          prevLetters.filter((letter) => !selectedIds.includes(letter.id))
-        );
-
-        // 받은 꿀과 보낸 꿀 갯수 업데이트
-        refetchReceivedPraise();
-        refetchSendPraise();
-
-        closeDetailModal();
-      },
-    });
   };
 
   const handleTabClick = (id: string) => {
@@ -467,7 +466,10 @@ const GroupDetailPage = () => {
                 height="54px"
                 background={theme.colors.warning90}
                 disabled={selectedIds.length === 0}
-                onClick={handleHoneyDelete}
+                onClick={() => {
+                  setIsDetail(false);
+                  handleWarningDelete();
+                }}
               />
             )}
           </SelectActionButtonWrapper>
@@ -501,6 +503,20 @@ const GroupDetailPage = () => {
           />
         )}
       </BottomSheet>
+      {/* 꿀 삭제 경고 */}
+      {showDeleteWarningModal && (
+        <WarningModal
+          title={`정말 선택한 꿀을\n삭제하시겠어요?`}
+          description="삭제한 꿀은 복구할 수 없어요."
+          image={true}
+          cancelText="취소"
+          confirmText="삭제"
+          onCancel={() => {
+            handleCancelWarningDelete(isDetail);
+          }}
+          onConfirm={handleHoneyDelete}
+        />
+      )}
       {/* 꿀 상세보기 */}
       {isDetailModalOpen && (
         <DetailHoneyModal
@@ -511,13 +527,14 @@ const GroupDetailPage = () => {
           name={modalContent.name}
           content={modalContent.content}
           stampImage={modalContent.imgUrl}
-          onConfirm={handleSaveDetailHoney}
           onClose={handleCloseDetailHoney}
           onHoneyMove={() => {
             handleShowHoneyMoveModal(modalContent.id);
           }}
           onHoneyDelete={() => {
-            handleShowHoneyDeleteModal(modalContent.id);
+            setIsDetail(true);
+            setSelectedIds([modalContent.id]);
+            handleWarningDelete();
           }}
         />
       )}

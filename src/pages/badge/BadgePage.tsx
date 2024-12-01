@@ -13,7 +13,9 @@ const BadgePage = () => {
         badgeListRef,
         '꿀단지 뱃지 모아보기.png',
         null,
+        null,
         '20px',
+        null,
         null
       );
     }
