@@ -5,5 +5,5 @@ export const postGroup = async ({ groupName }: PostGroupParams) => {
   const response = await axios.post(`/api/group`, {
     groupName,
   });
-  return response.data;
+  return response.data.data;
 };
