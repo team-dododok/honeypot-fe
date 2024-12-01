@@ -76,11 +76,15 @@ const GroupDetailPage = () => {
   /* 보기 탭 */
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
-  const initGroupName = groupInfo?.groupName;
-  const [groupName, setGroupName] = useState<string>(initGroupName || '');
+  const [groupName, setGroupName] = useState<string>('');
   const praiseCount = groupInfo?.praiseCount;
-
   const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
+
+  useEffect(() => {
+    if (groupInfo?.groupName) {
+      setGroupName(groupInfo.groupName);
+    }
+  }, [groupInfo]);
 
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
@@ -204,13 +208,8 @@ const GroupDetailPage = () => {
 
   const { mutate } = usePatchGroup();
 
+  /* 그룹명 수정 API */
   const handleEditGroupName = () => {
-    /* 그룹명 수정 API */
-    console.log('그룹명 수정');
-    if (!id) {
-      return;
-    }
-
     mutate(
       { groupId: Number(id), groupName },
       {

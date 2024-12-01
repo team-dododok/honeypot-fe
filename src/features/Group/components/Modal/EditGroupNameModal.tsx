@@ -25,14 +25,10 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
 }) => {
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const [editGroupName, setEditGroupName] = useState(groupName);
+  const [editGroupName, setEditGroupName] = useState('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(editGroupName);
-  }, [editGroupName]);
 
   const {
     data: groupCheckResponse,
@@ -43,23 +39,34 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   });
 
   useEffect(() => {
-    if (editGroupName.trim() !== '') {
-      checkGroupName();
+    if (isVisible) {
+      setEditGroupName(groupName);
     }
-  }, [editGroupName, checkGroupName]);
+  }, [isVisible, groupName]);
 
   useEffect(() => {
-    if (!isFetching && groupCheckResponse?.isDuplicate) {
+    if (editGroupName.trim() !== '' && editGroupName !== groupName) {
+      checkGroupName();
+    }
+  }, [editGroupName, groupName, checkGroupName]);
+
+  useEffect(() => {
+    if (
+      !isFetching &&
+      groupCheckResponse?.isDuplicate &&
+      editGroupName !== groupName
+    ) {
       setErrorMsg('이미 존재하는 그룹이에요');
     } else {
       setErrorMsg('');
     }
-  }, [groupCheckResponse, isFetching]);
+  }, [groupCheckResponse, isFetching, editGroupName, groupName]);
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGroupName = e.target.value;
     if (newGroupName.length <= 15) {
       setEditGroupName(e.target.value);
+      setGroupName(newGroupName);
       setErrorMsg('');
     } else {
       setErrorMsg('15자 이내로 입력해주세요.');
@@ -112,7 +119,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
       )}
       {showGroupDeleteModal && (
         <WarningModal
-          title={`정말 'A그룹'을\n삭제하시겠어요?`}
+          title={`정말 '${groupName} 그룹'을\n삭제하시겠어요?`}
           description={`받은 꿀, 보낸 꿀도 모두 함께 삭제되며,\n복구할 수 없어요.`}
           image={true}
           cancelText="취소"
