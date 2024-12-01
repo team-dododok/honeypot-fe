@@ -1,10 +1,7 @@
 import {
   getAccessToken,
-  getRefreshToken,
   removeAccessToken,
   removeRefreshToken,
-  setAccessToken,
-  setRefreshToken,
 } from '@/utils/storage';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { postReissue } from './auth/postReissue';
@@ -19,7 +16,7 @@ export const authAxios: AxiosInstance = axios.create({
 authAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAccessToken();
-    if (token) {
+    if (token && config.headers) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
@@ -39,20 +36,14 @@ authAxios.interceptors.response.use(
     } = error;
     const originalRequest = error.config;
     /* 토큰 만료 시 */
-    const accessToken = getAccessToken() || '';
-    const refreshToken = getRefreshToken() || '';
     if (status === 401) {
       try {
-        const newToken = await postReissue(accessToken, refreshToken).catch(
-          (tokenError) => {
-            console.error('토큰 갱신 실패:', tokenError);
-            throw tokenError;
-          }
-        );
+        const newToken = await postReissue().catch((tokenError) => {
+          console.error('토큰 갱신 실패:', tokenError);
+          throw tokenError;
+        });
 
         if (newToken) {
-          setAccessToken(newToken.accessToken);
-          setRefreshToken(newToken.refreshToken);
           originalRequest.headers.Authorization = `Bearer ${newToken.accessToken}`;
           return authAxios(originalRequest);
         }
@@ -60,11 +51,11 @@ authAxios.interceptors.response.use(
         console.error('토큰 갱신 중 에러 발생:', refreshError);
         removeAccessToken();
         removeRefreshToken();
-        // window.location.href = '/login';
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     } else {
-      if (!accessToken) {
+      if (!getAccessToken()) {
         window.location.href = '/login';
       }
     }
