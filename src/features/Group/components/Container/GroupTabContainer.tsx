@@ -70,6 +70,7 @@ const GroupTabContainer = memo((props: GroupTabContainerProps) => {
             receiver: praise.name,
             content: praise.content,
             stampUrl: praise.stampUrl,
+            profileImageUrl: praise.profileImageUrl,
             date: praise.sendDate,
           }))
         )
@@ -83,6 +84,7 @@ const GroupTabContainer = memo((props: GroupTabContainerProps) => {
             receiver: praise.name,
             content: praise.content,
             stampUrl: praise.stampUrl,
+            profileImageUrl: praise.profileImageUrl,
             date: praise.receiveDate,
           }))
         )

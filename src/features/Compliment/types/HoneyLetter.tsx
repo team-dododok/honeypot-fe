@@ -4,5 +4,6 @@ export interface HoneyLetter {
   receiver: string;
   content: string;
   stampUrl: string;
+  profileImageUrl: string;
   date: string;
 }

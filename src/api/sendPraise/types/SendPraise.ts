@@ -17,6 +17,7 @@ export type sendPraiseInfo = {
   name: string;
   content: string;
   stampUrl: string;
+  profileImageUrl: string;
   sendDate: string;
 };
 

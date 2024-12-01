@@ -59,7 +59,7 @@ const HoneyView = (props: HoneyViewProps) => {
               <>
                 <HoneyStamp
                   key={letter.id}
-                  profileImg=""
+                  profileImg={letter.profileImageUrl}
                   nameType={nameType}
                   name={letter.sender}
                   content={letter.content}
