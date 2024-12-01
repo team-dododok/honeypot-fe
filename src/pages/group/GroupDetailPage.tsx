@@ -16,6 +16,7 @@ import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameM
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
 import { useGroupDetail } from '@/hooks/group/useGroupDetail';
 import { usePatchGroup } from '@/hooks/group/usePatchGroup';
+import { useDeleteReceivedPraise } from '@/hooks/receivedPraise/useDeleteReceivedPraise';
 import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedPraise';
 import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
@@ -59,6 +60,7 @@ const GroupDetailPage = () => {
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
+  const { mutate: deletePraise } = useDeleteReceivedPraise();
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const initGroupName = groupInfo?.groupName;
   const [groupName, setGroupName] = useState<string>(initGroupName || '');
@@ -170,7 +172,10 @@ const GroupDetailPage = () => {
 
   const handleHoneyDelete = () => {
     // 꿀 삭제하기
-    console.log(selectedIds);
+    if (selectedIds.length > 0) {
+      deletePraise(selectedIds);
+      console.log('삭제된 꿀: ', selectedIds);
+    }
   };
 
   /* 꿀 상세보기 관련 함수*/
@@ -297,23 +302,25 @@ const GroupDetailPage = () => {
               disabled={selectedIds.length === 0}
               onClick={handleHoneyMove}
             />
-            <Button
-              text=""
-              variant="activate"
-              icon={
-                <img
-                  src="/assets/icons/trash.svg"
-                  width={28}
-                  height={28}
-                  alt="삭제"
-                />
-              }
-              width="54px"
-              height="54px"
-              background={theme.colors.warning90}
-              disabled={selectedIds.length === 0}
-              onClick={handleHoneyDelete}
-            />
+            {tabValue === 'receive' && (
+              <Button
+                text=""
+                variant="activate"
+                icon={
+                  <img
+                    src="/assets/icons/trash.svg"
+                    width={28}
+                    height={28}
+                    alt="삭제"
+                  />
+                }
+                width="54px"
+                height="54px"
+                background={theme.colors.warning90}
+                disabled={selectedIds.length === 0}
+                onClick={handleHoneyDelete}
+              />
+            )}
           </SelectActionButtonWrapper>
         )}
         {/* 꿀 옮기기 그룹 선택 모달 */}
