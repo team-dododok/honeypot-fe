@@ -39,7 +39,7 @@ const SignUpEmailPage = () => {
   const [isShowAuthInput, setIsShowAuthInput] = useState<boolean>(false);
   /* 인증 메일 전송 완료 (타이머, 재전송과 인증번호 버튼 텍스트 결정) */
   const [isSend, setIsSend] = useState<boolean>(false);
-  const [leftTime, setLeftTime] = useState<number>(300);
+  const [leftTime, setLeftTime] = useState<number>(10);
 
   useEffect(() => {
     if (isAuthCompleted) {
@@ -94,7 +94,7 @@ const SignUpEmailPage = () => {
           setErrorEmailAuth('');
           setIsSend(true);
           setIsShowAuthInput(true);
-          setLeftTime(300);
+          setLeftTime(10);
         },
       });
     }
@@ -142,6 +142,7 @@ const SignUpEmailPage = () => {
 
     if (leftTime === 0) {
       setIsSend(false);
+      setErrorEmailAuth('유효시간이 만료되었어요.');
     }
 
     return () => {
@@ -193,7 +194,7 @@ const SignUpEmailPage = () => {
                 text={isAuthCompleted ? '인증 완료' : '인증하기'}
                 variant="activate"
                 onClick={handleAuthButtonClick}
-                disabled={!emailAuth || isAuthCompleted}
+                disabled={!emailAuth || isAuthCompleted || leftTime === 0}
               />
             </InputWrapper>
             {isSend && <Timer>{formatTime(leftTime)}</Timer>}
