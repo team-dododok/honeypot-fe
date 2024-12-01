@@ -254,12 +254,26 @@ const GroupDetailPage = () => {
       console.log(patchData);
       sendGroupChange(patchData, {
         onSuccess: () => {
+          setLetters((prevLetters) =>
+            prevLetters.filter((letter) => !selectedIds.includes(letter.id))
+          );
+
+          // 받은 꿀과 보낸 꿀 갯수 업데이트
+          refetchReceivedPraise();
+          refetchSendPraise();
           showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
         },
       });
     } else if (tabValue === 'receive') {
       receiveGroupChange(patchData, {
         onSuccess: () => {
+          setLetters((prevLetters) =>
+            prevLetters.filter((letter) => !selectedIds.includes(letter.id))
+          );
+
+          // 받은 꿀과 보낸 꿀 갯수 업데이트
+          refetchReceivedPraise();
+          refetchSendPraise();
           showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
         },
       });
@@ -284,7 +298,6 @@ const GroupDetailPage = () => {
           setLetters((prevLetters) =>
             prevLetters.filter((letter) => !selectedIds.includes(letter.id))
           );
-          console.log('삭제된 꿀: ', selectedIds);
 
           // 받은 꿀과 보낸 꿀 갯수 업데이트
           refetchReceivedPraise();
@@ -304,12 +317,14 @@ const GroupDetailPage = () => {
     closeDetailModal();
   };
 
-  const handleShowHoneyMoveModal = () => {
+  /* 꿀 상세보기 > 꿀 옮기기 */
+  const handleShowHoneyMoveModal = (id: number) => {
+    setSelectedIds([id]);
     setHoneyMoveModalOpen(true);
     closeDetailModal();
   };
 
-  // 삭제 경고 모달 추가
+  /* 꿀 상세보기 > 꿀 삭제하기 */
   const handleShowHoneyDeleteModal = (id: number) => {
     deletePraise([id], {
       onSuccess: () => {
@@ -317,7 +332,11 @@ const GroupDetailPage = () => {
         setLetters((prevLetters) =>
           prevLetters.filter((letter) => !selectedIds.includes(letter.id))
         );
-        console.log('삭제된 꿀: ', selectedIds);
+
+        // 받은 꿀과 보낸 꿀 갯수 업데이트
+        refetchReceivedPraise();
+        refetchSendPraise();
+
         closeDetailModal();
       },
     });
@@ -494,7 +513,9 @@ const GroupDetailPage = () => {
           stampImage={modalContent.imgUrl}
           onConfirm={handleSaveDetailHoney}
           onClose={handleCloseDetailHoney}
-          onHoneyMove={handleShowHoneyMoveModal}
+          onHoneyMove={() => {
+            handleShowHoneyMoveModal(modalContent.id);
+          }}
           onHoneyDelete={() => {
             handleShowHoneyDeleteModal(modalContent.id);
           }}
