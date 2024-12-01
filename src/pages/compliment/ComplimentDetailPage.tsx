@@ -93,25 +93,25 @@ const ComplimentDetailPage = () => {
           >
             <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
           </ComplimentLetter>
+          <ButtonWrapper>
+            {groupId !== null && groupId !== -1 && (
+              <Message>이미 저장된 꿀이에요</Message>
+            )}
+            {accessToken && groupId !== null ? (
+              <Button
+                text={
+                  groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
+                }
+                onClick={handleClickButton}
+              />
+            ) : (
+              <KakaoButton
+                text="카카오 로그인하고 꿀 저장하기"
+                onClick={handleLogin}
+              />
+            )}
+          </ButtonWrapper>
         </Content>
-        {groupId !== null && groupId !== -1 && (
-          <Message>이미 저장된 꿀이에요</Message>
-        )}
-        <ButtonWrapper>
-          {accessToken && groupId !== null ? (
-            <Button
-              text={
-                groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
-              }
-              onClick={handleClickButton}
-            />
-          ) : (
-            <KakaoButton
-              text="카카오 로그인하고 꿀 저장하기"
-              onClick={handleLogin}
-            />
-          )}
-        </ButtonWrapper>
       </CenterLayout>
       {showGroupModal && (
         <GroupModal
@@ -131,13 +131,28 @@ export default ComplimentDetailPage;
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
   position: relative;
+  box-sizing: border-box;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    position: absolute;
+    right: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 26px;
+    background: #66605b78;
+    background-clip: padding-box;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 `;
 
 const Content = styled.div`
@@ -146,8 +161,8 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 14px;
 `;
 
 const Title = styled.div`
