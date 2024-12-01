@@ -10,6 +10,7 @@ import { useGroupCheck } from '@/hooks/group/useGroupCheck';
 
 interface EditGroupNameModalProps {
   isVisible: boolean;
+  groupName: string;
   setGroupName: React.Dispatch<React.SetStateAction<string>>;
   onClose: () => void;
   onConfirm: () => void;
@@ -17,6 +18,7 @@ interface EditGroupNameModalProps {
 
 const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   isVisible,
+  groupName,
   setGroupName,
   onClose,
   onConfirm,
