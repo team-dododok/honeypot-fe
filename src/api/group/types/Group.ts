@@ -28,7 +28,7 @@ export type GroupSearchParams = {
 };
 
 type GroupMember = {
-  id: number;
+  name: number;
 };
 
 export type GroupWithMembersInfo = {
@@ -50,7 +50,7 @@ export type GroupDetailResponse = {
   praiseCount: number;
 };
 
-type GroupInfo = {
+export type GroupInfo = {
   groupId: number;
   groupName: string;
 };
