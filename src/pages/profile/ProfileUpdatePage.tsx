@@ -34,20 +34,18 @@ const ProfileUpdatePage = () => {
     : [];
 
   useEffect(() => {
-    if (member) {
+    if (member && profileImages.length > 0 && selectedImage === null) {
       setName(member.name);
       setEmail(member.email);
 
-      if (selectedImage === null) {
-        const matchingImage = profileImages.find(
-          ([, url]) => url === member.imageUrl
-        );
-        if (matchingImage) {
-          setSelectedImage(parseInt(matchingImage[0], 10));
-        }
+      const matchingImage = profileImages.find(
+        ([, url]) => url === member.imageUrl
+      );
+      if (matchingImage) {
+        setSelectedImage(parseInt(matchingImage[0], 10));
       }
     }
-  }, [member]);
+  }, [member, profileImages]);
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
