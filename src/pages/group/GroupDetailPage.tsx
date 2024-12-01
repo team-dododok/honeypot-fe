@@ -1,3 +1,5 @@
+import { GroupReceivePraiseInfo } from '@/api/receivedPraise/types/ReceivedPraise';
+import { GroupSendPraiseInfo } from '@/api/sendPraise/types/SendPraise';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
@@ -11,6 +13,7 @@ import TabToggle from '@/components/Toggle/TabToggle';
 import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
 import HoneyMoveCheckModal from '@/features/Compliment/components/Modal/HoneyMoveCheckModal';
 import HoneyMoveModal from '@/features/Compliment/components/Modal/HoneyMoveModal';
+import { HoneyLetter } from '@/features/Compliment/types/HoneyLetter';
 import GroupTabContainer from '@/features/Group/components/Container/GroupTabContainer';
 import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameModal';
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
@@ -24,51 +27,60 @@ import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  /* 그룹 ID, 페이지 크기 */
   const { id } = useParams();
+  const groupId = Number(id) || 0;
+  const pageSize = 10;
   const { showMoveToast } = useToast();
   const { isDetailModalOpen, modalContent, closeDetailModal } =
     useDetailHoneyModalStore();
-  const searchParams = new URLSearchParams(location.search);
-  const tabValue = searchParams.get('tab') || 'send';
 
-  const { data: receivedPraiseData } = useGroupReceivedPraise({
-    groupId: parseInt(id || '0'),
-    size: 10,
-    page: 0,
-  });
-
-  const { data: sendPraiseData } = useGroupSendPraise({
-    groupId: parseInt(id || '0'),
-    size: 10,
-    page: 0,
-  });
-
-  const receivedPraiseCount = receivedPraiseData
-    ? receivedPraiseData.pages[0].pageInfo.totalElements
-    : 0;
-
-  const sendPraiseCount = sendPraiseData
-    ? sendPraiseData.pages[0].pageInfo.totalElements
-    : 0;
-
-  const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
   const { mutate: deletePraise } = useDeleteReceivedPraise();
+  const { data: receivedPraiseData, refetch: refetchReceivedPraise } =
+    useGroupReceivedPraise({
+      groupId: parseInt(id || '0'),
+      size: 10,
+      page: 0,
+    });
+  const { data: sendPraiseData, refetch: refetchSendPraise } =
+    useGroupSendPraise({
+      groupId: parseInt(id || '0'),
+      size: 10,
+      page: 0,
+    });
+
+  /* 보낸 꿀, 받은 꿀 탭 */
+  const searchParams = new URLSearchParams(location.search);
+  const tabValue = searchParams.get('tab') || 'send';
+
+  /* 받은 꿀, 보낸 꿀 갯수 */
+  const [receivedPraiseCount, setReceivedPraiseCount] = useState<number>(0);
+  const [sendPraiseCount, setSendPraiseCount] = useState<number>(0);
+
+  const [letters, setLetters] = useState<HoneyLetter[]>([]);
+
+  /* 보기 탭 */
+  const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const initGroupName = groupInfo?.groupName;
   const [groupName, setGroupName] = useState<string>(initGroupName || '');
   const praiseCount = groupInfo?.praiseCount;
 
+  const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
+
+  /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
+  /* 모달 */
   const [isHoneyMoveModalOpen, setHoneyMoveModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [isHoneyMoveCheckModalOpen, setHoneyMoveCheckModalOpen] =
@@ -80,6 +92,80 @@ const GroupDetailPage = () => {
 
   const [showToastModal, setShowToastModal] = useState<boolean>(false);
 
+  /* React Query 호출 */
+  const queryHook =
+    tabValue === 'receive'
+      ? useGroupReceivedPraise({
+          groupId,
+          size: pageSize,
+          page: 0,
+        })
+      : tabValue === 'send'
+        ? useGroupSendPraise({
+            groupId,
+            size: pageSize,
+            page: 0,
+          })
+        : null;
+
+  const data = queryHook?.data;
+  const fetchNextPage = queryHook?.fetchNextPage;
+  const hasNextPage = queryHook?.hasNextPage;
+  const isFetching = queryHook?.isFetching;
+
+  /* 페이지 끝까지 데이터 가져오기 */
+  useEffect(() => {
+    if (hasNextPage && !isFetching) {
+      fetchNextPage?.();
+    }
+  }, [hasNextPage, isFetching]);
+
+  useEffect(() => {
+    if (tabValue === 'send') {
+      setLetters(
+        data
+          ? data.pages.flatMap((page) =>
+              (page as GroupSendPraiseInfo).sendPraiseInfos.map((praise) => ({
+                id: praise.sendPraiseId,
+                sender: praise.name,
+                receiver: praise.name,
+                content: praise.content,
+                stampUrl: praise.stampUrl,
+                profileImageUrl: praise.profileImageUrl,
+                date: praise.sendDate,
+              }))
+            )
+          : []
+      );
+    } else if (tabValue === 'receive') {
+      setLetters(
+        data
+          ? data.pages.flatMap((page) =>
+              (page as GroupReceivePraiseInfo).receivePraiseInfos.map(
+                (praise) => ({
+                  id: praise.receivePraiseId,
+                  sender: praise.name,
+                  receiver: praise.name,
+                  content: praise.content,
+                  stampUrl: praise.stampUrl,
+                  profileImageUrl: praise.profileImageUrl,
+                  date: praise.receiveDate,
+                })
+              )
+            )
+          : []
+      );
+    }
+  }, [tabValue, data]);
+
+  useEffect(() => {
+    setReceivedPraiseCount(
+      receivedPraiseData?.pages[0].pageInfo.totalElements || 0
+    );
+    setSendPraiseCount(sendPraiseData?.pages[0].pageInfo.totalElements || 0);
+  }, [receivedPraiseData, sendPraiseData]);
+
+  /* 받은 꿀 저장 완료 안내 모달 */
   useEffect(() => {
     if (location.state?.showToast) {
       setShowToastModal(true);
@@ -89,7 +175,7 @@ const GroupDetailPage = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [location.state]);
+  }, [location.state?.showToast]);
 
   const handleToggle = () => {
     if (isSelectMode && selectedIds.length > 0) {
@@ -98,8 +184,6 @@ const GroupDetailPage = () => {
       setIsSelectMode(!isSelectMode);
     }
   };
-
-  const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
 
   const handleShowEditModal = () => {
     setShowEditGroupNameModal(true);
@@ -125,11 +209,8 @@ const GroupDetailPage = () => {
   };
 
   const handleWriteCompliment = () => {
-    // 칭찬 작성하기 페이지 이동
     navigate('/compliment/send/target');
   };
-
-  useEffect(() => {}, [isSelectMode]);
 
   /* 꿀 옮기기 프로세스 관련 함수 */
   const handleHoneyMove = () => {
@@ -158,9 +239,8 @@ const GroupDetailPage = () => {
     // 꿀 옮기기 API
     setHoneyMoveCheckModalOpen(false);
     handleCandleHoneyMove();
-
+    setIsSelectMode(false);
     // 꿀 옮기기 성공 시 토스트 메세지
-
     showMoveToast('성공적으로 꿀을 옮겼어요', `/group/${selectedGroup}`);
   };
 
@@ -170,11 +250,22 @@ const GroupDetailPage = () => {
     setIsSelectMode(false);
   };
 
+  /* 꿀 삭제하기 */
   const handleHoneyDelete = () => {
-    // 꿀 삭제하기
     if (selectedIds.length > 0) {
-      deletePraise(selectedIds);
-      console.log('삭제된 꿀: ', selectedIds);
+      deletePraise(selectedIds, {
+        onSuccess: () => {
+          setIsSelectMode(false);
+          setLetters((prevLetters) =>
+            prevLetters.filter((letter) => !selectedIds.includes(letter.id))
+          );
+          console.log('삭제된 꿀: ', selectedIds);
+
+          // 받은 꿀과 보낸 꿀 갯수 업데이트
+          refetchReceivedPraise();
+          refetchSendPraise();
+        },
+      });
     }
   };
 
@@ -193,13 +284,27 @@ const GroupDetailPage = () => {
     closeDetailModal();
   };
 
-  const handleShowHoneyDeleteModal = () => {
-    closeDetailModal();
+  // 삭제 경고 모달 추가
+  const handleShowHoneyDeleteModal = (id: number) => {
+    deletePraise([id], {
+      onSuccess: () => {
+        setIsSelectMode(false);
+        setLetters((prevLetters) =>
+          prevLetters.filter((letter) => !selectedIds.includes(letter.id))
+        );
+        console.log('삭제된 꿀: ', selectedIds);
+        closeDetailModal();
+      },
+    });
   };
 
   const handleTabClick = (id: string) => {
     navigate(`/group/${id}?tab=${id}`, { replace: true });
   };
+
+  const onSelectedChange = useCallback((ids: number[]) => {
+    setSelectedIds(ids);
+  }, []);
 
   return (
     <Layout>
@@ -287,11 +392,11 @@ const GroupDetailPage = () => {
           />
         </DisplayToggleWrapper>
         <GroupTabContainer
-          type={tabValue === 'send' ? 'send' : 'receive'}
           displayType={selectedDisplay}
           isSelectMode={isSelectMode}
           selectedIds={selectedIds}
-          onSelectedChange={(ids: number[]) => setSelectedIds(ids)}
+          onSelectedChange={onSelectedChange}
+          letters={letters}
         />
         {/* 꿀 이동 및 삭제 버튼 */}
         {isSelectMode && (
@@ -365,7 +470,9 @@ const GroupDetailPage = () => {
           onConfirm={handleSaveDetailHoney}
           onClose={handleCloseDetailHoney}
           onHoneyMove={handleShowHoneyMoveModal}
-          onHoneyDelete={handleShowHoneyDeleteModal}
+          onHoneyDelete={() => {
+            handleShowHoneyDeleteModal(modalContent.id);
+          }}
         />
       )}
       {/* 꿀 저장 성공 모달*/}

@@ -60,7 +60,7 @@ authAxios.interceptors.response.use(
         console.error('토큰 갱신 중 에러 발생:', refreshError);
         removeAccessToken();
         removeRefreshToken();
-        window.location.href = '/login';
+        // window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     } else {
