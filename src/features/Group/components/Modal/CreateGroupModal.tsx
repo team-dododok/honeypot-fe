@@ -30,7 +30,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
       setCreateGroup(e.target.value);
       setErrorMsg('');
     } else {
-      setErrorMsg('15자 이내로 입력해 주세요.');
+      setErrorMsg('15자 이내로 입력해주세요.');
     }
   };
 

@@ -154,7 +154,7 @@ const SignUpEmailPage = () => {
       <ProgressBarWrapper>
         <ProgressBar current={2} total={3} />
       </ProgressBarWrapper>
-      <Label marginBottom="32px">이메일 주소를 입력해 주세요.</Label>
+      <Label marginBottom="32px">이메일 주소를 입력해주세요.</Label>
       <Container>
         <LabelWrapper>
           <InputWrapper>

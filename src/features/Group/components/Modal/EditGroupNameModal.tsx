@@ -62,7 +62,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
       setEditGroupName(e.target.value);
       setErrorMsg('');
     } else {
-      setErrorMsg('15자 이내로 입력해 주세요.');
+      setErrorMsg('15자 이내로 입력해주세요.');
     }
   };
 
@@ -102,7 +102,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
           <DeleteButton onClick={handleShowDeleteModal}>삭제</DeleteButton>
           <Input
             width="100%"
-            placeholder="새 그룹명을 입력해 주세요."
+            placeholder="새 그룹명을 입력해주세요."
             clear={true}
             value={editGroupName}
             onChange={handleGroupChange}

@@ -38,7 +38,7 @@ const HoneyMoveModal = (props: HoneyMoveModalProps) => {
     <ProcessModal
       height="400px"
       title="다른 그룹으로 꿀 옮기기"
-      description="옮기고 싶은 그룹을 선택해 주세요."
+      description="옮기고 싶은 그룹을 선택해주세요."
       confirmText="다음"
       onCancel={onClose}
       onConfirm={() => onConfirm(selectedGroup)}

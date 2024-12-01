@@ -58,7 +58,7 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
     <ProcessModal
       height="400px"
       title={`총 ${selectedCount}개의 꿀을 옮기시겠어요?`}
-      description="선택한 그룹이 맞는지 다시 한번 확인해 주세요!"
+      description="선택한 그룹이 맞는지 다시 한번 확인해주세요!"
       onCancel={onClose}
       onConfirm={onConfirm}
       confirmText="확인"
