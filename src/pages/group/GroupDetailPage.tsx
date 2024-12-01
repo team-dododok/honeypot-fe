@@ -1,3 +1,4 @@
+import { PatchGroupChange } from '@/api/group/types/Group';
 import { GroupReceivePraiseInfo } from '@/api/receivedPraise/types/ReceivedPraise';
 import { GroupSendPraiseInfo } from '@/api/sendPraise/types/SendPraise';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
@@ -19,6 +20,8 @@ import EditGroupNameModal from '@/features/Group/components/Modal/EditGroupNameM
 import StampCard from '@/features/Stamp/components/Stamp/StampCard';
 import { useGroupDetail } from '@/hooks/group/useGroupDetail';
 import { usePatchGroup } from '@/hooks/group/usePatchGroup';
+import { usePatchReceiveGroupChange } from '@/hooks/group/usePatchReceiveGroupChange';
+import { usePatchSendGroupChange } from '@/hooks/group/usePatchSendGroupChange';
 import { useDeleteReceivedPraise } from '@/hooks/receivedPraise/useDeleteReceivedPraise';
 import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedPraise';
 import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
@@ -33,11 +36,11 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { showMoveToast } = useToast();
   /* 그룹 ID, 페이지 크기 */
   const { id } = useParams();
   const groupId = Number(id) || 0;
   const pageSize = 10;
-  const { showMoveToast } = useToast();
   const { isDetailModalOpen, modalContent, closeDetailModal } =
     useDetailHoneyModalStore();
 
@@ -56,6 +59,9 @@ const GroupDetailPage = () => {
       size: 10,
       page: 0,
     });
+
+  const { mutate: sendGroupChange } = usePatchSendGroupChange();
+  const { mutate: receiveGroupChange } = usePatchReceiveGroupChange();
 
   /* 보낸 꿀, 받은 꿀 탭 */
   const searchParams = new URLSearchParams(location.search);
@@ -80,16 +86,18 @@ const GroupDetailPage = () => {
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
-  /* 모달 */
+  /* 꿀 옮기기 모달 */
   const [isHoneyMoveModalOpen, setHoneyMoveModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
   const [isHoneyMoveCheckModalOpen, setHoneyMoveCheckModalOpen] =
     useState(false);
-
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
+
+  /* 그룹명 편집 모달 */
   const [showEditGroupNameModal, setShowEditGroupNameModal] =
     useState<boolean>(false);
 
+  /* 받은 꿀 저장 완료 모달 */
   const [showToastModal, setShowToastModal] = useState<boolean>(false);
 
   /* React Query 호출 */
@@ -235,13 +243,30 @@ const GroupDetailPage = () => {
     setSelectedGroup(null);
   };
 
+  /* 꿀 옮기기 */
   const handleHoneyMoveCheckModalConfirm = async () => {
-    // 꿀 옮기기 API
+    const patchData: PatchGroupChange = {
+      praiseIdList: selectedIds,
+      groupId: selectedGroup || 0,
+    };
+
+    if (tabValue === 'send') {
+      console.log(patchData);
+      sendGroupChange(patchData, {
+        onSuccess: () => {
+          showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
+        },
+      });
+    } else if (tabValue === 'receive') {
+      receiveGroupChange(patchData, {
+        onSuccess: () => {
+          showMoveToast('성공적으로 꿀을 옮겼어요.', `/group/${selectedGroup}`);
+        },
+      });
+    }
+
     setHoneyMoveCheckModalOpen(false);
     handleCandleHoneyMove();
-    setIsSelectMode(false);
-    // 꿀 옮기기 성공 시 토스트 메세지
-    showMoveToast('성공적으로 꿀을 옮겼어요', `/group/${selectedGroup}`);
   };
 
   /* 꿀 옮기기 취소 관련 함수 */
