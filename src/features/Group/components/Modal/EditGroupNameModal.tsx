@@ -10,7 +10,6 @@ import { useGroupCheck } from '@/hooks/group/useGroupCheck';
 
 interface EditGroupNameModalProps {
   isVisible: boolean;
-  groupName: string;
   setGroupName: React.Dispatch<React.SetStateAction<string>>;
   onClose: () => void;
   onConfirm: () => void;
@@ -18,14 +17,13 @@ interface EditGroupNameModalProps {
 
 const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   isVisible,
-  groupName,
   setGroupName,
   onClose,
   onConfirm,
 }) => {
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const [editGroupName, setEditGroupName] = useState(groupName);
+  const [editGroupName, setEditGroupName] = useState('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
@@ -67,12 +65,14 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   };
 
   const handleCancelEdit = () => {
-    setEditGroupName(groupName);
+    setEditGroupName('');
+    setErrorMsg('');
     onClose();
   };
 
   const handleSaveGroupName = () => {
     setGroupName(editGroupName);
+    setErrorMsg('');
     onConfirm();
   };
 
@@ -96,7 +96,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
           confirmText="저장"
           onCancel={handleCancelEdit}
           onConfirm={handleSaveGroupName}
-          confirmDisabled={editGroupName.length === 0}
+          confirmDisabled={editGroupName.length === 0 || errorMsg !== ''}
           isVisible={isVisible}
         >
           <DeleteButton onClick={handleShowDeleteModal}>삭제</DeleteButton>
