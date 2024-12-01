@@ -7,7 +7,7 @@ export const useDeleteReceivedPraise = () => {
   
   return useMutation((ids: number[]) => deleteReceivedPraise(ids), {
     onSuccess: () => {
-      showToast('선택한 꿀을 성공적으로 삭제하였습니다.');
+      showToast('선택한 꿀을 삭제했어요');
     },
   });
 };
