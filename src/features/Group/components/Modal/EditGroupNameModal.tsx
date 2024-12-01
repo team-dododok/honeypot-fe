@@ -5,8 +5,9 @@ import styled from '@emotion/styled';
 import { theme } from '@/styles/theme';
 import WarningModal from '@/components/Modal/WarningModal';
 import { useToast } from '@/store/useToast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGroupCheck } from '@/hooks/group/useGroupCheck';
+import { useDeleteGroup } from '@/hooks/group/useDeleteGroup';
 
 interface EditGroupNameModalProps {
   isVisible: boolean;
@@ -25,6 +26,8 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
 }) => {
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const { id: groupId } = useParams();
+  const { mutate: groupDelete } = useDeleteGroup();
   const [editGroupName, setEditGroupName] = useState('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
@@ -91,6 +94,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
 
   const handleDelteGroup = () => {
     // 그룹 삭제 API
+    groupDelete(groupId + '');
     setShowGroupDeleteModal(false);
     showToast('그룹을 삭제했어요');
     navigate('/');
