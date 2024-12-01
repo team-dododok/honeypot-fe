@@ -33,7 +33,7 @@ export default ComplimentSendCompletePage;
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,5 +50,6 @@ const Title = styled.h1`
 
 const Image = styled.object`
   width: 100%;
+  padding: 0 34px;
   margin-bottom: 48px;
 `;

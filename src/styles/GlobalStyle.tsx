@@ -30,9 +30,9 @@ const GlobalStyle = () => (
         overflow-y: auto;
       }
 
-      ::-webkit-scrollbar {
+      /* ::-webkit-scrollbar {
         display: none;
-      }
+      } */
 
       a {
         color: inherit;

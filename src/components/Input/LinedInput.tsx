@@ -6,15 +6,22 @@ interface LinedInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   lineCount?: number;
   lineHeight?: number;
+  lineColor?: string;
 }
 
 const LinedInput: React.FC<LinedInputProps> = ({
   lineCount = 9,
   lineHeight = 26,
+  lineColor,
   ...props
 }) => {
   return (
-    <StyledTextarea lineCount={lineCount} lineHeight={lineHeight} {...props} />
+    <StyledTextarea
+      lineCount={lineCount}
+      lineHeight={lineHeight}
+      lineColor={lineColor}
+      {...props}
+    />
   );
 };
 
@@ -23,17 +30,18 @@ export default LinedInput;
 const StyledTextarea = styled.textarea<{
   lineCount: number;
   lineHeight: number;
+  lineColor?: string;
 }>`
   width: 100%;
   height: ${({ lineCount, lineHeight }) =>
     `calc(${lineHeight}px * ${lineCount})`};
   padding: 0;
   background-color: transparent;
-  background-image: ${({ lineHeight }) => `
+  background-image: ${({ lineHeight, lineColor }) => `
     repeating-linear-gradient(
       to bottom,
-      ${theme.colors.gray10},
-      ${theme.colors.gray10} 1px,
+      ${lineColor || theme.colors.gray10},
+      ${lineColor || theme.colors.gray10} 1px,
       transparent 1px,
       transparent ${lineHeight + 3}px
     )`};

@@ -30,6 +30,20 @@ export const saveImageFromRef = async (
     /* 실제 내용을 복사하여 가상 컨테이너에 추가 */
     const clonedDiv = div.cloneNode(true) as HTMLDivElement;
     clonedDiv.style.margin = '0';
+
+    // const images = clonedDiv.querySelectorAll('img');
+    // images.forEach((img) => {
+    //    if (!img.crossOrigin) {
+    //      img.crossOrigin = 'anonymous';
+    //    }
+
+    //    if (img.src) {
+    //      const url = new URL(img.src);
+    //      const fileNameFromSrc = url.pathname.split('/').pop();
+    //      img.src = `https://dodok-s3-bucket.s3.ap-northeast-2.amazonaws.com/${fileNameFromSrc}`;
+    //    }
+    // });
+
     virtualContainer.appendChild(clonedDiv);
 
     document.body.appendChild(virtualContainer);
@@ -37,7 +51,8 @@ export const saveImageFromRef = async (
     /* html2canvas로 가상 컨테이너 캡처 */
     const canvas = await html2canvas(virtualContainer, {
       scale: 2,
-      useCORS: true,
+      useCORS: false,
+      // allowTaint: true,
       logging: true,
       backgroundColor: 'transparent',
     });

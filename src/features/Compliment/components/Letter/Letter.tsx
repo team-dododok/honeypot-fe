@@ -9,11 +9,19 @@ interface LetterProps {
   sender: string;
   content: string;
   totalLength: number;
+  lineColor?: string;
   readOnly?: boolean;
 }
 
 const Letter = (props: LetterProps) => {
-  const { receiver, sender, content, totalLength, readOnly = true } = props;
+  const {
+    receiver,
+    sender,
+    content,
+    totalLength,
+    lineColor,
+    readOnly = true,
+  } = props;
   const { setContent } = useSendComplimentStore();
 
   const isMaxLengthReached = content.length === totalLength;
@@ -39,6 +47,7 @@ const Letter = (props: LetterProps) => {
           onChange={handleContentChange}
           lineCount={9}
           lineHeight={26}
+          lineColor={lineColor}
         />
       </Content>
       <BottomWrapper>

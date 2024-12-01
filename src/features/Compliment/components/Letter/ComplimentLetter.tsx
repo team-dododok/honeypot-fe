@@ -37,6 +37,7 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
         receiver={receiver}
         sender={sender}
         content={content}
+        lineColor={readOnly ? theme.colors.gray05 : theme.colors.gray10}
         totalLength={180}
         readOnly={readOnly}
       />

@@ -1,4 +1,5 @@
 export interface InputProps {
+  type?: string;
   width?: string;
   placeholder?: string;
   clear?: boolean;
@@ -11,6 +12,7 @@ export interface InputProps {
   readOnly?: boolean;
   disabled?: boolean;
   style?: React.CSSProperties;
+  pattern?: string;
 }
 
 export interface MessageProps {
