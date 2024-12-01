@@ -100,13 +100,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: '/',
-        element: <YellowBackgroundLayout />,
-        children: [
-          { path: 'compliment/:id', element: <ComplimentDetailPage /> },
-        ],
-      },
     ],
   },
   { path: 'login', element: <LoginPage /> },
@@ -122,6 +115,11 @@ const router = createBrowserRouter([
     ],
   },
   { path: 'signup/complete', element: <SignUpCompletePage /> },
+  {
+    path: '/',
+    element: <YellowBackgroundLayout />,
+    children: [{ path: 'compliment/:id', element: <ComplimentDetailPage /> }],
+  },
   { path: '*', element: <Navigate to="/login" replace /> },
 ]);
 
