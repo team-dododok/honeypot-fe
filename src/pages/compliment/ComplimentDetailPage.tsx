@@ -72,6 +72,9 @@ const ComplimentDetailPage = () => {
                 width={68}
                 height={24}
                 alt="꿀단지"
+                onClick={() => {
+                  navigate('/');
+                }}
               />
             )}
             <Text>
