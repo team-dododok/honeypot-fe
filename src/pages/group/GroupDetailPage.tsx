@@ -401,6 +401,7 @@ const GroupDetailPage = () => {
         isVisible={showEditGroupNameModal}
         onClose={() => setShowEditGroupNameModal(false)}
         onConfirm={handleEditGroupName}
+        groupName={groupName}
         setGroupName={setGroupName}
       />
       <BottomSheet
