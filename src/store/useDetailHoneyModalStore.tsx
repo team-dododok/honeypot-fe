@@ -3,6 +3,7 @@ import { create } from 'zustand';
 interface DetailHoneyModalState {
   isDetailModalOpen: boolean;
   modalContent: {
+    id: number;
     profileImg: string;
     nameType: 'receiver' | 'sender';
     name: string;
@@ -18,6 +19,7 @@ export const useDetailHoneyModalStore = create<DetailHoneyModalState>(
   (set) => ({
     isDetailModalOpen: false,
     modalContent: {
+      id: 0,
       profileImg: '',
       nameType: 'sender',
       name: '',

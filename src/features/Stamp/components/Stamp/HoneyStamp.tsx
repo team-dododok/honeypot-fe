@@ -7,6 +7,7 @@ import React from 'react';
 export type NameType = 'receiver' | 'sender';
 
 interface HoneyStamp {
+  id: number;
   profileImg: string;
   nameType: NameType;
   name: string;
@@ -20,6 +21,7 @@ interface HoneyStamp {
 
 const HoneyStamp = (props: HoneyStamp) => {
   const {
+    id,
     profileImg,
     nameType,
     name,
@@ -38,6 +40,7 @@ const HoneyStamp = (props: HoneyStamp) => {
       onClick();
     } else {
       openDetailModal({
+        id,
         profileImg,
         nameType,
         name,

@@ -10,7 +10,7 @@ export type GroupReceivedPraiseParams = {
 };
 
 export type receivePraiseInfo = {
-  receivedPraiseId: number;
+  receivePraiseId: number;
   name: string;
   content: string;
   stampUrl: string;

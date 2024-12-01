@@ -47,6 +47,7 @@ const ListView = (props: ListViewProps) => {
       {letters.map((letter) => (
         <StampList
           key={letter.id}
+          id={letter.id}
           profileImg={letter.profileImageUrl}
           nameType={nameType}
           name={letter[nameType]}
