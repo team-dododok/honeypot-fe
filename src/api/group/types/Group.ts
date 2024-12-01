@@ -14,11 +14,13 @@ export type GroupCheckResponse = {
   isDuplicate: boolean;
 };
 
+export type GroupOrder = {
+  groupId: number;
+  orderIdx: number;
+};
+
 export type PatchGroupOrder = {
-  groupOrderList: Array<{
-    groupId: number;
-    orderIdx: number;
-  }>;
+  groupOrderList: GroupOrder[];
 };
 
 export type GroupSearchParams = {
@@ -26,7 +28,7 @@ export type GroupSearchParams = {
 };
 
 type GroupMember = {
-  name: string;
+  id: number;
 };
 
 export type GroupWithMembersInfo = {
@@ -55,4 +57,9 @@ type GroupInfo = {
 
 export type GroupSearchResponse = {
   groupInfos: GroupInfo[];
+};
+
+export type PatchGroupChange = {
+  praiseIdList: number[];
+  groupId: number;
 };

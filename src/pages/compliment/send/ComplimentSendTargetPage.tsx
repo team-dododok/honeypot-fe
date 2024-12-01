@@ -13,7 +13,6 @@ import {
   ProgressBarWrapper,
 } from '@/layouts/FormLayoutStyles';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
-import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -32,6 +31,7 @@ const ComplimentSendTargetPage = () => {
     setOngoing,
     clearState,
   } = useSendComplimentStore();
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
 
@@ -49,7 +49,12 @@ const ComplimentSendTargetPage = () => {
   }, [receiverName, groupName, ongoing]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReceiverName(e.target.value);
+    if (e.target.value.length <= 8) {
+      setReceiverName(e.target.value);
+      setErrorMsg('');
+    } else {
+      setErrorMsg('8자 이내로 입력해 주세요.');
+    }
   };
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,20 +98,19 @@ const ComplimentSendTargetPage = () => {
           <Label marginBottom="4px" typography="subtitle1">
             칭찬하고 싶은 팀원의 이름을 적어주세요.
           </Label>
-          <Description>본명을 적어주세요.</Description>
           <Input
             width="100%"
             placeholder="ex. 도도독사우루스"
             clear={true}
             value={receiverName}
             onChange={handleNameChange}
+            errorMsg={errorMsg}
           />
         </LabelWrapper>
         <LabelWrapper>
           <Label marginBottom="4px" typography="subtitle1">
             함께하고 있는 그룹명을 적어주세요.
           </Label>
-          <Description>그룹명은 추후에 수정할 수 있어요.</Description>
           <Input
             width="100%"
             placeholder="ex. 꿀단지 만들기 프로젝트"
@@ -119,7 +123,7 @@ const ComplimentSendTargetPage = () => {
         </LabelWrapper>
         <LabelWrapper>
           <Label marginBottom="14px" typography="subtitle1">
-            해당 프로젝트는 현재 진행 중인가요?
+            함께 그룹 활동을 진행하는 중인가요?
           </Label>
           <CheckList>
             {CHECK_COMPLIMENT_OPTIONS.map((option) => (
@@ -172,11 +176,6 @@ const LabelWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Description = styled.div`
-  color: ${theme.colors.gray50};
-  ${theme.typography.body4};
-  margin-bottom: 14px;
-`;
 const CheckList = styled.div`
   width: 100%;
   display: flex;

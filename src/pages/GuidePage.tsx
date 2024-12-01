@@ -469,6 +469,7 @@ const GuidePage = () => {
         <Elements>
           <h4>Stamp List</h4>
           <StampList
+            id={0}
             profileImg={''}
             nameType={'sender'}
             name={'받는 사람'}
@@ -480,6 +481,7 @@ const GuidePage = () => {
             onClick={() => {}}
           />
           <StampList
+            id={0}
             profileImg={''}
             nameType={'receiver'}
             name={'보내는 사람'}
@@ -494,6 +496,7 @@ const GuidePage = () => {
         <Elements>
           <h4>Honey Stamp</h4>
           <HoneyStamp
+            id={0}
             profileImg={''}
             nameType={'receiver'}
             name={'sender'}

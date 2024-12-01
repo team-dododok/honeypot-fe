@@ -25,7 +25,7 @@ const ProgressBarWrapper = styled.div<{ marginBottom?: string }>`
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,7 +36,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
 `;
 
 const Label = styled.div<LabelProps>`

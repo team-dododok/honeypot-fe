@@ -1,6 +1,7 @@
 import ProcessModal from '@/components/Modal/ProcessModal';
 import GroupListBox from '@/features/Group/components/GroupListBox';
-import { GROUP_LIST_DUMMY } from '@/features/Group/constant/dummy/groupList';
+import { useGroupSearch } from '@/hooks/group/useGroupSearch';
+import styled from '@emotion/styled';
 import React from 'react';
 
 interface HoneyMoveModalProps {
@@ -22,6 +23,9 @@ const HoneyMoveModal = (props: HoneyMoveModalProps) => {
     groupId,
   } = props;
 
+  const { data: groupData } = useGroupSearch('');
+  const groupList = groupData?.groupInfos || [];
+
   const handleSelectGroup = (groupId: number) => {
     if (selectedGroup === groupId) {
       setSelectedGroup(null);
@@ -41,18 +45,29 @@ const HoneyMoveModal = (props: HoneyMoveModalProps) => {
       confirmDisabled={selectedGroup === null}
       isVisible={isVisible}
     >
-      {GROUP_LIST_DUMMY.map((group) => (
-        <GroupListBox
-          key={group.id}
-          id={group.id}
-          currentId={groupId}
-          groupName={group.groupName}
-          selected={group.id === selectedGroup}
-          onClick={() => handleSelectGroup(group.id)}
-        />
-      ))}
+      <GroupList>
+        {groupList?.map((group) => (
+          <GroupListBox
+            key={group.groupId}
+            id={group.groupId}
+            currentId={groupId}
+            groupName={group.groupName}
+            selected={group.groupId === selectedGroup}
+            onClick={() => handleSelectGroup(group.groupId)}
+          />
+        ))}
+      </GroupList>
     </ProcessModal>
   );
 };
 
 export default HoneyMoveModal;
+
+const GroupList = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  overflow-y: scroll;
+`;

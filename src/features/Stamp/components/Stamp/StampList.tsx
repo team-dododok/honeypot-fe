@@ -1,12 +1,13 @@
 import Check from '@/components/Check/Check';
-import DetailHoneyModal from '@/features/Compliment/components/Modal/DetailHoneyModal';
+import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React from 'react';
 
 export type NameType = 'receiver' | 'sender';
 
 interface StampListProps {
+  id: number;
   profileImg: string;
   nameType: NameType;
   name: string;
@@ -20,6 +21,7 @@ interface StampListProps {
 
 const StampList = (props: StampListProps) => {
   const {
+    id,
     profileImg,
     nameType,
     name,
@@ -30,24 +32,21 @@ const StampList = (props: StampListProps) => {
     readOnly,
     onClick,
   } = props;
-
-  const [showDetailHoneyModal, setShowDetailHoneyModal] =
-    useState<boolean>(false);
+  const { openDetailModal } = useDetailHoneyModalStore();
 
   const handleClickStamp = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (readOnly) {
-      setShowDetailHoneyModal(true);
+      openDetailModal({
+        id,
+        profileImg,
+        nameType,
+        name,
+        content,
+        imgUrl,
+        date,
+      });
     }
-  };
-
-  const handleSaveDetailHoney = () => {
-    // 이미지 저장하기
-    setShowDetailHoneyModal(false);
-  };
-
-  const handleCloseDetailHoney = () => {
-    setShowDetailHoneyModal(false);
   };
 
   return (
@@ -74,19 +73,6 @@ const StampList = (props: StampListProps) => {
         </LeftElement>
         <StampImage src={imgUrl} width={55} height={55} alt="꿀도장" />
       </StampListBox>
-      {showDetailHoneyModal && (
-        <DetailHoneyModal
-          profileImg={profileImg}
-          groupName="groupName"
-          date={date}
-          nameType={nameType}
-          name={name}
-          content={content}
-          stampImage={imgUrl}
-          onConfirm={handleSaveDetailHoney}
-          onClose={handleCloseDetailHoney}
-        />
-      )}
     </>
   );
 };

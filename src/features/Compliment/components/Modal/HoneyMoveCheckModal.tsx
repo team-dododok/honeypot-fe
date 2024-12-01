@@ -33,13 +33,13 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
   // 더미데이터, 추후 서버로부터 반환되는 값으로 저장
   const groupInfo = [
     {
-      id: 0,
+      id: groupId,
       groupName: '도도독',
       groupMemberCount: 8,
       groupMemberName: '박형준',
     },
     {
-      id: 1,
+      id: selectedGroup,
       groupName: '도도독개발그루우우우우우웁웁웁',
       groupMemberCount: 5,
       groupMemberName: '박진우',
