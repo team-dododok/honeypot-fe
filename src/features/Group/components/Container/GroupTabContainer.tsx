@@ -11,7 +11,7 @@ import { theme } from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { memo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface GroupTabContainerProps {
   type: 'send' | 'receive' | null;
@@ -25,7 +25,8 @@ const GroupTabContainer = memo((props: GroupTabContainerProps) => {
 
   const navigate = useNavigate();
 
-  const groupId = 1;
+  const { id } = useParams() || '0';
+  const groupId = Number(id);
   const pageSize = 10;
 
   /* React Query 호출 */

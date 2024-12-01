@@ -1,5 +1,3 @@
-import { GroupReceivePraiseInfo } from '@/api/receivedPraise/types/ReceivedPraise';
-import { GroupSendPraiseInfo } from '@/api/sendPraise/types/SendPraise';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/Button/Button';
 import SelectButton from '@/components/Button/SelectButton';
@@ -51,15 +49,11 @@ const GroupDetailPage = () => {
   });
 
   const receivedPraiseCount = receivedPraiseData
-    ? receivedPraiseData.pages.flatMap(
-        (page) => (page as GroupReceivePraiseInfo).receivePraiseInfos
-      ).length
+    ? receivedPraiseData.pages[0].pageInfo.totalElements
     : 0;
 
   const sendPraiseCount = sendPraiseData
-    ? sendPraiseData.pages.flatMap(
-        (page) => (page as GroupSendPraiseInfo).sendPraiseInfos
-      ).length
+    ? sendPraiseData.pages[0].pageInfo.totalElements
     : 0;
 
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
