@@ -17,11 +17,13 @@ interface GroupTabContainerProps {
   type: 'send' | 'receive' | null;
   displayType: ToggleType;
   isSelectMode: boolean;
-  onSelectedChange: (count: number) => void;
+  selectedIds: number[];
+  onSelectedChange: (selectedIds: number[]) => void;
 }
 
 const GroupTabContainer = memo((props: GroupTabContainerProps) => {
-  const { type, displayType, isSelectMode, onSelectedChange } = props;
+  const { type, displayType, isSelectMode, selectedIds, onSelectedChange } =
+    props;
 
   const navigate = useNavigate();
 
@@ -108,12 +110,14 @@ const GroupTabContainer = memo((props: GroupTabContainerProps) => {
         <HoneyView
           letters={letters}
           isSelectMode={isSelectMode}
+          selectedIds={selectedIds}
           onSelectedChange={onSelectedChange}
         />
       ) : (
         <ListView
           letters={letters}
           isSelectMode={isSelectMode}
+          selectedIds={selectedIds}
           onSelectedChange={onSelectedChange}
         />
       )}

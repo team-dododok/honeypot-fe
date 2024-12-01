@@ -6,14 +6,14 @@ import HoneyStamp, { NameType } from '../../HoneyStamp';
 interface HoneyViewProps {
   letters: HoneyLetter[];
   isSelectMode: boolean;
-  onSelectedChange: (count: number) => void;
+  selectedIds: number[];
+  onSelectedChange: (selectedIds: number[]) => void;
 }
 
 const HoneyView = (props: HoneyViewProps) => {
-  const { letters, isSelectMode, onSelectedChange } = props;
+  const { letters, isSelectMode, selectedIds, onSelectedChange } = props;
 
   const [nameType, setNameType] = useState<NameType>('sender');
-  const [selected, setSelected] = useState<number[]>([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -27,9 +27,9 @@ const HoneyView = (props: HoneyViewProps) => {
 
   useEffect(() => {
     if (!isSelectMode) {
-      setSelected([]);
+      onSelectedChange([]);
     }
-  }, [isSelectMode]);
+  }, [isSelectMode, onSelectedChange]);
 
   const columns = [];
   let index = 0;
@@ -43,14 +43,11 @@ const HoneyView = (props: HoneyViewProps) => {
   }
 
   const handleCheckHoneyStamp = (id: number) => {
-    const updatedSelected = selected.includes(id)
-      ? selected.filter((selectedId) => selectedId !== id)
-      : [...selected, id];
+    const updatedSelected = selectedIds.includes(id)
+      ? selectedIds.filter((selectedId) => selectedId !== id)
+      : [...selectedIds, id];
 
-    setSelected(updatedSelected);
-
-    // disabled 처리를 위해 선택된 도장 길이 전달
-    onSelectedChange(updatedSelected?.length);
+    onSelectedChange(updatedSelected);
   };
 
   return (
@@ -68,7 +65,7 @@ const HoneyView = (props: HoneyViewProps) => {
                   content={letter.content}
                   imgUrl={letter.stampUrl}
                   date={letter.date}
-                  selected={selected.includes(letter.id)}
+                  selected={selectedIds.includes(letter.id)}
                   readOnly={!isSelectMode}
                   onClick={() => handleCheckHoneyStamp(letter.id)}
                 />

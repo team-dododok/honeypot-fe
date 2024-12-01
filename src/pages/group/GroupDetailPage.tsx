@@ -65,7 +65,7 @@ const GroupDetailPage = () => {
   const praiseCount = groupInfo?.praiseCount;
 
   const [isSelectMode, setIsSelectMode] = useState(false);
-  const [selectedCount, setSelectedCount] = useState<number>(0);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const [isHoneyMoveModalOpen, setHoneyMoveModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
@@ -90,7 +90,7 @@ const GroupDetailPage = () => {
   }, [location.state]);
 
   const handleToggle = () => {
-    if (isSelectMode && selectedCount > 0) {
+    if (isSelectMode && selectedIds.length > 0) {
       setShowCancelModal(true);
     } else {
       setIsSelectMode(!isSelectMode);
@@ -166,6 +166,11 @@ const GroupDetailPage = () => {
   const handleCandleHoneyMove = () => {
     setShowCancelModal(false);
     setIsSelectMode(false);
+  };
+
+  const handleHoneyDelete = () => {
+    // 꿀 삭제하기
+    console.log(selectedIds);
   };
 
   /* 꿀 상세보기 관련 함수*/
@@ -280,7 +285,8 @@ const GroupDetailPage = () => {
           type={tabValue === 'send' ? 'send' : 'receive'}
           displayType={selectedDisplay}
           isSelectMode={isSelectMode}
-          onSelectedChange={(count: number) => setSelectedCount(count)}
+          selectedIds={selectedIds}
+          onSelectedChange={(ids: number[]) => setSelectedIds(ids)}
         />
         {/* 꿀 이동 및 삭제 버튼 */}
         {isSelectMode && (
@@ -288,7 +294,7 @@ const GroupDetailPage = () => {
             <Button
               text="다른 그룹으로 꿀 옮기기"
               variant="warning"
-              disabled={selectedCount === 0}
+              disabled={selectedIds.length === 0}
               onClick={handleHoneyMove}
             />
             <Button
@@ -305,7 +311,8 @@ const GroupDetailPage = () => {
               width="54px"
               height="54px"
               background={theme.colors.warning90}
-              disabled={selectedCount === 0}
+              disabled={selectedIds.length === 0}
+              onClick={handleHoneyDelete}
             />
           </SelectActionButtonWrapper>
         )}
@@ -325,7 +332,7 @@ const GroupDetailPage = () => {
           onConfirm={handleHoneyMoveCheckModalConfirm}
           selectedGroup={selectedGroup}
           groupId={Number(id)}
-          selectedCount={selectedCount}
+          selectedCount={selectedIds.length}
         />
         {showCancelModal && (
           <WarningModal
