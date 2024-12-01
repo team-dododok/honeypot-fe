@@ -40,11 +40,11 @@ const GroupPagination = (props: GroupPaginationProps) => {
 export default GroupPagination;
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 24px;
+  padding: 16px 0;
 
   ${theme.typography.detail4};
   color: ${theme.colors.gray50};

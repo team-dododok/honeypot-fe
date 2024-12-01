@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Input from '@/components/Input/Input';
 import BottomModal from '@/components/Modal/BottomModal';
-import { useToast } from '@/store/useToast';
 import { usePostGroup } from '@/hooks/group/usePostGroup';
 
 interface CreateGroupModalProps {
@@ -19,7 +18,6 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const { showToast } = useToast();
   const [createGroup, setCreateGroup] = useState(Group);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const { mutate: postGroup } = usePostGroup();
@@ -43,7 +41,6 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
     setGroup(createGroup);
     onConfirm();
     postGroup({ groupName: createGroup });
-    showToast('새 그룹을 생성했어요');
     setCreateGroup('');
   };
 

@@ -30,7 +30,7 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
   };
 
   return (
-    <>
+    <ContainerBox>
       <Container>
         <Header>
           <div>
@@ -62,19 +62,29 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
         onPageChange={handlePageChange}
         type="group"
       />
-    </>
+    </ContainerBox>
   );
 };
 
 export default HoneyGroup;
+
+const ContainerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+`;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
+
   padding: 16px 22px;
   border-radius: 24px;
   border: 1px solid ${(props) => props.theme.colors.gray10};

@@ -34,20 +34,18 @@ const ProfileUpdatePage = () => {
     : [];
 
   useEffect(() => {
-    if (member) {
+    if (member && profileImages.length > 0 && selectedImage === null) {
       setName(member.name);
       setEmail(member.email);
 
-      if (selectedImage === null) {
-        const matchingImage = profileImages.find(
-          ([, url]) => url === member.imageUrl
-        );
-        if (matchingImage) {
-          setSelectedImage(parseInt(matchingImage[0], 10));
-        }
+      const matchingImage = profileImages.find(
+        ([, url]) => url === member.imageUrl
+      );
+      if (matchingImage) {
+        setSelectedImage(parseInt(matchingImage[0], 10));
       }
     }
-  }, [member]);
+  }, [member, profileImages]);
 
   useEffect(() => {
     const unlistenHistoryEvent = history.listen(({ action }) => {
@@ -102,7 +100,7 @@ const ProfileUpdatePage = () => {
 
   const handleModalCancel = () => {
     setShowModal(false);
-    navigate('/');
+    navigate('/profile');
   };
 
   useEffect(() => {
@@ -182,6 +180,15 @@ const ProfileUpdatePage = () => {
 
 export default ProfileUpdatePage;
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding-bottom: 20px;
+`;
+
 const SubTitle = styled.h2`
   color: ${theme.colors.gray80};
   ${theme.typography.body3};
@@ -214,13 +221,6 @@ const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
   padding: ${({ isSelected }) => (isSelected ? '0px' : '5px')};
   box-sizing: border-box;
   cursor: pointer;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
 `;
 
 const InputBox = styled.div`
