@@ -10,10 +10,10 @@ interface GroupListProps {
 
 const GroupList = ({ group }: GroupListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalGroups = group.length || 0;
+  const groupsPerPage = 3;
 
-  const startIndex = (currentPage - 1) * totalGroups;
-  const currentGroups = group.slice(startIndex, startIndex + totalGroups);
+  const startIndex = (currentPage - 1) * groupsPerPage;
+  const currentGroups = group.slice(startIndex, startIndex + groupsPerPage);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -28,7 +28,7 @@ const GroupList = ({ group }: GroupListProps) => {
       </Container>
       <GroupPagination
         currentPage={currentPage}
-        totalGroups={Math.ceil(group.length / totalGroups)}
+        totalGroups={Math.ceil(group.length / groupsPerPage)}
         onPageChange={handlePageChange}
         type="list"
       />
@@ -43,4 +43,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  width: 100%;
+  height: 100%;
 `;
