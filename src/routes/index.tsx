@@ -90,9 +90,9 @@ const router = createBrowserRouter([
             children: [
               { path: 'target', element: <ComplimentSendTargetPage /> },
               { path: 'content', element: <ComplimentSendContentPage /> },
-              { path: 'complete', element: <ComplimentSendCompletePage /> },
             ],
           },
+          { path: 'send/complete', element: <ComplimentSendCompletePage /> },
           {
             path: 'receive',
             element: <SubLayout title="칭찬 받기" />,
@@ -119,9 +119,9 @@ const router = createBrowserRouter([
       { path: 'name', element: <SignUpNamePage /> },
       { path: 'email', element: <SignUpEmailPage /> },
       { path: 'profile', element: <SignUpProfilePage /> },
-      { path: 'complete', element: <SignUpCompletePage /> },
     ],
   },
+  { path: 'signup/complete', element: <SignUpCompletePage /> },
   { path: '*', element: <Navigate to="/login" replace /> },
 ]);
 

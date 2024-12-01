@@ -28,7 +28,6 @@ const ComplimentSendContentPage = () => {
     ongoing,
     honeyStampId,
     honeyStampImage,
-    clearState,
   } = useSendComplimentStore();
   const sender = getUserName() || '';
 
@@ -96,7 +95,6 @@ const ComplimentSendContentPage = () => {
             });
           }
 
-          clearState();
           navigate('/compliment/send/complete');
         },
       }
