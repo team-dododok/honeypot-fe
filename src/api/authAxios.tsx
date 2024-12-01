@@ -1,7 +1,10 @@
 import {
   getAccessToken,
+  getRefreshToken,
   removeAccessToken,
   removeRefreshToken,
+  setAccessToken,
+  setRefreshToken,
 } from '@/utils/storage';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { postReissue } from './auth/postReissue';
@@ -36,30 +39,33 @@ authAxios.interceptors.response.use(
     } = error;
     const originalRequest = error.config;
     /* 토큰 만료 시 */
+    const accessToken = getAccessToken() || '';
+    const refreshToken = getRefreshToken() || '';
     if (status === 401) {
-      // 토큰 재발급 로직
       try {
-        const newAccessToken = await postReissue().catch((tokenError) => {
-          console.error('토큰 갱신 실패:', tokenError);
-          throw tokenError;
-        });
+        const newToken = await postReissue(accessToken, refreshToken).catch(
+          (tokenError) => {
+            console.error('토큰 갱신 실패:', tokenError);
+            throw tokenError;
+          }
+        );
 
-        if (newAccessToken) {
-          console.log('액세스 토큰 발급 중');
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        if (newToken) {
+          setAccessToken(newToken.accessToken);
+          setRefreshToken(newToken.refreshToken);
+          originalRequest.headers.Authorization = `Bearer ${newToken.accessToken}`;
           return authAxios(originalRequest);
         }
       } catch (refreshError) {
         console.error('토큰 갱신 중 에러 발생:', refreshError);
         removeAccessToken();
         removeRefreshToken();
-        // window.location.href = '/login';
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     } else {
-      const accessToken = getAccessToken();
       if (!accessToken) {
-        // window.location.href = '/login';
+        window.location.href = '/login';
       }
     }
     return Promise.reject(error);
