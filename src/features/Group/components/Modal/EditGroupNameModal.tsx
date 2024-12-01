@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '@/components/Input/Input';
 import BottomModal from '@/components/Modal/BottomModal';
 import styled from '@emotion/styled';
@@ -6,6 +6,7 @@ import { theme } from '@/styles/theme';
 import WarningModal from '@/components/Modal/WarningModal';
 import { useToast } from '@/store/useToast';
 import { useNavigate } from 'react-router-dom';
+import { useGroupCheck } from '@/hooks/group/useGroupCheck';
 
 interface EditGroupNameModalProps {
   isVisible: boolean;
@@ -29,14 +30,39 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
 
+  useEffect(() => {
+    console.log(editGroupName);
+  }, [editGroupName]);
+
+  const {
+    data: groupCheckResponse,
+    refetch: checkGroupName,
+    isFetching,
+  } = useGroupCheck({
+    groupName: editGroupName,
+  });
+
+  useEffect(() => {
+    if (editGroupName.trim() !== '') {
+      checkGroupName();
+    }
+  }, [editGroupName, checkGroupName]);
+
+  useEffect(() => {
+    if (!isFetching && groupCheckResponse?.isDuplicate) {
+      setErrorMsg('이미 존재하는 그룹이에요');
+    } else {
+      setErrorMsg('');
+    }
+  }, [groupCheckResponse, isFetching]);
+
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 그룹명 중복 API로 체크
-    //   setErrorMsg('이미 존재하는 그룹이에요');
-    if (e.target.value.length <= 15) {
+    const newGroupName = e.target.value;
+    if (newGroupName.length <= 15) {
       setEditGroupName(e.target.value);
       setErrorMsg('');
     } else {
-      setErrorMsg('15자 이내로 입력해 주세요.');
+      setErrorMsg('15자 이내로 입력해주세요.');
     }
   };
 
@@ -76,7 +102,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
           <DeleteButton onClick={handleShowDeleteModal}>삭제</DeleteButton>
           <Input
             width="100%"
-            placeholder="새 그룹명을 입력해 주세요."
+            placeholder="새 그룹명을 입력해주세요."
             clear={true}
             value={editGroupName}
             onChange={handleGroupChange}

@@ -43,8 +43,9 @@ const GroupModal: React.FC<GroupModalProps> = ({
     addGroup(
       { groupName: localGroupName },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           refetch();
+          setSelectedGroup(data.groupId);
           setLocalGroupName('');
         },
       }
@@ -71,7 +72,7 @@ const GroupModal: React.FC<GroupModalProps> = ({
       <Input
         width="100%"
         placeholder={
-          placeholder ? placeholder : '추가할 그룹명을 입력해 주세요.'
+          placeholder ? placeholder : '추가할 그룹명을 입력해주세요.'
         }
         clear={true}
         value={localGroupName}

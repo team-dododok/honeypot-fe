@@ -4,18 +4,18 @@ export type PostReceivedPraise = {
 };
 
 export type GroupReceivedPraiseParams = {
-  id: number;
   groupId: number;
   size: number;
   page: number;
 };
 
 export type receivePraiseInfo = {
-  receivedPariseId: number;
+  receivePraiseId: number;
   name: string;
   content: string;
   stampUrl: string;
-  receivedDate: string;
+  profileImageUrl: string;
+  receiveDate: string;
 };
 
 export type pageInfo = {

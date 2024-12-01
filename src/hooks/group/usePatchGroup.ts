@@ -1,7 +1,16 @@
-import { PatchGroupParams } from '@/api/group/types/Group';
 import { patchGroup } from '@/api/group/patchGroup';
-import { useQuery } from '@tanstack/react-query';
+import { useToast } from '@/store/useToast';
+import { useMutation } from '@tanstack/react-query';
 
-export const usePatchGroup = ({ groupId, groupName }: PatchGroupParams) => {
-  return useQuery(['group'], () => patchGroup({ groupId, groupName }));
+export const usePatchGroup = () => {
+  const { showToast } = useToast.getState();
+  
+  return useMutation(patchGroup, {
+    onSuccess: () => {
+      showToast('그룹명 변경이 완료되었어요');
+    },
+    onError: () => {
+      showToast('그룹명 변경 중 오류가 발생했어요. 다시 시도해주세요.');
+    },
+  });
 };

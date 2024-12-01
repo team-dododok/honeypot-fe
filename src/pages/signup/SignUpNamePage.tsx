@@ -23,7 +23,7 @@ const SignUpNamePage = () => {
       setName(e.target.value);
       setErrorMsg('');
     } else {
-      setErrorMsg('8자 이내로 입력해 주세요.');
+      setErrorMsg('8자 이내로 입력해주세요.');
     }
   };
 
@@ -35,12 +35,18 @@ const SignUpNamePage = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleButtonClick();
+    }
+  };
+
   return (
     <CommonLayout>
       <ProgressBarWrapper>
         <ProgressBar current={1} total={3} />
       </ProgressBarWrapper>
-      <Label marginBottom="32px">사용하실 이름을 입력해 주세요.</Label>
+      <Label marginBottom="32px">사용하실 이름을 입력해주세요.</Label>
       <Input
         width="100%"
         placeholder="ex. 나봉봉"
@@ -48,6 +54,7 @@ const SignUpNamePage = () => {
         value={name}
         onChange={handleNameChange}
         errorMsg={errorMsg}
+        onKeyDown={handleKeyDown}
       />
       <BottomWrapper>
         <Button

@@ -1,4 +1,5 @@
 import { theme } from '@/styles/theme';
+import { formatDate } from '@/utils/format';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -18,7 +19,7 @@ const LetterInfo = (props: StampListProps) => {
   return (
     <LetterInfoBox>
       <ProfileImage
-        src={profileImg || '/assets/images/profile/profile-1-120-varient.svg'}
+        src={profileImg || '/assets/images/profile/profile-1-120.svg'}
         width={48}
         height={48}
         alt="프로필"
@@ -26,7 +27,7 @@ const LetterInfo = (props: StampListProps) => {
       <TextBox>
         <TopElement>
           <GroupName>{groupName}</GroupName>
-          <Date>{date}</Date>
+          <Date>{formatDate(date)}</Date>
         </TopElement>
         <Name>
           {nameType === 'receiver' ? 'To. ' : 'From. '} {name}
@@ -48,9 +49,7 @@ const LetterInfoBox = styled.div`
   background: ${theme.colors.gray00};
 `;
 
-const ProfileImage = styled.img`
-  background: gray;
-`;
+const ProfileImage = styled.img``;
 
 const TextBox = styled.div`
   width: 100%;

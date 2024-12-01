@@ -20,7 +20,9 @@ const Badge = (props: BadgeType) => {
         badgeBoxRef,
         `${name} 뱃지.png`,
         '308px',
+        null,
         '16px',
+        null,
         '16px'
       );
     }

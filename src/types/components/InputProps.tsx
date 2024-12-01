@@ -5,6 +5,7 @@ export interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   successMsg?: string;
   errorMsg?: string;
   readOnly?: boolean;

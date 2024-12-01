@@ -14,12 +14,7 @@ const StampCard = (props: StampCardProps) => {
 
   return (
     <StampCardBox $isVisible={count !== 0}>
-      <StampImage
-        src={imgUrl || '/assets/images/stamp/stamp-example.svg'}
-        width={58}
-        height={58}
-        alt={stampName}
-      />
+      <StampImage src={imgUrl} width={58} height={58} alt={stampName} />
       <StampLabel>
         <StampName>{stampName}</StampName>
         {count}회 / {totalCount}회
@@ -45,9 +40,7 @@ const StampCardBox = styled.div<{ $isVisible: boolean }>`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0.4)};
 `;
 
-const StampImage = styled.img`
-  background: gray;
-`;
+const StampImage = styled.img``;
 
 const StampLabel = styled.div`
   display: flex;

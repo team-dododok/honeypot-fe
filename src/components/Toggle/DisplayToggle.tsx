@@ -26,15 +26,12 @@ const DisplayToggle = (props: DisplayToggleProps) => {
   return (
     <DisplayToggleContainer>
       {iconTypes[displayType].map((type, index) => (
-        <>
-          <DisplayToggleButton
-            key={type}
-            onClick={() => !disabled && onClick(type)}
-          >
+        <React.Fragment key={`${type}-${index}`}>
+          <DisplayToggleButton onClick={() => !disabled && onClick(type)}>
             <img src={getIconPath(type)} width={36} height={36} alt="toggle" />
           </DisplayToggleButton>
           {index === 0 && <Bar />}
-        </>
+        </React.Fragment>
       ))}
     </DisplayToggleContainer>
   );

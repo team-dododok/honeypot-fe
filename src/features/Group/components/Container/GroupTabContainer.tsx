@@ -1,37 +1,27 @@
 import Button from '@/components/Button/Button';
 import { ToggleType } from '@/components/Toggle/DisplayToggle';
-import {
-  RECEIVE_HONEY,
-  SEND_HONEY,
-} from '@/features/Compliment/constants/dummy/honey';
 import { HoneyLetter } from '@/features/Compliment/types/HoneyLetter';
 import HoneyView from '@/features/Stamp/components/Stamp/StampView/Honey/HoneyView';
 import ListView from '@/features/Stamp/components/Stamp/StampView/List/ListView';
 import { theme } from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GroupTabContainerProps {
-  type: 'send' | 'receive' | null;
   displayType: ToggleType;
   isSelectMode: boolean;
-  onSelectedChange: (count: number) => void;
+  selectedIds: number[];
+  onSelectedChange: (selectedIds: number[]) => void;
+  letters: HoneyLetter[];
 }
 
-const GroupTabContainer = (props: GroupTabContainerProps) => {
-  const { type, displayType, isSelectMode, onSelectedChange } = props;
+const GroupTabContainer = memo((props: GroupTabContainerProps) => {
+  const { displayType, isSelectMode, selectedIds, onSelectedChange, letters } =
+    props;
 
   const navigate = useNavigate();
-
-  let letters: HoneyLetter[] = [];
-  if (type === 'send') {
-    letters = SEND_HONEY;
-    // letters = [];
-  } else if (type === 'receive') {
-    letters = RECEIVE_HONEY;
-  }
 
   const handleWriteCompliment = () => {
     // 칭찬 작성하기 페이지 이동
@@ -42,7 +32,7 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
     <Container $isStamp={letters.length === 0}>
       {letters.length === 0 ? (
         <NoStamp>
-          <img src="/assets/images/group/stamp/img-none-stamp.svg" />
+          <img src="/assets/images/group/stamp/none-stamp.svg" />
           <div>아직 받은 꿀도장이 없어요.</div>
           <Button
             text="친구에게 꿀 보내기"
@@ -54,18 +44,22 @@ const GroupTabContainer = (props: GroupTabContainerProps) => {
         <HoneyView
           letters={letters}
           isSelectMode={isSelectMode}
+          selectedIds={selectedIds}
           onSelectedChange={onSelectedChange}
         />
       ) : (
         <ListView
           letters={letters}
           isSelectMode={isSelectMode}
+          selectedIds={selectedIds}
           onSelectedChange={onSelectedChange}
         />
       )}
     </Container>
   );
-};
+});
+
+GroupTabContainer.displayName = 'GroupTabContainer';
 
 export default GroupTabContainer;
 

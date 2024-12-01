@@ -1,10 +1,11 @@
 import CloseModal from '@/components/Modal/CloseModal';
-import React from 'react';
+import React, { useRef } from 'react';
 import LetterInfo, { NameType } from '../Frame/LetterInfo';
 import ReadLetter from '../Letter/ReadLetter';
 import Button from '@/components/Button/Button';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
+import { saveImageFromRef } from '@/utils/saveImage';
 
 interface DetailHoneyModalProps {
   profileImg: string;
@@ -14,7 +15,6 @@ interface DetailHoneyModalProps {
   name: string;
   content: string;
   stampImage: string;
-  onConfirm: () => void;
   onClose: () => void;
   onHoneyMove?: () => void;
   onHoneyDelete?: () => void;
@@ -29,27 +29,48 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
     name,
     content,
     stampImage,
-    onConfirm,
     onClose,
     onHoneyMove,
     onHoneyDelete,
   } = props;
+
+  const complimentRef = useRef<HTMLDivElement>(null);
+
+  const handleSaveDetailHoney = () => {
+    // 이미지 저장하기
+    if (complimentRef.current) {
+      saveImageFromRef(
+        complimentRef,
+        `칭찬 이미지.png`,
+        null,
+        80,
+        '40px 20px',
+        '#ffffff',
+        '16px'
+      );
+    }
+
+    onClose();
+  };
+
   return (
     <>
       <CloseModal
         confirmText="저장"
         buttonIcon={<img src="/assets/icons/download.svg" alt="Download" />}
-        onConfirm={onConfirm}
+        onConfirm={handleSaveDetailHoney}
         onClose={onClose}
       >
-        <LetterInfo
-          profileImg={profileImg}
-          groupName={groupName}
-          date={date}
-          nameType={nameType}
-          name={name}
-        />
-        <ReadLetter content={content} stampImage={stampImage} />
+        <ComplimentBox ref={complimentRef}>
+          <LetterInfo
+            profileImg={profileImg}
+            groupName={groupName}
+            date={date}
+            nameType={nameType}
+            name={name}
+          />
+          <ReadLetter content={content} stampImage={stampImage} />
+        </ComplimentBox>
       </CloseModal>
       <ButtonWrapper>
         <Button
@@ -84,4 +105,13 @@ const ButtonWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+`;
+
+const ComplimentBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 `;

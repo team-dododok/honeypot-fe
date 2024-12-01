@@ -7,7 +7,6 @@ export type DeleteGroupParams = {
 };
 
 export type GroupCheckParams = {
-  id: number;
   groupName: string;
 };
 
@@ -15,16 +14,13 @@ export type GroupCheckResponse = {
   isDuplicate: boolean;
 };
 
-export type PatchGroupParams = {
+export type GroupOrder = {
   groupId: number;
-  groupName: string;
+  orderIdx: number;
 };
 
 export type PatchGroupOrder = {
-  groupOrderList: Array<{
-    groupId: number;
-    orderIdx: number;
-  }>;
+  groupOrderList: GroupOrder[];
 };
 
 export type GroupSearchParams = {
@@ -32,7 +28,7 @@ export type GroupSearchParams = {
 };
 
 type GroupMember = {
-  name: string;
+  name: number;
 };
 
 export type GroupWithMembersInfo = {
@@ -48,11 +44,22 @@ export type GroupResponse = {
   groupWithMembersInfos: GroupWithMembersInfo[];
 };
 
-type GroupInfo = {
+export type GroupDetailResponse = {
+  groupId: number;
+  groupName: string;
+  praiseCount: number;
+};
+
+export type GroupInfo = {
   groupId: number;
   groupName: string;
 };
 
 export type GroupSearchResponse = {
   groupInfos: GroupInfo[];
+};
+
+export type PatchGroupChange = {
+  praiseIdList: number[];
+  groupId: number;
 };

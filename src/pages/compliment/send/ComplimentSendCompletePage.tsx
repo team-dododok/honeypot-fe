@@ -1,5 +1,6 @@
 import Button from '@/components/Button/Button';
-import { BottomWrapper, CenterLayout } from '@/layouts/FormLayoutStyles';
+import { BottomWrapper } from '@/layouts/FormLayoutStyles';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -7,17 +8,18 @@ import { useNavigate } from 'react-router-dom';
 
 const ComplimentSendCompletePage = () => {
   const navigate = useNavigate();
-  const receiver = '도도독사우르스'; // 나중에 수정
+  const { receiverName, clearState } = useSendComplimentStore();
 
   const handleButtonClick = () => {
     navigate('/');
+    clearState();
   };
 
   return (
     <CenterLayout>
-      <Image src="/assets/images/signup/signup-01.svg" alt="team" />
+      <Image data="/assets/images/compliment/bongbong-complete.svg" />
       <Title>
-        `{receiver}`님에게
+        `{receiverName}`님에게
         <br /> 칭찬이 전달되었어요!
       </Title>
       <BottomWrapper>
@@ -29,6 +31,16 @@ const ComplimentSendCompletePage = () => {
 
 export default ComplimentSendCompletePage;
 
+const CenterLayout = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 56px;
@@ -36,11 +48,7 @@ const Title = styled.h1`
   ${theme.typography.body1};
 `;
 
-const Image = styled.img`
+const Image = styled.object`
   width: 100%;
-  height: 280px;
   margin-bottom: 48px;
-  width: 100%;
-  max-width: 300px;
-  background-color: gray;
 `;

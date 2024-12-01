@@ -74,7 +74,7 @@ const ProfileUpdatePage = () => {
     if (newName === '') {
       setNameError('이름을 입력해주세요.');
     } else if (newName.length > 8) {
-      setNameError('8자 이내로 입력해 주세요.');
+      setNameError('8자 이내로 입력해주세요.');
     } else {
       setNameError('');
     }
@@ -82,14 +82,14 @@ const ProfileUpdatePage = () => {
 
   const handleSaveButtonClick = () => {
     if (!name || selectedImage === null) {
-      showToast('이름과 프로필 이미지를 모두 선택해 주세요.');
+      showToast('이름과 프로필 이미지를 모두 선택해주세요.');
       return;
     }
     const selectedImageUrl = profileImages.find(
       ([key]) => parseInt(key, 10) === selectedImage
     )?.[1];
     if (!selectedImageUrl) {
-      showToast('선택한 프로필 이미지를 확인해 주세요.');
+      showToast('선택한 프로필 이미지를 확인해주세요.');
       return;
     }
     const updatedData = {

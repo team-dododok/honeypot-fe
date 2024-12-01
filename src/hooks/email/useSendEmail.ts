@@ -14,9 +14,9 @@ export const useSendEmail = () => {
     },
     onError: (error) => {
       handleMutationError(error);
-      showToast('인증번호 발송에 실패했습니다.', 3000, {
-        bottom: '81px',
-      });
+      // showToast('인증번호 발송에 실패했습니다.', 3000, {
+      //   bottom: '81px',
+      // });
     },
   });
 };

@@ -70,7 +70,9 @@ const SignUpAgreePage = () => {
         <Check
           variant="circle"
           label="약관 전체 동의"
-          isChecked={isCheckedAll}
+          isChecked={
+            isCheckedTerms[0] && isCheckedTerms[1] && isCheckedTerms[2]
+          }
           onChange={handleCheckAll}
         />
         <Divider />

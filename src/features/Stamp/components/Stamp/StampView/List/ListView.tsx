@@ -7,16 +7,16 @@ import { useLocation } from 'react-router-dom';
 interface ListViewProps {
   letters: HoneyLetter[];
   isSelectMode: boolean;
-  onSelectedChange: (count: number) => void;
+  selectedIds: number[];
+  onSelectedChange: (selectedIds: number[]) => void;
 }
 
 const ListView = (props: ListViewProps) => {
-  const { letters, isSelectMode, onSelectedChange } = props;
+  const { letters, isSelectMode, selectedIds, onSelectedChange } = props;
 
   const location = useLocation();
 
   const [nameType, setNameType] = useState<NameType>('sender');
-  const [selected, setSelected] = useState<number[]>([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -30,19 +30,16 @@ const ListView = (props: ListViewProps) => {
 
   useEffect(() => {
     if (!isSelectMode) {
-      setSelected([]);
+      onSelectedChange([]);
     }
-  }, [isSelectMode]);
+  }, [isSelectMode, onSelectedChange]);
 
-  const handleCheckStampList = (id: number) => {
-    const updatedSelected = selected.includes(id)
-      ? selected.filter((selectedId) => selectedId !== id)
-      : [...selected, id];
+  const handleCheckHoneyStamp = (id: number) => {
+    const updatedSelected = selectedIds.includes(id)
+      ? selectedIds.filter((selectedId) => selectedId !== id)
+      : [...selectedIds, id];
 
-    setSelected(updatedSelected);
-
-    // disabled 처리를 위해 선택된 도장 길이 전달
-    onSelectedChange(updatedSelected?.length);
+    onSelectedChange(updatedSelected);
   };
 
   return (
@@ -50,15 +47,16 @@ const ListView = (props: ListViewProps) => {
       {letters.map((letter) => (
         <StampList
           key={letter.id}
-          profileImg=""
+          id={letter.id}
+          profileImg={letter.profileImageUrl}
           nameType={nameType}
           name={letter[nameType]}
           content={letter.content}
-          imgUrl=""
+          imgUrl={letter.stampUrl}
           date={letter.date}
-          selected={selected.includes(letter.id)}
+          selected={selectedIds.includes(letter.id)}
           readOnly={!isSelectMode}
-          onClick={() => handleCheckStampList(letter.id)}
+          onClick={() => handleCheckHoneyStamp(letter.id)}
         />
       ))}
     </ListViewContainer>

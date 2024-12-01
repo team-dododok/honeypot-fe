@@ -1,12 +1,13 @@
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export interface Tabs {
   id: number;
   tabName: string;
   path: string;
+  count: number;
 }
 
 interface TabToggleProps {
@@ -17,12 +18,13 @@ interface TabToggleProps {
 }
 
 const TabToggle = (props: TabToggleProps) => {
-  const { tabs, selected, originalPath, onClick } = props;
+  const { tabs, selected, onClick } = props;
+  const { id: groupId } = useParams();
   const navigate = useNavigate();
 
   const handleTabClick = (id: number, path: string) => {
     onClick(id);
-    navigate(`${originalPath}?tab=${path}`, { replace: true });
+    navigate(`/group/${groupId}?tab=${path}`, { replace: true });
   };
 
   return (
@@ -33,7 +35,7 @@ const TabToggle = (props: TabToggleProps) => {
           $isSelected={selected === item.id}
           onClick={() => handleTabClick(item.id, item.path)}
         >
-          {item.tabName}
+          {`${item.tabName} (${item.count})`}
         </TabToggleButton>
       ))}
     </TabToggleContainer>

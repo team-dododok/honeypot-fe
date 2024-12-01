@@ -57,6 +57,12 @@ const SignUpEmailPage = () => {
       setSuccessEmailAuth('');
       setErrorEmailAuth('');
     }
+    /* 인증 완료 상태에서 인증번호 변경 시 인증 상태 초기화 */
+    if (isAuthCompleted) {
+      setIsAuthCompleted(false);
+      setEmailAuth('');
+      setSuccessEmailAuth('');
+    }
     setEmail(e.target.value);
     if (EMAIL_REGEX.test(e.target.value) || e.target.value.length === 0) {
       setErrorEmail('');
@@ -67,11 +73,15 @@ const SignUpEmailPage = () => {
 
   const handleEmailAuthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     /* 인증 완료 상태에서 인증번호 변경 시 인증 상태 초기화 */
-    if (isAuthCompleted) {
-      setIsAuthCompleted(false);
-      setSuccessEmailAuth('');
+    const inputValue = e.target.value;
+    // 숫자만 입력되도록
+    if (/^\d*$/.test(inputValue)) {
+      if (isAuthCompleted) {
+        setIsAuthCompleted(false);
+        setSuccessEmailAuth('');
+      }
+      setEmailAuth(e.target.value);
     }
-    setEmailAuth(e.target.value);
   };
 
   const handleSendButtonClick = () => {
@@ -99,6 +109,7 @@ const SignUpEmailPage = () => {
           setSuccessEmailAuth('인증되었어요.');
           setIsAuthCompleted(true);
           setErrorEmailAuth('');
+          setIsSend(false);
         },
         onError: () => {
           setSuccessEmailAuth('');
@@ -143,7 +154,7 @@ const SignUpEmailPage = () => {
       <ProgressBarWrapper>
         <ProgressBar current={2} total={3} />
       </ProgressBarWrapper>
-      <Label marginBottom="32px">이메일 주소를 입력해 주세요.</Label>
+      <Label marginBottom="32px">이메일 주소를 입력해주세요.</Label>
       <Container>
         <LabelWrapper>
           <InputWrapper>
@@ -175,6 +186,7 @@ const SignUpEmailPage = () => {
                 onChange={handleEmailAuthChange}
                 successMsg={successEmailAuth}
                 errorMsg={errorEmailAuth}
+                disabled={isAuthCompleted}
               />
               <Button
                 width="120px"
