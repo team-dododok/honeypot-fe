@@ -43,5 +43,4 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-  height: 100%;
 `;
