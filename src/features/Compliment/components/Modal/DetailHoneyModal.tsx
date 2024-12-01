@@ -15,7 +15,6 @@ interface DetailHoneyModalProps {
   name: string;
   content: string;
   stampImage: string;
-  // onConfirm: () => void;
   onClose: () => void;
   onHoneyMove?: () => void;
   onHoneyDelete?: () => void;
@@ -30,7 +29,6 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
     name,
     content,
     stampImage,
-    // onConfirm,
     onClose,
     onHoneyMove,
     onHoneyDelete,
@@ -41,7 +39,15 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
   const handleSaveDetailHoney = () => {
     // 이미지 저장하기
     if (complimentRef.current) {
-      saveImageFromRef(complimentRef, `칭찬 이미지.png`, null, '20px', null);
+      saveImageFromRef(
+        complimentRef,
+        `칭찬 이미지.png`,
+        null,
+        80,
+        '40px 20px',
+        '#ffffff',
+        '16px'
+      );
     }
 
     onClose();
@@ -102,6 +108,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const ComplimentBox = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

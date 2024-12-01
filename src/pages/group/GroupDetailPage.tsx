@@ -308,11 +308,6 @@ const GroupDetailPage = () => {
   };
 
   /* 꿀 상세보기 관련 함수*/
-  // const handleSaveDetailHoney = () => {
-  //   // 이미지 저장하기
-  //   closeDetailModal();
-  // };
-
   const handleCloseDetailHoney = () => {
     closeDetailModal();
   };
@@ -511,7 +506,6 @@ const GroupDetailPage = () => {
           name={modalContent.name}
           content={modalContent.content}
           stampImage={modalContent.imgUrl}
-          // onConfirm={handleSaveDetailHoney}
           onClose={handleCloseDetailHoney}
           onHoneyMove={() => {
             handleShowHoneyMoveModal(modalContent.id);

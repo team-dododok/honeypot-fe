@@ -1,7 +1,7 @@
 import ProcessModal from '@/components/Modal/ProcessModal';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 interface HoneyMoveCheckModalProps {
   isVisible: boolean;
@@ -45,13 +45,6 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
       groupMemberName: '박진우',
     },
   ];
-
-  useEffect(() => {
-    // 현재 그룹 정보 반환 (API)
-    console.log(selectedGroup);
-    // 이동 그룹 정보 반환 (API)
-    console.log(groupId);
-  }, []);
 
   if (!isVisible) return;
   return (
