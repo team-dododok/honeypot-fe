@@ -1,5 +1,6 @@
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 import { usePatchMember } from '@/hooks/user/usePatchMember';
 import { BottomWrapper } from '@/layouts/FormLayoutStyles';
 import { theme } from '@/styles/theme';
@@ -18,6 +19,8 @@ const EmailUpdatePage = () => {
     useState('인증번호');
   const [timer, setTimer] = useState(300);
   const [isTimerActive, setIsTimerActive] = useState(false);
+
+  const { data: member } = useMemberInfo();
   const { mutate: patchMemberEmail } = usePatchMember();
 
   useEffect(() => {
@@ -47,7 +50,10 @@ const EmailUpdatePage = () => {
     const value = e.target.value;
     setInputValue(value);
 
-    if (validateEmail(value)) {
+    if (value === member?.email) {
+      setIsEmailValid(false);
+      setErrorMessage('현재 이메일과 동일합니다.');
+    } else if (validateEmail(value)) {
       setIsEmailValid(true);
       setErrorMessage('');
     } else {
