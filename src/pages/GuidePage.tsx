@@ -425,7 +425,7 @@ const GuidePage = () => {
         />
         <ToastModal
           isVisible={showToastModal}
-          image={<img src="/assets/images/saved.svg" />}
+          image={<object data="/assets/images/saved.svg" />}
           text="꿀이 저장되었어요!"
           onClose={() => {
             setShowToastModal(false);
