@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/login/LoginPage';
-import GroupPage from '@/pages/group/GroupPage';
 import GroupDetailPage from '@/pages/group/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
@@ -47,7 +46,6 @@ const router = createBrowserRouter([
         path: '/',
         element: <MainLayout />,
         children: [
-          { path: 'group', element: <GroupPage /> },
           { path: 'group/:id', element: <GroupDetailPage /> },
           {
             path: 'group',
@@ -62,7 +60,11 @@ const router = createBrowserRouter([
             element: <SubLayout title="공지" padding="0px" />,
             children: [{ path: '', element: <AnnouncementPage /> }],
           },
-          { path: 'profile', element: <ProfilePage /> },
+          {
+            path: 'profile',
+            element: <SubLayout title="마이페이지" padding="0px" />,
+            children: [{ path: '', element: <ProfilePage /> }],
+          },
           {
             path: 'profile',
             element: <SubLayout title="프로필 수정" padding="0px" />,

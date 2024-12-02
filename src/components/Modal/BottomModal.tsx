@@ -94,7 +94,7 @@ const ModalOverlay = styled(motion.div)`
   top: 0;
   left: 0;
   background: rgba(46, 44, 41, 0.8);
-  z-index: 20;
+  z-index: 100;
 `;
 
 const ModalImageContainer = styled(motion.div)<{ height?: string }>`
@@ -106,7 +106,7 @@ const ModalImageContainer = styled(motion.div)<{ height?: string }>`
   justify-content: center;
   align-items: flex-end;
   position: fixed;
-  z-index: 5;
+  z-index: 100;
 `;
 
 const ModalContainer = styled.div<{ width?: string; height?: string }>`

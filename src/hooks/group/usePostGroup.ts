@@ -1,6 +1,13 @@
 import { postGroup } from '@/api/group/postGroup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const usePostGroup = () => {
-  return useMutation(postGroup);
+  const queryClient = useQueryClient();
+
+  return useMutation(postGroup, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['group']);
+      return data;
+    },
+  });
 };
