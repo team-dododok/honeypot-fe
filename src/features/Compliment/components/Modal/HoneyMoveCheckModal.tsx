@@ -1,4 +1,5 @@
 import ProcessModal from '@/components/Modal/ProcessModal';
+import { useGroupMember } from '@/hooks/group/useGroupMember';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -12,13 +13,6 @@ interface HoneyMoveCheckModalProps {
   selectedCount: number;
 }
 
-// interface GroupInfo {
-//   id: number;
-//   groupName: string;
-//   groupMemberCount: number;
-//   groupMemberName: string;
-// }
-
 const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
   const {
     isVisible,
@@ -29,21 +23,12 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
     selectedCount,
   } = props;
 
-  // const [groupInfo, setGroupInfo] = useState<GroupInfo[]>();
-  // 더미데이터, 추후 서버로부터 반환되는 값으로 저장
+  const { data: groupData } = useGroupMember([groupId]);
+  const { data: selectedGroupData } = useGroupMember([selectedGroup || 0]);
+
   const groupInfo = [
-    {
-      id: groupId,
-      groupName: '도도독',
-      groupMemberCount: 8,
-      groupMemberName: '박형준',
-    },
-    {
-      id: selectedGroup,
-      groupName: '도도독개발그루우우우우우웁웁웁',
-      groupMemberCount: 5,
-      groupMemberName: '박진우',
-    },
+    ...(groupData?.groupMembersInfos || []),
+    ...(selectedGroupData?.groupMembersInfos || []),
   ];
 
   if (!isVisible) return;
@@ -60,13 +45,16 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
       <HoneyMoveCheckContainer>
         <HoneyGroupInfoContainer>
           {groupInfo?.map((group) => (
-            <HoneyGroupInfo key={group.id}>
+            <HoneyGroupInfo key={group.groupId}>
               <HoneypotImage src="/assets/images/group/move/honey-pot.svg" />
               <Info>
                 {group.groupName}
-                <Detail>
-                  {group.groupMemberName} 외 {group.groupMemberCount - 1}명
-                </Detail>
+                {group.groupMembers.length > 0 && (
+                  <Detail>
+                    {group.groupMembers[0].name} 외{' '}
+                    {group.groupMembers.length - 1}명
+                  </Detail>
+                )}
               </Info>
             </HoneyGroupInfo>
           ))}

@@ -215,7 +215,7 @@ const ProfileImage = styled.img<{ isSelected: boolean; index: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 40px;
+  border-radius: 35%;
   border: ${({ isSelected, index }) =>
     isSelected ? `5px solid ${PROFILE_COLORS[index]}` : 'none'};
   padding: ${({ isSelected }) => (isSelected ? '0px' : '5px')};

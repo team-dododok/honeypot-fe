@@ -139,20 +139,6 @@ const CenterLayout = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-    position: absolute;
-    right: 0;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 26px;
-    background: #66605b78;
-    background-clip: padding-box;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
 `;
 
 const Content = styled.div`
