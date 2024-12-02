@@ -49,11 +49,13 @@ const HoneyMoveCheckModal = (props: HoneyMoveCheckModalProps) => {
               <HoneypotImage src="/assets/images/group/move/honey-pot.svg" />
               <Info>
                 {group.groupName}
-                {group.groupMembers.length > 0 && (
+                {group.groupMembers.length > 0 ? (
                   <Detail>
                     {group.groupMembers[0].name} 외{' '}
                     {group.groupMembers.length - 1}명
                   </Detail>
+                ) : (
+                  <Detail>0명</Detail>
                 )}
               </Info>
             </HoneyGroupInfo>
