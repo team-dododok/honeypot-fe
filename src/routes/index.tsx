@@ -60,7 +60,11 @@ const router = createBrowserRouter([
             element: <SubLayout title="공지" padding="0px" />,
             children: [{ path: '', element: <AnnouncementPage /> }],
           },
-          { path: 'profile', element: <ProfilePage /> },
+          {
+            path: 'profile',
+            element: <SubLayout title="마이페이지" padding="0px" />,
+            children: [{ path: '', element: <ProfilePage /> }],
+          },
           {
             path: 'profile',
             element: <SubLayout title="프로필 수정" padding="0px" />,
