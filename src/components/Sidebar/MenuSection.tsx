@@ -24,21 +24,23 @@ const MenuSection = ({
   return (
     <MenuSectionWrapper>
       <MenuTitle onClick={onMenuClick}>{menu.title}</MenuTitle>
-      <SubMenu isOpen={isOpen}>
-        {isVisible &&
-          menu.tab.map((subMenu) => (
-            <SubMenuLink
-              key={subMenu.id}
-              to={subMenu.path}
-              current={
-                window.location.pathname === subMenu.path ? 'true' : 'false'
-              }
-              onClick={onClose}
-            >
-              {subMenu.subTitle}
-            </SubMenuLink>
-          ))}
-      </SubMenu>
+      {menu.tab && (
+        <SubMenu isOpen={isOpen}>
+          {isVisible &&
+            menu.tab.map((subMenu) => (
+              <SubMenuLink
+                key={subMenu.id}
+                to={subMenu.path}
+                current={
+                  window.location.pathname === subMenu.path ? 'true' : 'false'
+                }
+                onClick={onClose}
+              >
+                {subMenu.subTitle}
+              </SubMenuLink>
+            ))}
+        </SubMenu>
+      )}
     </MenuSectionWrapper>
   );
 };

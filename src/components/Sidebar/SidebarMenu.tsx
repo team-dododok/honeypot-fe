@@ -22,7 +22,11 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [showWithdrawModal, setShowWithdrawModal] = useState<boolean>(false);
 
-  const handleMenuClick = (menuId: string) => {
+  const handleMenuClick = (menuId: string, menuPath?: string) => {
+    if (menuPath) {
+      navigate(menuPath);
+      onClose();
+    }
     setOpenMenuId((prev) => (prev === menuId ? null : menuId));
   };
 
@@ -85,7 +89,7 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
                 key={menu.id}
                 menu={menu}
                 isOpen={openMenuId === menu.id}
-                onMenuClick={() => handleMenuClick(menu.id)}
+                onMenuClick={() => handleMenuClick(menu.id, menu.path)}
                 onClose={onClose}
               />
             ))}
