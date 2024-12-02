@@ -28,11 +28,21 @@ const GlobalStyle = () => (
         font-family: 'Pretendard';
         background-color: ${theme.colors.gray05};
         overflow-y: auto;
-      }
 
-      /* ::-webkit-scrollbar {
-        display: none;
-      } */
+        &::-webkit-scrollbar {
+          width: 5px;
+          position: absolute;
+          right: 0;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 26px;
+          background: #66605b78;
+          background-clip: padding-box;
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+      }
 
       a {
         color: inherit;
