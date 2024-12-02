@@ -88,6 +88,13 @@ const Content = styled.div`
   color: ${theme.colors.kakao};
   ${theme.typography.detail5};
   white-space: pre-wrap;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const CheckButton = styled.div`
