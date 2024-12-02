@@ -52,7 +52,7 @@ const MainBottomSheet = () => {
         <DisplayToggle
           displayType="group"
           selected={selectedGroupToggle}
-          disabled={false}
+          disabled={count === 0 ? true : false}
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>

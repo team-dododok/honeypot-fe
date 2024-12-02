@@ -1,6 +1,6 @@
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 export type DisplayType = 'group' | 'stamp';
 export type ToggleType = 'card' | 'list' | 'honey';
@@ -26,12 +26,15 @@ const DisplayToggle = (props: DisplayToggleProps) => {
   return (
     <DisplayToggleContainer>
       {iconTypes[displayType].map((type, index) => (
-        <React.Fragment key={`${type}-${index}`}>
-          <DisplayToggleButton onClick={() => !disabled && onClick(type)}>
+        <Fragment key={`${type}-${index}`}>
+          <DisplayToggleButton
+            onClick={() => !disabled && onClick(type)}
+            disabled={disabled}
+          >
             <img src={getIconPath(type)} width={36} height={36} alt="toggle" />
           </DisplayToggleButton>
           {index === 0 && <Bar />}
-        </React.Fragment>
+        </Fragment>
       ))}
     </DisplayToggleContainer>
   );
@@ -50,9 +53,10 @@ const DisplayToggleContainer = styled.div`
   border: 1px solid ${theme.colors.gray10};
 `;
 
-const DisplayToggleButton = styled.button`
+const DisplayToggleButton = styled.button<{ disabled?: boolean }>`
   width: 36px;
   height: 36px;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
 
 const Bar = styled.div`
