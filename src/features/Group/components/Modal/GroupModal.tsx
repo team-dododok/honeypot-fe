@@ -5,6 +5,7 @@ import GroupListBox from '@/features/Group/components/GroupListBox';
 import styled from '@emotion/styled';
 import { usePostGroup } from '@/hooks/group/usePostGroup';
 import { useGroupSearch } from '@/hooks/group/useGroupSearch';
+import { css } from '@emotion/react';
 
 interface GroupModalProps {
   isVisible: boolean;
@@ -24,13 +25,19 @@ const GroupModal: React.FC<GroupModalProps> = ({
   setSelectedGroup,
 }) => {
   const [localGroupName, setLocalGroupName] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const { data: groupData, refetch } = useGroupSearch(localGroupName);
   const { mutate: addGroup } = usePostGroup();
 
   const groupList = groupData?.groupInfos || [];
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalGroupName(e.target.value);
+    if (e.target.value.length <= 15) {
+      setLocalGroupName(e.target.value);
+      setErrorMsg('');
+    } else {
+      setErrorMsg('15자 이내로 입력해주세요.');
+    }
   };
 
   const handleSelectGroup = (groupId: number) => {
@@ -77,9 +84,11 @@ const GroupModal: React.FC<GroupModalProps> = ({
         clear={true}
         value={localGroupName}
         onChange={handleGroupChange}
+        errorMsg={errorMsg}
       />
-      <GroupList>
+      <GroupList $errorMsg={errorMsg.length > 0}>
         {localGroupName.length > 0 &&
+          errorMsg === '' &&
           groupList.every((group) => group.groupName !== localGroupName) && (
             <GroupListBox
               id={-1}
@@ -106,7 +115,7 @@ const GroupModal: React.FC<GroupModalProps> = ({
 
 export default GroupModal;
 
-const GroupList = styled.div`
+const GroupList = styled.div<{ $errorMsg: boolean }>`
   width: 100%;
   height: 280px;
   display: flex;
@@ -114,4 +123,10 @@ const GroupList = styled.div`
   margin: 20px 0;
   gap: 10px;
   overflow-y: scroll;
+
+  ${({ $errorMsg }) =>
+    $errorMsg &&
+    css`
+      margin-top: 40px;
+    `}
 `;
