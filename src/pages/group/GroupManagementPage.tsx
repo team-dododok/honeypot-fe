@@ -3,13 +3,13 @@ import Button from '@/components/Button/Button';
 import DraggableButton from '@/components/Button/DraggableButton';
 import CreateGroupModal from '@/features/Group/components/Modal/CreateGroupModal';
 import WarningModal from '@/components/Modal/WarningModal';
-import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useGroup } from '@/hooks/group/useGroup';
 import { usePatchGroupOrder } from '@/hooks/group/usePatchGroupOrder';
 import { useDeleteGroup } from '@/hooks/group/useDeleteGroup';
+import HoneyBlank from '@/features/Main/components/HoneyBlank';
 
 const GroupManagementPage = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -97,14 +97,7 @@ const GroupManagementPage = () => {
             </GroupList>
           </FullContainer>
         ) : (
-          <BlankContainer>
-            <img src="/assets/images/group/none-stamp.svg" alt="nonestamp" />
-            <Text>
-              <p>아직 그룹이 없어요.</p>
-              <p>새 그룹을 생성해 볼까요?</p>
-            </Text>
-            <Button text="새 그룹 생성하기" onClick={toggleModal} />
-          </BlankContainer>
+          <HoneyBlank />
         )}
       </DndProvider>
       <CreateGroupModal
@@ -142,18 +135,6 @@ const Container = styled.div`
 const FullContainer = styled(Container)`
   gap: 16px;
   height: 100%;
-`;
-
-const BlankContainer = styled(Container)`
-  justify-content: center;
-  gap: 24px;
-  height: calc(100% - 164px);
-`;
-
-const Text = styled.div`
-  color: ${theme.colors.gray80};
-  ${theme.typography.body2};
-  text-align: center;
 `;
 
 const GroupList = styled.div`
