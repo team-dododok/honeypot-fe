@@ -46,9 +46,13 @@ const Profile = () => {
           <Label>Best 꿀도장</Label>
           <Icon>
             {member && member.bestStamp ? (
-              <img src={`${member.bestStamp}`} alt="bestStamp" />
+              <img
+                className="bestStamp"
+                src={`${member.bestStamp}`}
+                alt="bestStamp"
+              />
             ) : (
-              <Info>
+              <Info className="infoImg">
                 {BEST_STAMP_COMMENT.map((line, index) => (
                   <Fragment key={index}>
                     {line}
@@ -162,9 +166,14 @@ const Icon = styled.div`
   position: relative;
   cursor: pointer;
 
-  img {
+  .bestStamp {
     width: 40px;
     height: 40px;
+  }
+
+  .infoImg {
+    width: 16px;
+    height: 16px;
   }
 `;
 

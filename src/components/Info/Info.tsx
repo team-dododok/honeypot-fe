@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface InfoProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 const Info = (props: InfoProps) => {
