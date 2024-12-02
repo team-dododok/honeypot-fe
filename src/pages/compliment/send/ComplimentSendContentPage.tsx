@@ -9,7 +9,7 @@ import {
 } from '@/layouts/FormLayoutStyles';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfoModal from '@/features/Compliment/components/Modal/InfoModal';
 import StampModal from '@/features/Stamp/components/Modal/StampModal';
@@ -18,6 +18,7 @@ import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
 import useKakaoSDK from '@/hooks/useKakaoSDK';
 import { getUserName } from '@/utils/storage';
+import { useSendCheck } from '@/hooks/sendPraise/useSendCheck';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
@@ -38,6 +39,16 @@ const ComplimentSendContentPage = () => {
 
   const { mutate: sendPraise } = usePostSendPraise();
   const isKakaoLoaded = useKakaoSDK();
+
+  const [uuid, setUuid] = useState<string>('');
+
+  /* 칭찬 상태 확인 */
+  const { refetch } = useSendCheck(uuid, {
+    enabled: uuid.length > 0,
+    onSuccess: () => {
+      navigate('/compliment/send/complete');
+    },
+  });
 
   const handleSelectedStamp = () => {
     setShowSelectedStampModal(true);
@@ -72,11 +83,12 @@ const ComplimentSendContentPage = () => {
       },
       {
         onSuccess: (data) => {
-          const uuid = data?.uuid;
-          if (!uuid) {
+          const generatedUuid = data?.uuid;
+          if (!generatedUuid) {
             console.error('UUID가 없습니다.');
             return;
           }
+          setUuid(generatedUuid);
 
           console.log('uuid', uuid);
           /* 2. 카카오 공유 */
@@ -91,14 +103,24 @@ const ComplimentSendContentPage = () => {
                 content: content,
                 id: uuid,
               },
+              serverCallbackArgs: { praiseUuid: generatedUuid },
             });
           }
-
-          navigate('/compliment/send/complete');
         },
       }
     );
   };
+
+  /* 폴링 효과를 위한 useEffect */
+  useEffect(() => {
+    if (uuid.length > 0) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, [uuid, refetch]);
 
   return (
     <CommonLayout>
@@ -130,7 +152,7 @@ const ComplimentSendContentPage = () => {
           text="칭찬 보내기"
           variant="activate"
           onClick={handleSendCompliment}
-          disabled={!receiverName || !sender || !content}
+          disabled={!receiverName || !sender || !content || !honeyStampId}
         />
       </BottomWrapper>
       {/* 모달 */}
