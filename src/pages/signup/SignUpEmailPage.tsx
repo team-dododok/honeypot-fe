@@ -190,6 +190,7 @@ const SignUpEmailPage = () => {
                 disabled={isAuthCompleted}
                 type="tel"
                 pattern="[0-9]*"
+                inputMode="numeric"
               />
               <Button
                 width="120px"

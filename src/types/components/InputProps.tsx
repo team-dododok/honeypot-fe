@@ -13,9 +13,21 @@ export interface InputProps {
   disabled?: boolean;
   style?: React.CSSProperties;
   pattern?: string;
+  inputMode?: inputModeType;
 }
 
 export interface MessageProps {
   successMsg?: string;
   errorMsg?: string;
 }
+
+export type inputModeType =
+  | 'search'
+  | 'text'
+  | 'email'
+  | 'tel'
+  | 'url'
+  | 'none'
+  | 'numeric'
+  | 'decimal'
+  | undefined;

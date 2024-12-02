@@ -18,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   disabled = false,
   style,
   pattern,
+  inputMode,
 }) => {
   const handleClear = () => {
     onChange({
@@ -39,6 +40,7 @@ const Input: React.FC<InputProps> = ({
         disabled={disabled}
         style={style}
         pattern={pattern}
+        inputMode={inputMode}
       />
       {clear && (
         <ClearIconContainer onClick={handleClear} hasValue={!!value}>
