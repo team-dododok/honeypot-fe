@@ -32,3 +32,7 @@ export type GroupSendPraiseInfo = {
   sendPraiseInfos: sendPraiseInfo[];
   pageInfo: pageInfo;
 };
+
+export type SendCheckData = {
+  sendStatus: string;
+}

@@ -15,7 +15,11 @@ const InfoModal = (props: InfoModalProps) => {
   if (!showModal) return null;
 
   return (
-    <CenterModal title="칭찬에는 두 가지 방법이 있어요." onConfirm={onClose}>
+    <CenterModal
+      title="칭찬에는 두 가지 방법이 있어요."
+      onConfirm={onClose}
+      isVisible={showModal}
+    >
       <CenterModalContainer>
         {COMPLIMENT_WAY_DESCRIPTION.map((item) => (
           <InfoDiv key={item.id}>

@@ -216,6 +216,10 @@ const SheetContainer = styled.div<{ height: string; background?: string }>`
   bottom: 0;
   left: 0;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   background-image: url(${({ background }) => background});
   background-size: cover;
   background-repeat: no-repeat;
@@ -246,5 +250,9 @@ const Title = styled.h2`
 `;
 
 const Content = styled.div`
+  height: 100%;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

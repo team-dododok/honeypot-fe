@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import Button from '../Button/Button';
 import { theme } from '@/styles/theme';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface BottomModal {
   width?: string;
@@ -33,42 +34,57 @@ const BottomModal = (props: BottomModal) => {
   if (!isVisible) return null;
 
   return (
-    <ModalOverlay>
-      <ModalImageContainer height={height}>
-        {bongbong && (
-          <>
-            <BongBongFace src="/assets/images/group/stamp/stamp-modal-bongbong-face.svg" />
-            <BongBongHands src="/assets/images/group/stamp/stamp-modal-bongbong-hands.svg" />
-          </>
-        )}
-        <ModalContainer width={width} height={height}>
-          <ModalTop>
-            <Title>{title}</Title>
-            <ModalContent>{children}</ModalContent>
-          </ModalTop>
-          <ButtonWrapper>
-            <Button
-              variant="deactivate"
-              text={cancelText}
-              onClick={onCancel}
-              background={theme.colors.gray10}
-            />
-            <Button
-              variant="activate"
-              text={confirmText}
-              onClick={onConfirm}
-              disabled={confirmDisabled}
-            />
-          </ButtonWrapper>
-        </ModalContainer>
-      </ModalImageContainer>
-    </ModalOverlay>
+    <AnimatePresence>
+      {isVisible && (
+        <ModalOverlay
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ModalImageContainer
+            height={height}
+            initial={{ y: '30%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '100%' }}
+            transition={{ duration: 0.3 }}
+          >
+            {bongbong && (
+              <>
+                <BongBongFace src="/assets/images/group/stamp/stamp-modal-bongbong-face.svg" />
+                <BongBongHands src="/assets/images/group/stamp/stamp-modal-bongbong-hands.svg" />
+              </>
+            )}
+            <ModalContainer width={width} height={height}>
+              <ModalTop>
+                <Title>{title}</Title>
+                <ModalContent>{children}</ModalContent>
+              </ModalTop>
+              <ButtonWrapper>
+                <Button
+                  variant="deactivate"
+                  text={cancelText}
+                  onClick={onCancel}
+                  background={theme.colors.gray10}
+                />
+                <Button
+                  variant="activate"
+                  text={confirmText}
+                  onClick={onConfirm}
+                  disabled={confirmDisabled}
+                />
+              </ButtonWrapper>
+            </ModalContainer>
+          </ModalImageContainer>
+        </ModalOverlay>
+      )}
+    </AnimatePresence>
   );
 };
 
 export default BottomModal;
 
-const ModalOverlay = styled.div`
+const ModalOverlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   display: flex;
@@ -81,7 +97,7 @@ const ModalOverlay = styled.div`
   z-index: 100;
 `;
 
-const ModalImageContainer = styled.div<{ height?: string }>`
+const ModalImageContainer = styled(motion.div)<{ height?: string }>`
   position: relative;
   width: 100%;
   max-width: 480px;

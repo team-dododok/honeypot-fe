@@ -17,7 +17,11 @@ const PreviewModal = (props: PreviewModalProps) => {
   if (!showModal) return null;
 
   return (
-    <CenterModal title="‘칭찬 전달’ 카카오톡 예시" onConfirm={onClose}>
+    <CenterModal
+      title="‘칭찬 전달’ 카카오톡 예시"
+      onConfirm={onClose}
+      isVisible={showModal}
+    >
       <PreviewContainer>
         <Description>
           {`카카오톡으로 칭찬을 보내면,\n아래와 같은 메시지가 전송됩니다.`}

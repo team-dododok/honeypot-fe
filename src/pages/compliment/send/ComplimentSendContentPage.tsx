@@ -19,6 +19,7 @@ import { usePostSendPraise } from '@/hooks/sendPraise/usePostSendPraise';
 import useKakaoSDK from '@/hooks/useKakaoSDK';
 import { getUserName } from '@/utils/storage';
 import { useSendCheck } from '@/hooks/sendPraise/useSendCheck';
+import { SendCheckData } from '@/api/sendPraise/types/SendPraise';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
@@ -45,8 +46,10 @@ const ComplimentSendContentPage = () => {
   /* 칭찬 상태 확인 */
   const { refetch } = useSendCheck(uuid, {
     enabled: uuid.length > 0,
-    onSuccess: () => {
-      navigate('/compliment/send/complete');
+    onSuccess: (data: SendCheckData) => {
+      if (data?.sendStatus === 'SUCCESS') {
+        navigate('/compliment/send/complete');
+      }
     },
   });
 
