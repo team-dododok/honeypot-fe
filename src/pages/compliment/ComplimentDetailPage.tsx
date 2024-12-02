@@ -94,15 +94,21 @@ const ComplimentDetailPage = () => {
             <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
           </ComplimentLetter>
           <ButtonWrapper>
-            {groupId !== null && groupId !== -1 && (
-              <Message>이미 저장된 꿀이에요</Message>
+            {groupId === -2 ? (
+              <Message>내가 보낸 꿀이에요</Message>
+            ) : (
+              groupId !== null &&
+              groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>
             )}
             {accessToken && groupId !== null ? (
               <Button
                 text={
-                  groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
+                  groupId !== -1 && groupId !== -2
+                    ? '나의 꿀단지로 이동하기'
+                    : '받은 꿀 저장하기'
                 }
                 onClick={handleClickButton}
+                disabled={groupId === -2}
               />
             ) : (
               <KakaoButton
