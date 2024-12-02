@@ -41,7 +41,7 @@ export type GroupWithMembersInfo = {
 };
 
 export type GroupResponse = {
-  groupWithMembersInfos: GroupWithMembersInfo[];
+  groupMembersPraiseCountInfos: GroupWithMembersInfo[];
 };
 
 export type GroupWMemberInfos = {

@@ -18,8 +18,8 @@ const MainBottomSheet = () => {
   const { data: groupData } = useGroup();
 
   useEffect(() => {
-    setGroups(groupData?.groupWithMembersInfos || []);
-    setCount(groupData?.groupWithMembersInfos?.length || 0);
+    setGroups(groupData?.groupMembersPraiseCountInfos || []);
+    setCount(groupData?.groupMembersPraiseCountInfos?.length || 0);
   }, [groupData]);
 
   const [bottomSheetHeight, setBottomSheetHeight] = useState(
@@ -52,7 +52,7 @@ const MainBottomSheet = () => {
         <DisplayToggle
           displayType="group"
           selected={selectedGroupToggle}
-          disabled={false}
+          disabled={count === 0 ? true : false}
           onClick={(type) => setSelectedGroupToggle(type)}
         />
       </Header>
