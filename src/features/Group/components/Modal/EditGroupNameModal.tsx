@@ -97,7 +97,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
     groupDelete(groupId + '');
     setShowGroupDeleteModal(false);
     showToast('그룹을 삭제했어요');
-    navigate('/');
+    navigate('/group/management');
   };
 
   return (
