@@ -44,6 +44,17 @@ export type GroupResponse = {
   groupWithMembersInfos: GroupWithMembersInfo[];
 };
 
+export type GroupWMemberInfos = {
+  groupId: number;
+  groupName: string;
+  orderIdx: number;
+  groupMembers: GroupMember[];
+};
+
+export type GroupMemberResponse = {
+  groupMembersInfos: GroupWMemberInfos[];
+};
+
 export type GroupDetailResponse = {
   groupId: number;
   groupName: string;
