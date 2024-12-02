@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import Button from '../Button/Button';
 import { theme } from '@/styles/theme';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface CenterModal {
   width?: string;
@@ -11,6 +12,7 @@ interface CenterModal {
   children?: React.ReactNode;
   onConfirm: () => void;
   disabled?: boolean;
+  isVisible: boolean;
 }
 const CenterModal = (props: CenterModal) => {
   const {
@@ -21,30 +23,47 @@ const CenterModal = (props: CenterModal) => {
     children,
     onConfirm,
     disabled = false,
+    isVisible,
   } = props;
   return (
-    <ModalOverlay>
-      <ModalContainer width={width} height={height}>
-        <Title>{title}</Title>
-        <ModalContent>
-          {children}
-          <ButtonWrapper>
-            <Button
-              variant="activate"
-              text={confirmText}
-              onClick={onConfirm}
-              disabled={disabled}
-            />
-          </ButtonWrapper>
-        </ModalContent>
-      </ModalContainer>
-    </ModalOverlay>
+    <AnimatePresence>
+      {isVisible && (
+        <ModalOverlay
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ModalContainer
+            width={width}
+            height={height}
+            initial={{ transform: 'translateY(5%)' }}
+            animate={{ transform: 'translateY(0)' }}
+            exit={{ transform: 'translateY(100%)' }}
+            transition={{ duration: 0.4 }}
+          >
+            <Title>{title}</Title>
+            <ModalContent>
+              {children}
+              <ButtonWrapper>
+                <Button
+                  variant="activate"
+                  text={confirmText}
+                  onClick={onConfirm}
+                  disabled={disabled}
+                />
+              </ButtonWrapper>
+            </ModalContent>
+          </ModalContainer>
+        </ModalOverlay>
+      )}
+    </AnimatePresence>
   );
 };
 
 export default CenterModal;
 
-const ModalOverlay = styled.div`
+const ModalOverlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   display: flex;
@@ -58,7 +77,7 @@ const ModalOverlay = styled.div`
   z-index: 10;
 `;
 
-const ModalContainer = styled.div<{ width?: string; height?: string }>`
+const ModalContainer = styled(motion.div)<{ width?: string; height?: string }>`
   display: flex;
   width: ${({ width }) => width || '100%'};
   max-width: 424px;

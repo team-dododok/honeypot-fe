@@ -25,6 +25,7 @@ const StampModal = (props: StampModalProps) => {
       confirmText="도장찍기"
       onConfirm={onClose}
       disabled={honeyStampId === null}
+      isVisible={showModal}
     >
       <GridContainer>
         {stampList.map((item) => (

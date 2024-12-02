@@ -349,6 +349,7 @@ const GuidePage = () => {
               setShowCenterModal(false);
             }}
             disabled={false}
+            isVisible={showCenterModal}
           >
             <Input
               width="100%"
