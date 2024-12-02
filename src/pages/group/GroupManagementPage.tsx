@@ -24,9 +24,9 @@ const GroupManagementPage = () => {
   >([]);
 
   useEffect(() => {
-    if (groupData?.groupWithMembersInfos) {
+    if (groupData?.groupMembersPraiseCountInfos) {
       setGroupItems(
-        groupData.groupWithMembersInfos.map((group) => ({
+        groupData.groupMembersPraiseCountInfos.map((group) => ({
           groupId: group.groupId,
           groupName: group.groupName,
         }))

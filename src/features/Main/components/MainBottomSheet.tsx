@@ -18,8 +18,8 @@ const MainBottomSheet = () => {
   const { data: groupData } = useGroup();
 
   useEffect(() => {
-    setGroups(groupData?.groupWithMembersInfos || []);
-    setCount(groupData?.groupWithMembersInfos?.length || 0);
+    setGroups(groupData?.groupMembersPraiseCountInfos || []);
+    setCount(groupData?.groupMembersPraiseCountInfos?.length || 0);
   }, [groupData]);
 
   const [bottomSheetHeight, setBottomSheetHeight] = useState(

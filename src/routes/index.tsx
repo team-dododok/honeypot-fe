@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/login/LoginPage';
-import GroupPage from '@/pages/group/GroupPage';
 import GroupDetailPage from '@/pages/group/GroupDetailPage';
 import SignUpAgreePage from '@/pages/signup/SignUpAgreePage';
 import SignUpNamePage from '@/pages/signup/SignUpNamePage';
@@ -47,7 +46,6 @@ const router = createBrowserRouter([
         path: '/',
         element: <MainLayout />,
         children: [
-          { path: 'group', element: <GroupPage /> },
           { path: 'group/:id', element: <GroupDetailPage /> },
           {
             path: 'group',
