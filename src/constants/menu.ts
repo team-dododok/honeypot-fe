@@ -27,4 +27,9 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 'terms',
+    title: '서비스 이용 약관',
+    path: '/setting/terms',
+  },
 ];

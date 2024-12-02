@@ -7,5 +7,6 @@ export interface SubMenuItem {
 export interface MenuItem {
   id: string;
   title: string;
-  tab: SubMenuItem[];
+  tab?: SubMenuItem[];
+  path?: string;
 }
