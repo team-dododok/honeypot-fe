@@ -66,11 +66,22 @@ export default GroupTabContainer;
 const Container = styled.div<{ $isStamp: boolean }>`
   width: 100%;
   margin-top: 18px;
+  margin-bottom: 60px;
   ${({ $isStamp }) =>
     $isStamp &&
     css`
       margin-top: 100px;
       padding: 0 19px;
+
+      @media (max-height: 700px) {
+        margin-top: 50px;
+      }
+      @media (max-height: 630px) {
+        margin-top: 20px;
+      }
+      @media (max-height: 600px) {
+        margin-top: 0px;
+      }
     `}
 `;
 
