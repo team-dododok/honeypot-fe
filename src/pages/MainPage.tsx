@@ -1,9 +1,16 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainBox from '@/features/Main/components/MainBox';
 import MainBottomSheet from '@/features/Main/components/MainBottomSheet';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 
 const MainPage = () => {
+  const { clearState } = useSendComplimentStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
+
   return (
     <>
       <Container>
