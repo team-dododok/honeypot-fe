@@ -17,7 +17,7 @@ const Profile = () => {
           <ProfileImg src={member && member.imageUrl} alt="profile" />
           <ProfileEdit
             src="/assets/icons/profile-edit.svg"
-            alt="profileedit"
+            alt="profile_edit"
             onClick={() => {
               navigate('update');
             }}
@@ -45,18 +45,18 @@ const Profile = () => {
         <Section>
           <Label>Best 꿀도장</Label>
           <Icon>
-            <Info>
-              {member && member.bestStamp ? (
-                <img src={`${member.bestStamp}`} alt={member.bestStamp} />
-              ) : (
-                BEST_STAMP_COMMENT.map((line, index) => (
+            {member && member.bestStamp ? (
+              <img src={`${member.bestStamp}`} alt="bestStamp" />
+            ) : (
+              <Info>
+                {BEST_STAMP_COMMENT.map((line, index) => (
                   <Fragment key={index}>
                     {line}
                     {index < BEST_STAMP_COMMENT.length - 1 && <br />}
                   </Fragment>
-                ))
-              )}
-            </Info>
+                ))}
+              </Info>
+            )}
           </Icon>
         </Section>
       </ProfileDesc>
@@ -163,8 +163,8 @@ const Icon = styled.div`
   cursor: pointer;
 
   img {
-    width: 16px;
-    height: 16px;
+    width: 40px;
+    height: 40px;
   }
 `;
 
