@@ -104,7 +104,7 @@ const ComplimentSendContentPage = () => {
                 senderName: sender,
                 receiverName: receiverName,
                 content: content,
-                id: uuid,
+                id: generatedUuid,
               },
               serverCallbackArgs: { praiseUuid: generatedUuid },
             });
