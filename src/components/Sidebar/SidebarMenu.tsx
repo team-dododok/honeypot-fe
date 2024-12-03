@@ -10,6 +10,7 @@ import {
   removeRefreshToken,
 } from '@/utils/storage';
 import WarningModal from '../Modal/WarningModal';
+import { postLogout } from '@/api/auth/postLogout';
 
 interface SidebarMenuProps {
   isOpen: boolean;
@@ -42,6 +43,7 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
 
   const handleLogout = () => {
     /* 로그아웃 API 연동 */
+    postLogout();
     navigate('/login');
     removeAccessToken();
     removeRefreshToken();
