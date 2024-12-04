@@ -5,16 +5,17 @@ import styled from '@emotion/styled';
 interface HoneyCardProps {
   type: boolean;
   count: number;
+  onClick: () => void;
 }
 
 const HoneyCard = (prop: HoneyCardProps) => {
-  const { type, count } = prop;
+  const { type, count, onClick } = prop;
 
   const titleText = `내가 ${type ? '받은' : '보낸'} 꿀`;
   const imagePosition = type ? 'right' : 'left';
 
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Title>{titleText}</Title>
       <Number>{count}</Number>
       <HoneyImg
@@ -44,6 +45,7 @@ const Container = styled.div`
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const Title = styled.div`
