@@ -47,7 +47,7 @@ const ComplimentSendContentPage = () => {
   const { refetch } = useSendCheck(uuid, {
     enabled: uuid.length > 0,
     onSuccess: (data: SendCheckData) => {
-      if (data?.sendStatus === 'SUCCESS') {
+      if (data?.sendStatus !== 'FAIL') {
         navigate('/compliment/send/complete');
       }
     },

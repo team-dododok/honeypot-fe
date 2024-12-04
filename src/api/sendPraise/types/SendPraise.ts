@@ -33,6 +33,8 @@ export type GroupSendPraiseInfo = {
   pageInfo: pageInfo;
 };
 
+export type sendStatusType = 'MYSELF' | 'DIRECT' | 'GROUP' | 'FAIL';
+
 export type SendCheckData = {
-  sendStatus: string;
-}
+  sendStatus: sendStatusType;
+};

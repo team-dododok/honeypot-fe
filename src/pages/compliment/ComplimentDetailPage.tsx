@@ -1,3 +1,4 @@
+import { sendStatusType } from '@/api/sendPraise/types/SendPraise';
 import Button from '@/components/Button/Button';
 import ComplimentLetter from '@/features/Compliment/components/Letter/ComplimentLetter';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
@@ -17,6 +18,7 @@ const ComplimentDetailPage = () => {
   const urlParams = new URLSearchParams(location.search);
   const name = urlParams.get('name');
   const [groupId, setGroupId] = useState<number | null>(null);
+  const [sendStatus, setSendStatus] = useState<sendStatusType | null>(null);
   const accessToken = getAccessToken();
 
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -28,6 +30,9 @@ const ComplimentDetailPage = () => {
   useEffect(() => {
     if (data?.groupId) {
       setGroupId(data?.groupId);
+      if (data?.sendStatus) {
+        setSendStatus(data.sendStatus);
+      }
     }
   }, [data]);
 
@@ -94,26 +99,24 @@ const ComplimentDetailPage = () => {
             <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
           </ComplimentLetter>
           <ButtonWrapper>
-            {groupId === -2 ? (
+            {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
             ) : (
               groupId !== null &&
               groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>
             )}
-            {accessToken && groupId !== null ? (
-              <Button
-                text={
-                  groupId !== -1 && groupId !== -2
-                    ? '나의 꿀단지로 이동하기'
-                    : '받은 꿀 저장하기'
-                }
-                onClick={handleClickButton}
-                disabled={groupId === -2}
-              />
-            ) : (
+            {!accessToken && sendStatus === null && groupId === -1 ? (
               <KakaoButton
                 text="카카오 로그인하고 꿀 저장하기"
                 onClick={handleLogin}
+              />
+            ) : (
+              <Button
+                text={
+                  groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
+                }
+                onClick={handleClickButton}
+                disabled={sendStatus === 'MYSELF'}
               />
             )}
           </ButtonWrapper>
