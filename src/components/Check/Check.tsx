@@ -71,6 +71,7 @@ const Icon = styled.img<{ marginRight: string }>`
   width: 24px;
   height: 24px;
   margin-right: ${(props) => props.marginRight};
+  cursor: pointer;
 `;
 
 const StyledRadio = styled.div<{ isChecked: boolean; marginRight: string }>`
