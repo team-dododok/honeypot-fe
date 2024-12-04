@@ -44,7 +44,10 @@ const ComplimentDetailPage = () => {
   const handleClickButton = () => {
     if (groupId !== -1) {
       /* 이미 저장된 칭찬일 경우, 해당 그룹으로 이동 */
-      navigate(`/group/${groupId}`);
+      // navigate(`/group/${groupId}`);
+
+      /* 전시회 임시 수정: 무조건 메인으로 이동 */
+      navigate('/');
     } else {
       /* 아직 저장되지 않았을 경우, 저장을 위한 그룹 선택 모달 띄우기 */
       setShowGroupModal(true);
@@ -58,7 +61,10 @@ const ComplimentDetailPage = () => {
       { praiseUuid: uuid!, groupId: selectedGroupId },
       {
         onSuccess: () => {
-          navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
+          // navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
+
+          /* 전시회 임시 수정: 무조건 메인으로 이동 */
+          navigate('/', { state: { showToast: true } });
         },
       }
     );
@@ -113,7 +119,11 @@ const ComplimentDetailPage = () => {
             ) : (
               <Button
                 text={
-                  groupId !== -1 ? '나의 꿀단지로 이동하기' : '받은 꿀 저장하기'
+                  name
+                    ? '아까 받은 꿀 저장하러 가기'
+                    : groupId !== -1
+                      ? '나의 꿀단지로 이동하기'
+                      : '받은 꿀 저장하기'
                 }
                 onClick={handleClickButton}
                 disabled={sendStatus === 'MYSELF'}
