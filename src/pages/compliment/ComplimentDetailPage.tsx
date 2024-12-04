@@ -100,10 +100,9 @@ const ComplimentDetailPage = () => {
             receiver={data?.receiverName || ''}
             sender={data?.senderName || ''}
             content={data?.content || ''}
+            groupName={data?.groupName || ''}
             honeyStampImage={data?.imageUrl || ''}
-          >
-            <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
-          </ComplimentLetter>
+          ></ComplimentLetter>
           <ButtonWrapper>
             {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
@@ -150,11 +149,9 @@ export default ComplimentDetailPage;
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
   position: relative;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -184,18 +181,6 @@ const Title = styled.div`
 const HelloText = styled.div`
   color: ${theme.colors.gray80};
   ${theme.typography.subtitle1}
-`;
-
-const ProjectLabel = styled.div`
-  width: 100%;
-  display: flex;
-  padding: 8px 0px;
-  border-radius: 12px;
-  background: ${theme.colors.brand05};
-  color: ${theme.colors.gray80};
-  ${theme.typography.subtitle3}
-  text-align: center;
-  justify-content: center;
 `;
 
 const Text = styled.div`

@@ -27,6 +27,7 @@ const ComplimentSendContentPage = () => {
     receiverName,
     content,
     groupId,
+    groupName,
     ongoing,
     honeyStampId,
     honeyStampImage,
@@ -138,6 +139,7 @@ const ComplimentSendContentPage = () => {
           receiver={receiverName}
           sender={sender}
           content={content}
+          groupName={groupName}
           honeyStampImage={honeyStampImage}
           onClick={handleSelectedStamp}
           readOnly={false}

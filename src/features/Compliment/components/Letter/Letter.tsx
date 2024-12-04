@@ -40,7 +40,9 @@ const Letter = (props: LetterProps) => {
       <NameLabel>To. {receiver}</NameLabel>
       <Content>
         <LinedInput
-          placeholder="칭찬을 작성해주세요."
+          placeholder={
+            !readOnly ? '칭찬을 작성해주세요.' : '내용을 찾을 수 없어요.'
+          }
           maxLength={totalLength}
           rows={9}
           defaultValue={content}
