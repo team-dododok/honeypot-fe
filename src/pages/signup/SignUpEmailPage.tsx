@@ -182,7 +182,7 @@ const SignUpEmailPage = () => {
             <InputWrapper>
               <Input
                 width="100%"
-                placeholder="000000"
+                placeholder="00000"
                 value={emailAuth}
                 onChange={handleEmailAuthChange}
                 successMsg={successEmailAuth}
