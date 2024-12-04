@@ -407,7 +407,7 @@ const GroupDetailPage = () => {
       <BottomSheet
         title="꿀단지 현황"
         initialMargin={550}
-        expandedMargin={135}
+        expandedMargin={110}
         background="/assets/images/group/stamp/stamp-modal-backgroud.svg"
       >
         <TabToggle
