@@ -64,11 +64,6 @@ const SignUpEmailPage = () => {
       setSuccessEmailAuth('');
     }
     setEmail(e.target.value);
-    if (EMAIL_REGEX.test(e.target.value) || e.target.value.length === 0) {
-      setErrorEmail('');
-    } else {
-      setErrorEmail('올바른 이메일 형식으로 입력해주세요.');
-    }
   };
 
   const handleEmailAuthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,18 +80,23 @@ const SignUpEmailPage = () => {
   };
 
   const handleSendButtonClick = () => {
-    if (!isSending) {
-      /* 인증 번호 전송 API */
-      sendEmailMutate(email, {
-        onSuccess: () => {
-          setEmailAuth('');
-          setSuccessEmailAuth('');
-          setErrorEmailAuth('');
-          setIsSend(true);
-          setIsShowAuthInput(true);
-          setLeftTime(300);
-        },
-      });
+    if (EMAIL_REGEX.test(email) || email.length === 0) {
+      setErrorEmail('');
+      if (!isSending) {
+        /* 인증 번호 전송 API */
+        sendEmailMutate(email, {
+          onSuccess: () => {
+            setEmailAuth('');
+            setSuccessEmailAuth('');
+            setErrorEmailAuth('');
+            setIsSend(true);
+            setIsShowAuthInput(true);
+            setLeftTime(300);
+          },
+        });
+      }
+    } else {
+      setErrorEmail('올바른 이메일 형식으로 입력해주세요.');
     }
   };
 
@@ -161,7 +161,7 @@ const SignUpEmailPage = () => {
           <InputWrapper>
             <Input
               width="100%"
-              placeholder="ex. ddd.000@gmail.com"
+              placeholder="*****@***.***"
               value={email}
               onChange={handleEmailChange}
               errorMsg={errorEmail}
@@ -171,7 +171,7 @@ const SignUpEmailPage = () => {
               text={isSend ? '재전송' : '인증번호'}
               variant="activate"
               onClick={handleSendButtonClick}
-              disabled={!email || errorEmail !== ''}
+              disabled={!email}
               loading={isSending}
             />
           </InputWrapper>
@@ -182,7 +182,7 @@ const SignUpEmailPage = () => {
             <InputWrapper>
               <Input
                 width="100%"
-                placeholder="000000"
+                placeholder="00000"
                 value={emailAuth}
                 onChange={handleEmailAuthChange}
                 successMsg={successEmailAuth}

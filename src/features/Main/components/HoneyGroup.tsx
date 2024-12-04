@@ -29,6 +29,10 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
     setCurrentPage(newPage);
   };
 
+  const handleMoveGroupPage = (link: string) => {
+    navigate(link);
+  };
+
   return (
     <ContainerBox>
       <Container>
@@ -46,8 +50,20 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
           />
         </Header>
         <CardBox>
-          <HoneyCard type={true} count={currentGroup.receiveCount} />
-          <HoneyCard type={false} count={currentGroup.sendCount} />
+          <HoneyCard
+            type={true}
+            count={currentGroup.receiveCount}
+            onClick={() =>
+              handleMoveGroupPage(`/group/${currentGroup.groupId}?tab=receive`)
+            }
+          />
+          <HoneyCard
+            type={false}
+            count={currentGroup.sendCount}
+            onClick={() =>
+              handleMoveGroupPage(`/group/${currentGroup.groupId}?tab=send`)
+            }
+          />
         </CardBox>
         <Button
           text="이 그룹에 꿀 보내기"

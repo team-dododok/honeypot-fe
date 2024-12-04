@@ -113,8 +113,8 @@ const ComplimentSendTargetPage = () => {
           </Label>
           <Input
             width="100%"
-            placeholder="ex. 꿀단지 만들기 프로젝트"
-            clear={true}
+            placeholder="그룹 선택 또는 생성"
+            clear={false}
             value={groupName}
             onChange={handleGroupChange}
             onClick={handleGroupClick}

@@ -1,3 +1,4 @@
+import { sendStatusType } from '@/api/sendPraise/types/SendPraise';
 import Button from '@/components/Button/Button';
 import ComplimentLetter from '@/features/Compliment/components/Letter/ComplimentLetter';
 import GroupModal from '@/features/Group/components/Modal/GroupModal';
@@ -17,6 +18,7 @@ const ComplimentDetailPage = () => {
   const urlParams = new URLSearchParams(location.search);
   const name = urlParams.get('name');
   const [groupId, setGroupId] = useState<number | null>(null);
+  const [sendStatus, setSendStatus] = useState<sendStatusType | null>(null);
   const accessToken = getAccessToken();
 
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
@@ -28,6 +30,9 @@ const ComplimentDetailPage = () => {
   useEffect(() => {
     if (data?.groupId) {
       setGroupId(data?.groupId);
+      if (data?.sendStatus) {
+        setSendStatus(data.sendStatus);
+      }
     }
   }, [data]);
 
@@ -39,7 +44,10 @@ const ComplimentDetailPage = () => {
   const handleClickButton = () => {
     if (groupId !== -1) {
       /* 이미 저장된 칭찬일 경우, 해당 그룹으로 이동 */
-      navigate(`/group/${groupId}`);
+      // navigate(`/group/${groupId}`);
+
+      /* 전시회 임시 수정: 무조건 메인으로 이동 */
+      navigate('/');
     } else {
       /* 아직 저장되지 않았을 경우, 저장을 위한 그룹 선택 모달 띄우기 */
       setShowGroupModal(true);
@@ -53,7 +61,10 @@ const ComplimentDetailPage = () => {
       { praiseUuid: uuid!, groupId: selectedGroupId },
       {
         onSuccess: () => {
-          navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
+          // navigate(`/group/${selectedGroupId}`, { state: { showToast: true } });
+
+          /* 전시회 임시 수정: 무조건 메인으로 이동 */
+          navigate('/', { state: { showToast: true } });
         },
       }
     );
@@ -89,31 +100,32 @@ const ComplimentDetailPage = () => {
             receiver={data?.receiverName || ''}
             sender={data?.senderName || ''}
             content={data?.content || ''}
+            groupName={data?.groupName || ''}
             honeyStampImage={data?.imageUrl || ''}
-          >
-            <ProjectLabel>꿀단지 프로젝트</ProjectLabel>
-          </ComplimentLetter>
+          ></ComplimentLetter>
           <ButtonWrapper>
-            {groupId === -2 ? (
+            {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
             ) : (
               groupId !== null &&
               groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>
             )}
-            {accessToken && groupId !== null ? (
-              <Button
-                text={
-                  groupId !== -1 && groupId !== -2
-                    ? '나의 꿀단지로 이동하기'
-                    : '받은 꿀 저장하기'
-                }
-                onClick={handleClickButton}
-                disabled={groupId === -2}
-              />
-            ) : (
+            {!accessToken && sendStatus === null && groupId === -1 ? (
               <KakaoButton
                 text="카카오 로그인하고 꿀 저장하기"
                 onClick={handleLogin}
+              />
+            ) : (
+              <Button
+                text={
+                  name
+                    ? '아까 받은 꿀 저장하러 가기'
+                    : groupId !== -1
+                      ? '나의 꿀단지로 이동하기'
+                      : '받은 꿀 저장하기'
+                }
+                onClick={handleClickButton}
+                disabled={sendStatus === 'MYSELF'}
               />
             )}
           </ButtonWrapper>
@@ -137,11 +149,9 @@ export default ComplimentDetailPage;
 
 const CenterLayout = styled.div`
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
   position: relative;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -173,18 +183,6 @@ const HelloText = styled.div`
   ${theme.typography.subtitle1}
 `;
 
-const ProjectLabel = styled.div`
-  width: 100%;
-  display: flex;
-  padding: 8px 0px;
-  border-radius: 12px;
-  background: ${theme.colors.brand05};
-  color: ${theme.colors.gray80};
-  ${theme.typography.subtitle3}
-  text-align: center;
-  justify-content: center;
-`;
-
 const Text = styled.div`
   color: ${theme.colors.gray80};
   ${theme.typography.body3};
@@ -200,7 +198,9 @@ const Message = styled.div`
   color: ${theme.colors.gray60};
   ${theme.typography.body3};
   text-align: center;
+  margin-bottom: 8px;
 `;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   max-width: 480px;

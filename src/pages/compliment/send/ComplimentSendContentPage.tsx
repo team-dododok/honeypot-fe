@@ -27,6 +27,7 @@ const ComplimentSendContentPage = () => {
     receiverName,
     content,
     groupId,
+    groupName,
     ongoing,
     honeyStampId,
     honeyStampImage,
@@ -47,7 +48,7 @@ const ComplimentSendContentPage = () => {
   const { refetch } = useSendCheck(uuid, {
     enabled: uuid.length > 0,
     onSuccess: (data: SendCheckData) => {
-      if (data?.sendStatus === 'SUCCESS') {
+      if (data?.sendStatus !== 'FAIL') {
         navigate('/compliment/send/complete');
       }
     },
@@ -138,6 +139,7 @@ const ComplimentSendContentPage = () => {
           receiver={receiverName}
           sender={sender}
           content={content}
+          groupName={groupName}
           honeyStampImage={honeyStampImage}
           onClick={handleSelectedStamp}
           readOnly={false}

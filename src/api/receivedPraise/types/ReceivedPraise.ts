@@ -1,3 +1,5 @@
+import { sendStatusType } from "@/api/sendPraise/types/SendPraise";
+
 export type PostReceivedPraise = {
   praiseUuid: string;
   groupId: number;
@@ -41,4 +43,5 @@ export type UuidReceivePraiseInfo = {
   groupName: string;
   groupId: number;
   imageUrl: string;
+  sendStatus?: sendStatusType;
 };
