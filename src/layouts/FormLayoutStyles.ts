@@ -37,6 +37,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
+  margin-bottom: 100px;
 `;
 
 const Label = styled.div<LabelProps>`
