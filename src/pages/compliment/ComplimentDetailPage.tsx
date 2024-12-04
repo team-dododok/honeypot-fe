@@ -213,7 +213,9 @@ const Message = styled.div`
   color: ${theme.colors.gray60};
   ${theme.typography.body3};
   text-align: center;
+  margin-bottom: 8px;
 `;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   max-width: 480px;
