@@ -27,6 +27,7 @@ import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedP
 import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -43,6 +44,8 @@ const GroupDetailPage = () => {
   const pageSize = 10;
   const { isDetailModalOpen, modalContent, openDetailModal, closeDetailModal } =
     useDetailHoneyModalStore();
+  const { setGroupName: setTargetGroupName, setGroupId } =
+    useSendComplimentStore();
 
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
@@ -241,8 +244,10 @@ const GroupDetailPage = () => {
     );
   };
 
-  const handleWriteCompliment = () => {
+  const handleSendHoney = () => {
     navigate('/compliment/send/target');
+    setTargetGroupName(groupName);
+    setGroupId(groupId);
   };
 
   /* 꿀 옮기기 프로세스 관련 함수 */
@@ -417,7 +422,7 @@ const GroupDetailPage = () => {
         <Button
           variant="normal"
           text="해당 그룹에게 꿀 보내기"
-          onClick={handleWriteCompliment}
+          onClick={handleSendHoney}
         />
       </ButtonWrapper>
       {/* 그룹명 수정 및 삭제 */}
@@ -529,8 +534,8 @@ const GroupDetailPage = () => {
         />
         {showCancelModal && (
           <WarningModal
-            title="꿀 옮기기를 취소하시겠어요?"
-            description="지금 나가면 변경된 내용은 저장되지 않습니다."
+            title="꿀 선택을 취소하시겠어요?"
+            description="지금 나가면 선택한 데이터가 저장되지 않아요."
             cancelText="이전"
             confirmText="나가기"
             onCancel={() => setShowCancelModal(false)}
@@ -604,7 +609,6 @@ const EditButton = styled.button``;
 
 const TotalHoneyContainer = styled.div`
   width: 100%;
-  height: 240px;
   padding: 13px 16px;
   display: flex;
   flex-direction: column;

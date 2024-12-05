@@ -25,6 +25,7 @@ const ComplimentSendTargetPage = () => {
     receiverName,
     setReceiverName,
     groupName,
+    groupId,
     setGroupName,
     setGroupId,
     ongoing,
@@ -33,7 +34,7 @@ const ComplimentSendTargetPage = () => {
   } = useSendComplimentStore();
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
-  const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<number | null>(groupId);
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
