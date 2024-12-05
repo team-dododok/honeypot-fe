@@ -42,6 +42,10 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   });
 
   useEffect(() => {
+    setEditGroupName(groupName);
+  }, []);
+
+  useEffect(() => {
     if (editGroupName.trim() !== '') {
       checkGroupName();
     }
