@@ -197,7 +197,9 @@ const SignUpEmailPage = () => {
                 text={isAuthCompleted ? '인증 완료' : '인증하기'}
                 variant="activate"
                 onClick={handleAuthButtonClick}
-                disabled={!emailAuth || isAuthCompleted || leftTime === 0}
+                disabled={
+                  !emailAuth || isAuthCompleted || leftTime === 0 || !isSend
+                }
               />
             </InputWrapper>
             {isSend && <Timer>{formatTime(leftTime)}</Timer>}
