@@ -30,13 +30,16 @@ import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
 import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
+import { history } from '@/utils/history';
 import styled from '@emotion/styled';
+import { Action } from 'history';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { pathname } = useLocation();
   const { showMoveToast } = useToast();
   /* 그룹 ID, 페이지 크기 */
   const { id } = useParams();
@@ -94,6 +97,7 @@ const GroupDetailPage = () => {
   useEffect(() => {
     setIsSelectMode(false);
   }, [tabValue]);
+
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -144,6 +148,21 @@ const GroupDetailPage = () => {
       fetchNextPage?.();
     }
   }, [hasNextPage, isFetching]);
+
+  /* 선택 중 뒤로가기 시 경고 모달 */
+  useEffect(() => {
+    const unlistenHistoryEvent = history.listen(({ action, location }) => {
+      if (
+        (action === Action.Pop || action === Action.Push) &&
+        !location.pathname.startsWith(`/group/${id}`) &&
+        selectedIds.length > 0
+      ) {
+        setShowCancelModal(true);
+        history.push(pathname);
+      }
+    });
+    return unlistenHistoryEvent;
+  }, [selectedIds]);
 
   useEffect(() => {
     if (tabValue === 'send') {
