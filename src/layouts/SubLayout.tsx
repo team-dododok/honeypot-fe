@@ -6,11 +6,16 @@ import BackHeader from '@/components/Header/BackHeader';
 interface SubLayoutProps {
   title: string;
   padding?: string;
+  to?: string;
 }
-const SubLayout: React.FC<SubLayoutProps> = ({ title, padding = '26px' }) => {
+const SubLayout: React.FC<SubLayoutProps> = ({
+  title,
+  padding = '26px',
+  to,
+}) => {
   return (
     <Container $padding={padding}>
-      <BackHeader title={title} />
+      <BackHeader title={title} to={to} />
       <Content>
         <Outlet />
       </Content>

@@ -18,7 +18,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           height={20}
           alt="header-logo"
           onClick={() => {
-            navigate('/');
+            navigate('/', { replace: true });
           }}
         />
       </LogoWrapper>
@@ -28,7 +28,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             src="/assets/icons/profile.svg"
             alt="header-profile"
             onClick={() => {
-              navigate('/profile');
+              navigate('/profile', { replace: true });
             }}
           />
         </IconWrapper>
