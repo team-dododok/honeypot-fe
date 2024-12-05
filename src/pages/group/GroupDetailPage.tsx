@@ -77,8 +77,12 @@ const GroupDetailPage = () => {
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const [groupName, setGroupName] = useState<string>('');
-  const praiseCount = groupInfo?.praiseCount;
-  const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
+  // const praiseCount = groupInfo?.praiseCount;
+  const [praiseCount, setPraiseCount] = useState(groupInfo?.praiseCount);
+  // const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
+  const [title, setTitle] = useState(
+    `${groupInfo?.groupName || ''} (${praiseCount || 0})`
+  );
 
   useEffect(() => {
     if (groupInfo?.groupName) {
@@ -176,11 +180,27 @@ const GroupDetailPage = () => {
   }, [tabValue, data]);
 
   useEffect(() => {
-    setReceivedPraiseCount(
-      receivedPraiseData?.pages[0].pageInfo.totalElements || 0
-    );
-    setSendPraiseCount(sendPraiseData?.pages[0].pageInfo.totalElements || 0);
-  }, [receivedPraiseData, sendPraiseData]);
+    if (receivedPraiseData && sendPraiseData && groupInfo) {
+      // 받은 꿀과 보낸 꿀 데이터에서 갯수 업데이트
+      const updatedReceivedPraiseCount =
+        receivedPraiseData?.pages[0].pageInfo.totalElements || 0;
+      const updatedSendPraiseCount =
+        sendPraiseData?.pages[0].pageInfo.totalElements || 0;
+
+      setReceivedPraiseCount(updatedReceivedPraiseCount);
+      setSendPraiseCount(updatedSendPraiseCount);
+
+      setPraiseCount(updatedReceivedPraiseCount + updatedSendPraiseCount);
+      setTitle(
+        `${groupInfo?.groupName || ''} (${updatedReceivedPraiseCount + updatedSendPraiseCount || 0})`
+      );
+    }
+  }, [
+    receivedPraiseData?.pages[0]?.pageInfo?.totalElements,
+    sendPraiseData?.pages[0]?.pageInfo?.totalElements,
+    groupInfo?.praiseCount,
+    groupInfo?.groupName,
+  ]);
 
   /* 받은 꿀 저장 완료 안내 모달 */
   useEffect(() => {
