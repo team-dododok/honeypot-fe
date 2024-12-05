@@ -18,6 +18,10 @@ export const setUserName = (userName: string) => {
   localStorage.setItem('userName', userName);
 };
 
+export const setUpdateEmail = (email: string) => {
+  localStorage.setItem('email', email);
+};
+
 export const getAccessToken = () => {
     return (localStorage.getItem('accessToken'));
 };
@@ -38,6 +42,10 @@ export const getUserName = () => {
   return localStorage.getItem('userName');
 };
 
+export const getUpdateEmail = () => {
+  return localStorage.getItem('email');
+};
+
 export const removeAccessToken = () => {
   return localStorage.removeItem('AccessToken');
 };
@@ -52,4 +60,12 @@ export const removeKakaoAccessToken = () => {
 
 export const removeUuid = () => {
   return localStorage.removeItem('uuid');
+};
+
+export const removeUserName = () => {
+  return localStorage.removeItem('userName');
+};
+
+export const removeUpdateEmail = () => {
+  return localStorage.removeItem('email');
 };

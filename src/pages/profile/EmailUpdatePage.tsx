@@ -1,15 +1,20 @@
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
+import { EMAIL_REGEX } from '@/constants/regEx';
+import { useSendEmail } from '@/hooks/email/useSendEmail';
+import { useVerifyEmail } from '@/hooks/email/useVerifyEmail';
 import { useMemberInfo } from '@/hooks/user/useMemberInfo';
-import { usePatchMember } from '@/hooks/user/usePatchMember';
 import { BottomWrapper } from '@/layouts/FormLayoutStyles';
 import { theme } from '@/styles/theme';
+import { formatTime } from '@/utils/format';
+import { setUpdateEmail } from '@/utils/storage';
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EmailUpdatePage = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isVerificationVisible, setIsVerificationVisible] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
@@ -21,7 +26,8 @@ const EmailUpdatePage = () => {
   const [isTimerActive, setIsTimerActive] = useState(false);
 
   const { data: member } = useMemberInfo();
-  const { mutate: patchMemberEmail } = usePatchMember();
+  const { mutate: sendEmailMutate, isLoading: isSending } = useSendEmail();
+  const { mutate: verifyEmailMutate } = useVerifyEmail();
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | undefined;
@@ -40,71 +46,75 @@ const EmailUpdatePage = () => {
     return () => clearInterval(interval);
   }, [isTimerActive, timer]);
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-  };
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputValue(value);
-
-    if (value === member?.email) {
-      setIsEmailValid(false);
-      setErrorMessage('현재 이메일과 동일합니다.');
-    } else if (validateEmail(value)) {
-      setIsEmailValid(true);
-      setErrorMessage('');
-    } else {
-      setIsEmailValid(false);
-      setErrorMessage('올바른 이메일 형식으로 입력해주세요.');
-    }
-
+    setEmail(value);
     setVerificationCode('');
     setVerificationError('');
     setVerificationSuccess(false);
-    setIsVerificationVisible(false);
     setIsTimerActive(false);
+    setVerificationButtonText('인증번호');
     setTimer(300);
   };
 
   const handleVerificationButtonClick = () => {
-    setIsVerificationVisible(true);
-    setVerificationButtonText('재전송');
-    setTimer(300);
-    setIsTimerActive(true);
-    setVerificationError('');
+    if (email === member?.email) {
+      setErrorMessage('현재 이메일과 동일합니다.');
+    } else if (EMAIL_REGEX.test(email) || email.length === 0) {
+      setVerificationError('');
+      if (!isSending) {
+        /* 인증 번호 전송 API */
+        sendEmailMutate(email, {
+          onSuccess: () => {
+            setVerificationButtonText('재전송');
+            setIsVerificationVisible(true);
+            setVerificationCode('');
+            setVerificationError('');
+            setIsTimerActive(true);
+            setErrorMessage('');
+            setTimer(300);
+          },
+        });
+      }
+    } else {
+      setErrorMessage('올바른 이메일 형식으로 입력해주세요.');
+    }
   };
 
   const handleVerificationInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVerificationCode(e.target.value);
+    if (/^\d*$/.test(e.target.value)) {
+      setVerificationCode(e.target.value);
+    }
     setVerificationError('');
     setVerificationSuccess(false);
   };
 
   const handleVerifyClick = () => {
-    if (verificationCode === '000000') {
-      setVerificationSuccess(true);
-      setVerificationError('');
-      setIsTimerActive(false);
-    } else {
-      setVerificationError('인증번호가 일치하지 않아요.');
-      setVerificationSuccess(false);
-    }
+    /* 인증 번호 검증 API */
+    verifyEmailMutate(
+      { email, code: verificationCode },
+      {
+        onSuccess: () => {
+          setVerificationSuccess(true);
+          setVerificationError('');
+          setIsTimerActive(false);
+        },
+        onError: () => {
+          setVerificationSuccess(false);
+          if (timer === 0) {
+            setVerificationError('유효시간이 만료되었어요.');
+          } else {
+            setVerificationError('인증번호가 일치하지 않아요.');
+          }
+        },
+      }
+    );
   };
 
   const handleSaveEmail = () => {
-    const updatedData = {
-      email: inputValue,
-    };
-
-    patchMemberEmail(updatedData);
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    setUpdateEmail(email);
+    console.log(email);
+    navigate('/profile/update');
   };
 
   return (
@@ -117,22 +127,17 @@ const EmailUpdatePage = () => {
               width="100%"
               placeholder="*****@***.***"
               clear={false}
-              value={inputValue}
-              onChange={handleInput}
+              value={email}
+              onChange={handleChangeEmail}
               errorMsg={errorMessage}
             />
             <Button
               width="35%"
               text={verificationButtonText}
-              variant={
-                verificationSuccess
-                  ? 'deactivate'
-                  : isEmailValid
-                    ? 'activate'
-                    : 'default'
-              }
-              disabled={!isEmailValid || verificationSuccess}
+              variant="activate"
+              disabled={!email}
               onClick={handleVerificationButtonClick}
+              loading={isSending}
             />
           </InputBox>
         </InputContainer>
@@ -144,7 +149,7 @@ const EmailUpdatePage = () => {
               <InputBox>
                 <Input
                   width="100%"
-                  placeholder="인증번호 입력"
+                  placeholder="00000"
                   clear={false}
                   value={verificationCode}
                   onChange={handleVerificationInput}
@@ -154,14 +159,12 @@ const EmailUpdatePage = () => {
                 <Button
                   width="35%"
                   text={verificationSuccess ? '인증완료' : '인증하기'}
-                  variant={
-                    verificationSuccess
-                      ? 'deactivate'
-                      : verificationCode
-                        ? 'activate'
-                        : 'default'
+                  variant="activate"
+                  disabled={
+                    !verificationCode ||
+                    verificationButtonText === '인증번호' ||
+                    timer === 0
                   }
-                  disabled={verificationSuccess || !verificationCode}
                   onClick={handleVerifyClick}
                 />
               </InputBox>
@@ -176,8 +179,8 @@ const EmailUpdatePage = () => {
 
         <BottomWrapper>
           <Button
-            text="다음"
-            variant={verificationSuccess ? 'activate' : 'deactivate'}
+            text="수정하기"
+            variant={'activate'}
             disabled={!verificationSuccess}
             onClick={handleSaveEmail}
           />

@@ -1,5 +1,6 @@
 import { patchMember } from '@/api/user/patchMember';
 import { useToast } from '@/store/useToast';
+import { removeUpdateEmail } from '@/utils/storage';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ export const usePatchMember = () => {
     mutationKey: ['users'],
     mutationFn: (updatedData: unknown) => patchMember(updatedData),
     onSuccess: () => {
+      removeUpdateEmail();
       showToast('변경된 내용을 저장했어요');
       navigate('/profile');
     },

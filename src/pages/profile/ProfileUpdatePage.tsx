@@ -11,6 +11,7 @@ import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
 import { PROFILE_COLORS } from '@/constants/colors';
 import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 import { usePatchMember } from '@/hooks/user/usePatchMember';
+import { getUpdateEmail, removeUpdateEmail } from '@/utils/storage';
 
 const ProfileUpdatePage = () => {
   const navigate = useNavigate();
@@ -36,7 +37,13 @@ const ProfileUpdatePage = () => {
   useEffect(() => {
     if (member && profileImages.length > 0 && selectedImage === null) {
       setName(member.name);
-      setEmail(member.email);
+
+      const savedEmail = getUpdateEmail();
+      if (savedEmail) {
+        setEmail(savedEmail);
+      } else if (member) {
+        setEmail(member.email);
+      }
 
       const matchingImage = profileImages.find(
         ([, url]) => url === member.imageUrl
@@ -92,6 +99,7 @@ const ProfileUpdatePage = () => {
     }
     const updatedData = {
       name,
+      email,
       profileImageUrl: selectedImageUrl,
     };
 
@@ -100,6 +108,7 @@ const ProfileUpdatePage = () => {
 
   const handleModalCancel = () => {
     setShowModal(false);
+    removeUpdateEmail();
     navigate('/profile');
   };
 
