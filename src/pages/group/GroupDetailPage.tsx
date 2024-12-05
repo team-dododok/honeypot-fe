@@ -77,9 +77,7 @@ const GroupDetailPage = () => {
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const [groupName, setGroupName] = useState<string>('');
-  // const praiseCount = groupInfo?.praiseCount;
   const [praiseCount, setPraiseCount] = useState(groupInfo?.praiseCount);
-  // const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
   const [title, setTitle] = useState(
     `${groupInfo?.groupName || ''} (${praiseCount || 0})`
   );
@@ -90,6 +88,9 @@ const GroupDetailPage = () => {
     }
   }, [groupInfo]);
 
+  useEffect(() => {
+    setIsSelectMode(false);
+  }, [tabValue]);
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
