@@ -65,7 +65,7 @@ const GroupDetailPage = () => {
 
   /* 보낸 꿀, 받은 꿀 탭 */
   const searchParams = new URLSearchParams(location.search);
-  const tabValue = searchParams.get('tab') || 'send';
+  const tabValue = searchParams.get('tab') || 'receive';
 
   /* 받은 꿀, 보낸 꿀 갯수 */
   const [receivedPraiseCount, setReceivedPraiseCount] = useState<number>(0);
@@ -413,17 +413,22 @@ const GroupDetailPage = () => {
         <TabToggle
           // tabs={HONEY_TOGGLE}
           tabs={[
-            { id: 0, tabName: '보낸 꿀', path: 'send', count: sendPraiseCount },
             {
-              id: 1,
-              tabName: '받은 꿀',
+              id: 0,
+              tabName: '내가 받은 꿀',
               path: 'receive',
               count: receivedPraiseCount,
             },
+            {
+              id: 1,
+              tabName: '내가 보낸 꿀',
+              path: 'send',
+              count: sendPraiseCount,
+            },
           ]}
-          selected={tabValue === 'send' ? 0 : 1}
+          selected={tabValue === 'receive' ? 0 : 1}
           originalPath={`/group/${1}`}
-          onClick={(id) => handleTabClick(id === 0 ? 'send' : 'receive')}
+          onClick={(id) => handleTabClick(id === 0 ? 'receive' : 'send')}
         />
         <DisplayToggleWrapper>
           <SelectButton selected={isSelectMode} onClick={handleToggle} />
