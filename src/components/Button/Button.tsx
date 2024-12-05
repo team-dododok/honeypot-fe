@@ -89,7 +89,9 @@ const StyledButton = styled.button<ButtonProps>`
         color: ${theme.colors.gray80};
         background-color: ${theme.colors.gray30};
         border: none;
-      `}
+      `};
+    ${({ disabledColor }) =>
+      disabledColor && `background-color: ${disabledColor};`}
   }
 
   opacity: ${({ loading }) => (loading ? 0.5 : 1)};

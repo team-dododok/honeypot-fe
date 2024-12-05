@@ -481,14 +481,17 @@ const GroupDetailPage = () => {
               variant="warning"
               disabled={selectedIds.length === 0}
               onClick={handleHoneyMove}
+              background={theme.colors.warning90}
+              color={theme.colors.gray00}
+              border={selectedIds.length > 0 ? 'none' : ''}
             />
             {tabValue === 'receive' && (
               <Button
                 text=""
-                variant="activate"
+                variant="warning"
                 icon={
                   <img
-                    src="/assets/icons/trash.svg"
+                    src={`/assets/icons/trash-${selectedIds.length > 0 ? 'orange' : 'gray'}.svg`}
                     width={28}
                     height={28}
                     alt="삭제"
@@ -496,7 +499,7 @@ const GroupDetailPage = () => {
                 }
                 width="54px"
                 height="54px"
-                background={theme.colors.warning90}
+                disabledColor={theme.colors.gray10}
                 disabled={selectedIds.length === 0}
                 onClick={() => {
                   setIsDetail(false);
