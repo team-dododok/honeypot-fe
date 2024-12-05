@@ -42,34 +42,27 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   });
 
   useEffect(() => {
-    if (isVisible) {
-      setEditGroupName(groupName);
-    }
-  }, [isVisible, groupName]);
-
-  useEffect(() => {
-    if (editGroupName.trim() !== '' && editGroupName !== groupName) {
+    if (editGroupName.trim() !== '') {
       checkGroupName();
     }
-  }, [editGroupName, groupName, checkGroupName]);
+  }, [editGroupName, checkGroupName]);
 
   useEffect(() => {
-    if (
-      !isFetching &&
-      groupCheckResponse?.isDuplicate &&
-      editGroupName !== groupName
-    ) {
+    if (groupCheckResponse?.isDuplicate) {
+      console.log(groupCheckResponse?.isDuplicate);
+    }
+    if (groupCheckResponse?.isDuplicate && editGroupName !== groupName) {
+      console.log(editGroupName, groupName);
       setErrorMsg('이미 존재하는 그룹이에요');
     } else {
       setErrorMsg('');
     }
-  }, [groupCheckResponse, isFetching, editGroupName, groupName]);
+  }, [groupCheckResponse, isFetching, editGroupName]);
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newGroupName = e.target.value;
     if (newGroupName.length <= 15) {
       setEditGroupName(e.target.value);
-      setGroupName(newGroupName);
       setErrorMsg('');
     } else {
       setErrorMsg('15자 이내로 입력해주세요.');
@@ -109,7 +102,11 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
           confirmText="저장"
           onCancel={handleCancelEdit}
           onConfirm={handleSaveGroupName}
-          confirmDisabled={editGroupName.length === 0 || errorMsg !== ''}
+          confirmDisabled={
+            editGroupName.length === 0 ||
+            errorMsg !== '' ||
+            editGroupName === groupName
+          }
           isVisible={isVisible}
         >
           <DeleteButton onClick={handleShowDeleteModal}>삭제</DeleteButton>

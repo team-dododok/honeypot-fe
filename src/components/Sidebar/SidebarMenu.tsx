@@ -8,6 +8,7 @@ import {
   getUserName,
   removeAccessToken,
   removeRefreshToken,
+  removeUserName,
 } from '@/utils/storage';
 import WarningModal from '../Modal/WarningModal';
 import { postLogout } from '@/api/auth/postLogout';
@@ -47,6 +48,7 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
     navigate('/login');
     removeAccessToken();
     removeRefreshToken();
+    removeUserName();
   };
 
   const handleShowWithdrawModal = () => {

@@ -65,7 +65,7 @@ const GroupDetailPage = () => {
 
   /* 보낸 꿀, 받은 꿀 탭 */
   const searchParams = new URLSearchParams(location.search);
-  const tabValue = searchParams.get('tab') || 'send';
+  const tabValue = searchParams.get('tab') || 'receive';
 
   /* 받은 꿀, 보낸 꿀 갯수 */
   const [receivedPraiseCount, setReceivedPraiseCount] = useState<number>(0);
@@ -77,8 +77,10 @@ const GroupDetailPage = () => {
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const [groupName, setGroupName] = useState<string>('');
-  const praiseCount = groupInfo?.praiseCount;
-  const title = `${groupInfo?.groupName || ''} (${praiseCount || 0})`;
+  const [praiseCount, setPraiseCount] = useState(groupInfo?.praiseCount);
+  const [title, setTitle] = useState(
+    `${groupInfo?.groupName || ''} (${praiseCount || 0})`
+  );
 
   useEffect(() => {
     if (groupInfo?.groupName) {
@@ -86,6 +88,9 @@ const GroupDetailPage = () => {
     }
   }, [groupInfo]);
 
+  useEffect(() => {
+    setIsSelectMode(false);
+  }, [tabValue]);
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -176,11 +181,27 @@ const GroupDetailPage = () => {
   }, [tabValue, data]);
 
   useEffect(() => {
-    setReceivedPraiseCount(
-      receivedPraiseData?.pages[0].pageInfo.totalElements || 0
-    );
-    setSendPraiseCount(sendPraiseData?.pages[0].pageInfo.totalElements || 0);
-  }, [receivedPraiseData, sendPraiseData]);
+    if (receivedPraiseData && sendPraiseData && groupInfo) {
+      // 받은 꿀과 보낸 꿀 데이터에서 갯수 업데이트
+      const updatedReceivedPraiseCount =
+        receivedPraiseData?.pages[0].pageInfo.totalElements || 0;
+      const updatedSendPraiseCount =
+        sendPraiseData?.pages[0].pageInfo.totalElements || 0;
+
+      setReceivedPraiseCount(updatedReceivedPraiseCount);
+      setSendPraiseCount(updatedSendPraiseCount);
+
+      setPraiseCount(updatedReceivedPraiseCount + updatedSendPraiseCount);
+      setTitle(
+        `${groupInfo?.groupName || ''} (${updatedReceivedPraiseCount + updatedSendPraiseCount || 0})`
+      );
+    }
+  }, [
+    receivedPraiseData?.pages[0]?.pageInfo?.totalElements,
+    sendPraiseData?.pages[0]?.pageInfo?.totalElements,
+    groupInfo?.praiseCount,
+    groupInfo?.groupName,
+  ]);
 
   /* 받은 꿀 저장 완료 안내 모달 */
   useEffect(() => {
@@ -348,6 +369,9 @@ const GroupDetailPage = () => {
     setSelectedIds(ids);
   }, []);
 
+  const shouldShowSelectButton =
+    tabValue === 'send' ? sendPraiseCount !== 0 : receivedPraiseCount !== 0;
+
   return (
     <Layout>
       <BackHeader title={title}>
@@ -413,20 +437,29 @@ const GroupDetailPage = () => {
         <TabToggle
           // tabs={HONEY_TOGGLE}
           tabs={[
-            { id: 0, tabName: '보낸 꿀', path: 'send', count: sendPraiseCount },
             {
-              id: 1,
-              tabName: '받은 꿀',
+              id: 0,
+              tabName: '내가 받은 꿀',
               path: 'receive',
               count: receivedPraiseCount,
             },
+            {
+              id: 1,
+              tabName: '내가 보낸 꿀',
+              path: 'send',
+              count: sendPraiseCount,
+            },
           ]}
-          selected={tabValue === 'send' ? 0 : 1}
+          selected={tabValue === 'receive' ? 0 : 1}
           originalPath={`/group/${1}`}
-          onClick={(id) => handleTabClick(id === 0 ? 'send' : 'receive')}
+          onClick={(id) => handleTabClick(id === 0 ? 'receive' : 'send')}
         />
         <DisplayToggleWrapper>
-          <SelectButton selected={isSelectMode} onClick={handleToggle} />
+          {shouldShowSelectButton ? (
+            <SelectButton selected={isSelectMode} onClick={handleToggle} />
+          ) : (
+            <div />
+          )}
           <DisplayToggle
             displayType="stamp"
             selected={selectedDisplay}
@@ -448,14 +481,17 @@ const GroupDetailPage = () => {
               variant="warning"
               disabled={selectedIds.length === 0}
               onClick={handleHoneyMove}
+              background={theme.colors.warning90}
+              color={theme.colors.gray00}
+              border={selectedIds.length > 0 ? 'none' : ''}
             />
             {tabValue === 'receive' && (
               <Button
                 text=""
-                variant="activate"
+                variant="warning"
                 icon={
                   <img
-                    src="/assets/icons/trash.svg"
+                    src={`/assets/icons/trash-${selectedIds.length > 0 ? 'orange' : 'gray'}.svg`}
                     width={28}
                     height={28}
                     alt="삭제"
@@ -463,7 +499,7 @@ const GroupDetailPage = () => {
                 }
                 width="54px"
                 height="54px"
-                background={theme.colors.warning90}
+                disabledColor={theme.colors.gray10}
                 disabled={selectedIds.length === 0}
                 onClick={() => {
                   setIsDetail(false);

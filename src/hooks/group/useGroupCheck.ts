@@ -3,5 +3,5 @@ import { getGroupCheck } from '../../api/group/getGroupCheck';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGroupCheck = ({ groupName }: GroupCheckParams) => {
-  return useQuery(['group'], () => getGroupCheck({ groupName }));
+  return useQuery(['group', groupName], () => getGroupCheck({ groupName }));
 };
