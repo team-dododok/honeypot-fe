@@ -6,6 +6,7 @@ import Button from '@/components/Button/Button';
 import GroupPagination from './GroupPagination';
 import { useNavigate } from 'react-router-dom';
 import { GroupWithMembersInfo } from '@/api/group/types/Group';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 
 interface HoneyGroupProps {
   group: GroupWithMembersInfo[];
@@ -16,6 +17,8 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalGroups = group.length || 0;
   const currentGroup = group[currentPage - 1];
+
+  const { setGroupName, setGroupId } = useSendComplimentStore();
 
   const displayedMembers =
     currentGroup.groupMembers.length > 2
@@ -31,6 +34,12 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
 
   const handleMoveGroupPage = (link: string) => {
     navigate(link);
+  };
+
+  const handleSendHoney = () => {
+    navigate(`/compliment/send/target`);
+    setGroupName(currentGroup.groupName);
+    setGroupId(currentGroup.groupId);
   };
 
   return (
@@ -65,12 +74,7 @@ const HoneyGroup = ({ group }: HoneyGroupProps) => {
             }
           />
         </CardBox>
-        <Button
-          text="이 그룹에 꿀 보내기"
-          onClick={() => {
-            navigate(`/compliment/send/target`);
-          }}
-        />
+        <Button text="이 그룹에 꿀 보내기" onClick={handleSendHoney} />
       </Container>
       <GroupPagination
         currentPage={currentPage}

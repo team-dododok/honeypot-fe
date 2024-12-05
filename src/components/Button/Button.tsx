@@ -70,7 +70,7 @@ const StyledButton = styled.button<ButtonProps>`
         case 'danger':
           return props.theme.colors.error90;
         case 'warning':
-          return props.theme.colors.warning20;
+          return props.theme.colors.warning90;
         default:
           return;
       }

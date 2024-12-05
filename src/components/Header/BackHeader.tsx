@@ -6,14 +6,15 @@ import BackButton from '../Button/BackButton';
 interface BackHeaderProps {
   title: string;
   children?: React.ReactNode;
+  to?: string;
 }
 
 const BackHeader = (props: BackHeaderProps) => {
-  const { title, children } = props;
+  const { title, children, to } = props;
 
   return (
     <Header>
-      <BackButton />
+      <BackButton to={to} />
       <Title>{title}</Title>
       {children}
     </Header>

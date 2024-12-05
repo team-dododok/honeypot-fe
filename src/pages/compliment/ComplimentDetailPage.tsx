@@ -19,7 +19,6 @@ const ComplimentDetailPage = () => {
   const name = urlParams.get('name');
   const [groupId, setGroupId] = useState<number | null>(null);
   const [sendStatus, setSendStatus] = useState<sendStatusType | null>(null);
-  const accessToken = getAccessToken();
 
   const [showGroupModal, setShowGroupModal] = useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
@@ -110,7 +109,7 @@ const ComplimentDetailPage = () => {
               groupId !== null &&
               groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>
             )}
-            {!accessToken && sendStatus === null && groupId === -1 ? (
+            {!getAccessToken() && sendStatus === null && groupId === -1 ? (
               <KakaoButton
                 text="카카오 로그인하고 꿀 저장하기"
                 onClick={handleLogin}

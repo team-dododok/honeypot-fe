@@ -62,7 +62,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            element: <SubLayout title="마이페이지" padding="0px" />,
+            element: <SubLayout title="마이페이지" padding="0px" to="/" />,
             children: [{ path: '', element: <ProfilePage /> }],
           },
           {

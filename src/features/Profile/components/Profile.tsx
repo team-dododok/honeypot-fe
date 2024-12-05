@@ -19,7 +19,7 @@ const Profile = () => {
             src="/assets/icons/profile-edit.svg"
             alt="profile_edit"
             onClick={() => {
-              navigate('update');
+              navigate('/profile/update');
             }}
           />
         </ProfileBox>

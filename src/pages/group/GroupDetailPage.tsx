@@ -27,15 +27,19 @@ import { useGroupReceivedPraise } from '@/hooks/receivedPraise/useGroupReceivedP
 import { useGroupSendPraise } from '@/hooks/sendPraise/useGroupSendPraise';
 import { useReceiveStamp } from '@/hooks/stamp/useReceiveStamp';
 import { useDetailHoneyModalStore } from '@/store/useDetailHoneyModalStore';
+import { useSendComplimentStore } from '@/store/useSendComplimentStore';
 import { useToast } from '@/store/useToast';
 import { theme } from '@/styles/theme';
+import { history } from '@/utils/history';
 import styled from '@emotion/styled';
+import { Action } from 'history';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { pathname } = useLocation();
   const { showMoveToast } = useToast();
   /* 그룹 ID, 페이지 크기 */
   const { id } = useParams();
@@ -43,6 +47,8 @@ const GroupDetailPage = () => {
   const pageSize = 10;
   const { isDetailModalOpen, modalContent, openDetailModal, closeDetailModal } =
     useDetailHoneyModalStore();
+  const { setGroupName: setTargetGroupName, setGroupId } =
+    useSendComplimentStore();
 
   const { data: groupInfo } = useGroupDetail(parseInt(id || '0'));
   const { data: totalStamp } = useReceiveStamp(parseInt(id || '0'));
@@ -91,6 +97,7 @@ const GroupDetailPage = () => {
   useEffect(() => {
     setIsSelectMode(false);
   }, [tabValue]);
+
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -141,6 +148,21 @@ const GroupDetailPage = () => {
       fetchNextPage?.();
     }
   }, [hasNextPage, isFetching]);
+
+  /* 선택 중 뒤로가기 시 경고 모달 */
+  useEffect(() => {
+    const unlistenHistoryEvent = history.listen(({ action, location }) => {
+      if (
+        (action === Action.Pop || action === Action.Push) &&
+        !location.pathname.startsWith(`/group/${id}`) &&
+        selectedIds.length > 0
+      ) {
+        setShowCancelModal(true);
+        history.push(pathname);
+      }
+    });
+    return unlistenHistoryEvent;
+  }, [selectedIds]);
 
   useEffect(() => {
     if (tabValue === 'send') {
@@ -241,8 +263,10 @@ const GroupDetailPage = () => {
     );
   };
 
-  const handleWriteCompliment = () => {
+  const handleSendHoney = () => {
     navigate('/compliment/send/target');
+    setTargetGroupName(groupName);
+    setGroupId(groupId);
   };
 
   /* 꿀 옮기기 프로세스 관련 함수 */
@@ -417,7 +441,7 @@ const GroupDetailPage = () => {
         <Button
           variant="normal"
           text="해당 그룹에게 꿀 보내기"
-          onClick={handleWriteCompliment}
+          onClick={handleSendHoney}
         />
       </ButtonWrapper>
       {/* 그룹명 수정 및 삭제 */}
@@ -529,8 +553,8 @@ const GroupDetailPage = () => {
         />
         {showCancelModal && (
           <WarningModal
-            title="꿀 옮기기를 취소하시겠어요?"
-            description="지금 나가면 변경된 내용은 저장되지 않습니다."
+            title="꿀 선택을 취소하시겠어요?"
+            description="지금 나가면 선택한 데이터가 저장되지 않아요."
             cancelText="이전"
             confirmText="나가기"
             onCancel={() => setShowCancelModal(false)}
@@ -604,7 +628,6 @@ const EditButton = styled.button``;
 
 const TotalHoneyContainer = styled.div`
   width: 100%;
-  height: 240px;
   padding: 13px 16px;
   display: flex;
   flex-direction: column;

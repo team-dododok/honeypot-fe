@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 interface BackButtonProps {
@@ -8,15 +8,21 @@ interface BackButtonProps {
   children?: React.ReactNode;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ to, onClick, children }) => {
+const BackButton: React.FC<BackButtonProps> = ({ to, children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const double = location.state?.double;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (onClick) {
-      onClick(e);
-    } else if (!to) {
+    if (to) {
+      navigate(to);
+    } else {
       e.preventDefault();
-      navigate(-1);
+      if (double) {
+        navigate(-2);
+      } else {
+        navigate(-1);
+      }
     }
   };
 

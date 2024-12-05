@@ -38,6 +38,7 @@ const StampCardBox = styled.div<{ $isVisible: boolean }>`
   border: 1px solid ${theme.colors.gray10};
   background: ${theme.colors.gray00};
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0.4)};
+  margin-bottom: 5px;
 `;
 
 const StampImage = styled.img``;
