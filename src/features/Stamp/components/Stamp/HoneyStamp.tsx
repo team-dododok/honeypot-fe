@@ -73,11 +73,7 @@ const HoneyStamp = (props: HoneyStamp) => {
         <HoneyStampContent $isSelectMode={!readOnly}>
           <Date>{formatDate(date)}</Date>
           <StampImage src={imgUrl} />
-          <Sender>
-            {' '}
-            {nameType === 'receiver' ? 'From. ' : 'To. '}
-            {name}
-          </Sender>
+          <Sender>{name}</Sender>
         </HoneyStampContent>
       </HoneyStampBox>
     </>
@@ -145,4 +141,5 @@ const StampImage = styled.img`
 const Sender = styled.div`
   color: ${theme.colors.gray80};
   ${theme.typography.subtitle4};
+  white-space: nowrap;
 `;
