@@ -368,6 +368,9 @@ const GroupDetailPage = () => {
     setSelectedIds(ids);
   }, []);
 
+  const shouldShowSelectButton =
+    tabValue === 'send' ? sendPraiseCount !== 0 : receivedPraiseCount !== 0;
+
   return (
     <Layout>
       <BackHeader title={title}>
@@ -451,7 +454,11 @@ const GroupDetailPage = () => {
           onClick={(id) => handleTabClick(id === 0 ? 'receive' : 'send')}
         />
         <DisplayToggleWrapper>
-          <SelectButton selected={isSelectMode} onClick={handleToggle} />
+          {shouldShowSelectButton ? (
+            <SelectButton selected={isSelectMode} onClick={handleToggle} />
+          ) : (
+            <div />
+          )}
           <DisplayToggle
             displayType="stamp"
             selected={selectedDisplay}
