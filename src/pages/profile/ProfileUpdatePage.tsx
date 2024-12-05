@@ -113,7 +113,18 @@ const ProfileUpdatePage = () => {
   };
 
   useEffect(() => {
-    setIsButtonActive(!!name && !!email && selectedImage !== null);
+    const selectedImageUrl = profileImages.find(
+      ([key]) => parseInt(key, 10) === selectedImage
+    )?.[1];
+
+    setIsButtonActive(
+      !!name &&
+        !!email &&
+        selectedImage !== null &&
+        (name !== member?.name ||
+          email !== member?.email ||
+          selectedImageUrl !== member.imageUrl)
+    );
   }, [name, email, selectedImage]);
 
   return (
@@ -167,9 +178,10 @@ const ProfileUpdatePage = () => {
         </div>
 
         <Button
-          variant={isButtonActive ? 'activate' : 'deactivate'}
+          variant={'activate'}
           text={'저장하기'}
           onClick={handleSaveButtonClick}
+          disabled={!isButtonActive}
         />
       </Container>
 
