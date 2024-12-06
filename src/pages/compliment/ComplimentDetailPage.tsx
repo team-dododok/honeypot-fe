@@ -43,10 +43,7 @@ const ComplimentDetailPage = () => {
   const handleClickButton = () => {
     if (groupId !== -1) {
       /* 이미 저장된 칭찬일 경우, 해당 그룹으로 이동 */
-      // navigate(`/group/${groupId}`);
-
-      /* 전시회 임시 수정: 무조건 메인으로 이동 */
-      navigate('/');
+      navigate(`/group/${groupId}`);
     } else {
       /* 아직 저장되지 않았을 경우, 저장을 위한 그룹 선택 모달 띄우기 */
       setShowGroupModal(true);
@@ -107,7 +104,9 @@ const ComplimentDetailPage = () => {
             {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
             ) : sendStatus === 'GROUP' ? (
-              <Message>그룹 채팅방에 보낸 꿀이에요</Message>
+              <Message>
+                그룹 채팅방에 보내진 꿀이네요. 수신인을 확인해주세요!
+              </Message>
             ) : (
               groupId !== null &&
               groupId !== -1 && <Message>이미 저장한 꿀이에요</Message>
