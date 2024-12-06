@@ -103,13 +103,14 @@ const ComplimentDetailPage = () => {
           <ButtonWrapper>
             {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
-            ) : sendStatus === 'GROUP' ? (
-              <Message>
-                그룹 채팅방에 보내진 꿀이네요. 수신인을 확인해주세요!
-              </Message>
+            ) : groupId !== null && groupId !== -1 ? (
+              <Message>이미 저장한 꿀이에요</Message>
             ) : (
-              groupId !== null &&
-              groupId !== -1 && <Message>이미 저장한 꿀이에요</Message>
+              sendStatus === 'GROUP' && (
+                <Message>
+                  그룹 채팅방에 보내진 꿀이네요. 수신인을 확인해주세요!
+                </Message>
+              )
             )}
             {!getAccessToken() && groupId === -1 && !name ? (
               <KakaoButton
