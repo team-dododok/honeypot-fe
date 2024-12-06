@@ -35,6 +35,8 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
   } = props;
 
   const complimentRef = useRef<HTMLDivElement>(null);
+  const searchParams = new URLSearchParams(location.search);
+  const tabValue = searchParams.get('tab') || 'receive';
 
   const handleSaveDetailHoney = () => {
     // 이미지 저장하기
@@ -78,13 +80,15 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
           variant="default"
           onClick={onHoneyMove}
         />
-        <Button
-          text="삭제"
-          variant="warning"
-          color={theme.colors.error60}
-          background={theme.colors.gray00}
-          onClick={onHoneyDelete}
-        />
+        {tabValue !== 'send' && (
+          <Button
+            text="삭제"
+            variant="warning"
+            color={theme.colors.error60}
+            background={theme.colors.gray00}
+            onClick={onHoneyDelete}
+          />
+        )}
       </ButtonWrapper>
     </>
   );
