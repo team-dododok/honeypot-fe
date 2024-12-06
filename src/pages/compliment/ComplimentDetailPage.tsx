@@ -107,7 +107,7 @@ const ComplimentDetailPage = () => {
               <Message>내가 보낸 꿀이에요</Message>
             ) : (
               groupId !== null &&
-              groupId !== -1 && <Message>이미 저장된 꿀이에요</Message>
+              groupId !== -1 && <Message>이미 저장한 꿀이에요</Message>
             )}
             {!getAccessToken() && sendStatus === null && groupId === -1 ? (
               <KakaoButton
