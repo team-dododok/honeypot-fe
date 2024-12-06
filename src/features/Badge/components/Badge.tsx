@@ -32,7 +32,8 @@ const Badge = (props: BadgeType) => {
     <>
       <BadgeBox onClick={handleClickBadge}>
         <BadgeImage
-          src={completedDate ? image : '/assets/images/badge/badge.svg'}
+          // src={completedDate ? image : '/assets/images/badge/badge.svg'}
+          src={'/assets/images/badge/badge.svg'}
         />
         <BadgeInfo>
           {name}

@@ -13,7 +13,7 @@ const ReadLetter = (props: ReadLetterProps) => {
   return (
     <Container>
       <Content>{content}</Content>
-      <StampImage src={stampImage} width={55} height={55} alt="꿀도장" />
+      <StampImage data={stampImage} />
     </Container>
   );
 };
@@ -37,9 +37,17 @@ const Content = styled.div`
   z-index: 5;
 `;
 
-const StampImage = styled.img`
+const StampImage = styled.div<{ data: string }>`
+  width: 55px;
+  height: 55px;
+  background-image: url(${(props) => props.data});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 10px;
+  right: 10px;
   z-index: 0;
 `;

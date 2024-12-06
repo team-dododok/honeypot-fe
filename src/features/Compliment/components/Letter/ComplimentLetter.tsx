@@ -27,10 +27,10 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
 
   return (
     <Container $readOnly={readOnly}>
-      <Stamp onClick={onClick}>
+      <Stamp>
         <Image
-          src={honeyStampImage || '/assets/images/stamp/stamp-select.svg'}
-          alt="꿀도장"
+          data={honeyStampImage || '/assets/images/stamp/stamp-select.svg'}
+          onClick={onClick}
         />
       </Stamp>
       <ProjectLabel>
@@ -73,11 +73,17 @@ const Stamp = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
-const Image = styled.img`
+const Image = styled.div<{ data: string }>`
   width: 137px;
   height: 137px;
+  background-image: url(${(props) => props.data});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 const ProjectLabel = styled.div`
