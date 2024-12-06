@@ -6,6 +6,8 @@ import Button from '@/components/Button/Button';
 import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { saveImageFromRef } from '@/utils/saveImage';
+import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
+// import { useStampImage } from '@/hooks/stamp/useStampImage';
 
 interface DetailHoneyModalProps {
   profileImg: string;
@@ -37,6 +39,32 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
   const complimentRef = useRef<HTMLDivElement>(null);
   const searchParams = new URLSearchParams(location.search);
   const tabValue = searchParams.get('tab') || 'receive';
+  const { data: profileData } = useMemberProfileImage();
+  // const { data: stampData } = useStampImage();
+
+  /* 서버 이미지 리스트와 일치 확인 후, index 값 가져오기 */
+  const profileImages = profileData?.profileImageUrl
+    ? Object.entries(profileData.profileImageUrl as Record<string, string>)
+    : [];
+
+  const matchedIndex = profileImages.findIndex(([, url]) => url === profileImg);
+
+  const newProfileImg =
+    matchedIndex !== -1
+      ? `/assets/images/profile/profile-${matchedIndex + 1}.svg`
+      : profileImg;
+
+  /* 서버 도장 리스트와 일치 확인 후, index 값 가져오기 */
+  // const stampDtos = stampData?.stampDtos || [];
+
+  // const matchedStampIndex = stampDtos.findIndex(
+  //   (stamp) => stamp.imageUrl === stampImage
+  // );
+
+  // const newStampImg =
+  //   matchedIndex !== -1
+  //     ? `/assets/images/stamp/stamp-${matchedStampIndex + 1}.svg`
+  //     : profileImg;
 
   const handleSaveDetailHoney = () => {
     // 이미지 저장하기
@@ -65,7 +93,7 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
       >
         <ComplimentBox ref={complimentRef}>
           <LetterInfo
-            profileImg={profileImg}
+            profileImg={newProfileImg}
             groupName={groupName}
             date={date}
             nameType={nameType}
