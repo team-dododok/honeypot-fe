@@ -20,9 +20,11 @@ import useKakaoSDK from '@/hooks/useKakaoSDK';
 import { getUserName } from '@/utils/storage';
 import { useSendCheck } from '@/hooks/sendPraise/useSendCheck';
 import { SendCheckData } from '@/api/sendPraise/types/SendPraise';
+import { useToast } from '@/store/useToast';
 
 const ComplimentSendContentPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const {
     receiverName,
     content,
@@ -72,6 +74,11 @@ const ComplimentSendContentPage = () => {
   };
 
   const handleSendCompliment = () => {
+    if (!honeyStampId) {
+      showToast('꿀도장을 선택해주세요', 3000, {
+        bottom: '80px',
+      });
+    }
     if (!receiverName || !content || !honeyStampId) {
       return;
     }
@@ -157,7 +164,11 @@ const ComplimentSendContentPage = () => {
           text="칭찬 보내기"
           variant="activate"
           onClick={handleSendCompliment}
-          disabled={!receiverName || !sender || !content || !honeyStampId}
+          background={
+            !receiverName || !sender || !content || !honeyStampId
+              ? theme.colors.gray30
+              : ''
+          }
         />
       </BottomWrapper>
       {/* 모달 */}

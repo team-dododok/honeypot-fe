@@ -65,8 +65,8 @@ const StyledButton = styled.button<ButtonProps>`
           return props.theme.colors.gray30;
         case 'deactivate':
           return props.theme.colors.gray50;
-        case 'activate':
-          return props.theme.colors.brand60;
+        // case 'activate':
+        //   return props.theme.colors.brand60;
         case 'danger':
           return props.theme.colors.gray00;
         // case 'warning':

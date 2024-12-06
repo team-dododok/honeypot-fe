@@ -43,5 +43,6 @@ export type UuidReceivePraiseInfo = {
   groupName: string;
   groupId: number;
   imageUrl: string;
+  stampName: string;
   sendStatus?: sendStatusType;
 };
