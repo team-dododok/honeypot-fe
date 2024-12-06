@@ -28,7 +28,6 @@ const GlobalStyle = () => (
         font-family: 'Pretendard';
         background-color: ${theme.colors.gray05};
         overflow: hidden;
-        /* overflow: scroll; */
       }
 
       &::-webkit-scrollbar {
