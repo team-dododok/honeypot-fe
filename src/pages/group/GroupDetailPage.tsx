@@ -83,6 +83,7 @@ const GroupDetailPage = () => {
   const [selectedDisplay, setSelectedDisplay] = useState<ToggleType>('honey');
   const totalStampList = totalStamp?.stampInfoByGroupDtos || [];
   const [groupName, setGroupName] = useState<string>('');
+  const [editGroupName, setEditGroupName] = useState<string>('');
   const [praiseCount, setPraiseCount] = useState(groupInfo?.praiseCount);
   const [title, setTitle] = useState(
     `${groupInfo?.groupName || ''} (${praiseCount || 0})`
@@ -95,8 +96,16 @@ const GroupDetailPage = () => {
   }, [groupInfo]);
 
   useEffect(() => {
+    setEditGroupName(groupName);
+  }, [groupName]);
+
+  useEffect(() => {
     setIsSelectMode(false);
   }, [tabValue]);
+
+  useEffect(() => {
+    console.log('groupName', groupName);
+  }, [groupName]);
 
   /* 선택 모드 및 선택한 id 배열 */
   const [isSelectMode, setIsSelectMode] = useState(false);
@@ -254,10 +263,11 @@ const GroupDetailPage = () => {
   /* 그룹명 수정 API */
   const handleEditGroupName = () => {
     mutate(
-      { groupId: Number(id), groupName },
+      { groupId: Number(id), groupName: editGroupName },
       {
         onSuccess: () => {
           setShowEditGroupNameModal(false);
+          setGroupName(editGroupName);
         },
       }
     );
@@ -456,7 +466,8 @@ const GroupDetailPage = () => {
         onClose={() => setShowEditGroupNameModal(false)}
         onConfirm={handleEditGroupName}
         groupName={groupName}
-        setGroupName={setGroupName}
+        editGroupName={editGroupName}
+        setEditGroupName={setEditGroupName}
       />
       <BottomSheet
         title="꿀단지 현황"
