@@ -101,6 +101,7 @@ const ComplimentDetailPage = () => {
             content={data?.content || ''}
             groupName={data?.groupName || ''}
             honeyStampImage={data?.imageUrl || ''}
+            stampName={data?.stampName || ''}
           ></ComplimentLetter>
           <ButtonWrapper>
             {sendStatus === 'MYSELF' ? (
