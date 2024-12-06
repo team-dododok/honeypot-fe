@@ -61,7 +61,7 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
 
   const stampImageToRender =
     !readOnly || honeyStampImage
-      ? honeyStampImage || '/assets/images/stamp/stamp-select.svg'
+      ? honeyStampImage || '/assets/images/stamp/stamp-select-default.svg'
       : undefined;
 
   return (
