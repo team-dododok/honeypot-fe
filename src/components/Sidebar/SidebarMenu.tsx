@@ -51,9 +51,9 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
     removeUserName();
   };
 
-  const handleShowWithdrawModal = () => {
-    setShowWithdrawModal(!showWithdrawModal);
-  };
+  // const handleShowWithdrawModal = () => {
+  //   setShowWithdrawModal(!showWithdrawModal);
+  // };
 
   const handleWithdraw = () => {
     /* 탈퇴 API 연동 */
@@ -102,7 +102,7 @@ const SidebarMenu = ({ onClose, isOpen }: SidebarMenuProps) => {
         <BottomWrapper>
           <ButtonWrapper>
             <Button onClick={handleLogout}>로그아웃</Button>
-            <Button onClick={handleShowWithdrawModal}>회원탈퇴</Button>
+            {/* <Button onClick={handleShowWithdrawModal}>회원탈퇴</Button> */}
           </ButtonWrapper>
           <LinkWrapper>
             <a
