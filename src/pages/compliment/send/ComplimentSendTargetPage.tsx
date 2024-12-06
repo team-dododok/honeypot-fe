@@ -110,7 +110,7 @@ const ComplimentSendTargetPage = () => {
         </LabelWrapper>
         <LabelWrapper>
           <Label marginBottom="4px" typography="subtitle1">
-            함께하고 있는 그룹명을 적어주세요.
+            함께하고 있는 그룹 이름을 적어주세요.
           </Label>
           <Input
             width="100%"

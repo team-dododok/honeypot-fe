@@ -105,6 +105,8 @@ const ComplimentDetailPage = () => {
           <ButtonWrapper>
             {sendStatus === 'MYSELF' ? (
               <Message>내가 보낸 꿀이에요</Message>
+            ) : sendStatus === 'GROUP' ? (
+              <Message>그룹 채팅방에 보낸 꿀이에요</Message>
             ) : (
               groupId !== null &&
               groupId !== -1 && <Message>이미 저장한 꿀이에요</Message>
