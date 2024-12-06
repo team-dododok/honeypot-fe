@@ -92,6 +92,7 @@ const SignUpEmailPage = () => {
             setIsSend(true);
             setIsShowAuthInput(true);
             setLeftTime(300);
+            setIsAuthCompleted(false);
           },
         });
       }
