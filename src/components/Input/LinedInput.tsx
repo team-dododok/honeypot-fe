@@ -55,4 +55,8 @@ const StyledTextarea = styled.textarea<{
   &::placeholder {
     color: ${theme.colors.gray10};
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

@@ -36,11 +36,11 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px 33px;
+  justify-content: flex-start;
   position: relative;
   background: ${theme.colors.brand05};
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 `;
 
 const BongBongFace = styled.img<{

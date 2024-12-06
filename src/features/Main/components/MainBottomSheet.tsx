@@ -106,7 +106,7 @@ const Container = styled.div<{ $height: number }>`
   width: 100%;
   height: ${({ $height }) => ($height ? `${$height}px` : '100%')};
   max-width: 480px;
-  padding: 0 26px;
+  padding: 0 26px 35px 26px;
   border-radius: 24px 24px 0px 0px;
   background: ${theme.colors.gray00};
   position: fixed;
@@ -114,6 +114,13 @@ const Container = styled.div<{ $height: number }>`
   left: 50%;
   transform: translateX(-50%);
   transition: height 0.3s ease;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Header = styled.div`
