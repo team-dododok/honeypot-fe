@@ -12,7 +12,8 @@ import { useDeleteGroup } from '@/hooks/group/useDeleteGroup';
 interface EditGroupNameModalProps {
   isVisible: boolean;
   groupName: string;
-  setGroupName: React.Dispatch<React.SetStateAction<string>>;
+  editGroupName: string;
+  setEditGroupName: React.Dispatch<React.SetStateAction<string>>;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -20,7 +21,8 @@ interface EditGroupNameModalProps {
 const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   isVisible,
   groupName,
-  setGroupName,
+  editGroupName,
+  setEditGroupName,
   onClose,
   onConfirm,
 }) => {
@@ -28,7 +30,7 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   const navigate = useNavigate();
   const { id: groupId } = useParams();
   const { mutate: groupDelete } = useDeleteGroup();
-  const [editGroupName, setEditGroupName] = useState('');
+  // const [editGroupName, setEditGroupName] = useState('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [showGroupDeleteModal, setShowGroupDeleteModal] =
     useState<boolean>(false);
@@ -80,9 +82,9 @@ const EditGroupNameModal: React.FC<EditGroupNameModalProps> = ({
   };
 
   const handleSaveGroupName = () => {
-    setGroupName(editGroupName);
-    setErrorMsg('');
+    setEditGroupName(editGroupName);
     onConfirm();
+    setErrorMsg('');
   };
 
   const handleShowDeleteModal = () => {
