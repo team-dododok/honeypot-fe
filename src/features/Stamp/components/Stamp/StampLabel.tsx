@@ -29,7 +29,7 @@ export default StampLabel;
 const StampLabelBox = styled.button<{ $selected: boolean }>`
   width: auto;
   height: 54px;
-  padding: 24px 4px;
+  padding: 24px 8px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -42,8 +42,8 @@ const StampLabelBox = styled.button<{ $selected: boolean }>`
 `;
 
 const StampImage = styled.div<{ data: string }>`
-  width: 41px;
-  height: 41px;
+  width: 33px;
+  height: 37px;
   background-image: url(${(props) => props.data});
   background-size: cover;
   background-position: center;

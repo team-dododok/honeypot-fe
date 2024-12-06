@@ -134,7 +134,7 @@ const Date = styled.div`
 `;
 
 const StampImage = styled.div<{ data: string }>`
-  width: 55px;
+  width: 48px;
   height: 55px;
   background-image: url(${(props) => props.data});
   background-size: cover;

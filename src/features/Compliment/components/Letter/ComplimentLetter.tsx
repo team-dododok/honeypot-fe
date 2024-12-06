@@ -136,8 +136,8 @@ const Essential = styled.div`
 `;
 
 const Image = styled.div<{ data: string }>`
-  width: 137px;
-  height: 137px;
+  width: 110px;
+  height: 124px;
   background-image: url(${(props) => props.data});
   background-size: cover;
   background-position: center;
