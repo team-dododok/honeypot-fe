@@ -11,7 +11,7 @@ const AnnouncementPage = () => {
     <>
       {/* <AlarmContainer /> */}
       <NoneAnnouncement>
-        <img src="/assets/images/announcement/none-alarm.svg" alt="공지없음" />
+        <object data="/assets/images/announcement/none-alarm.svg" />
         <Text>새로운 공지가 없어요.</Text>
       </NoneAnnouncement>
     </>
