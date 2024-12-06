@@ -27,7 +27,8 @@ const GlobalStyle = () => (
         max-width: 480px;
         font-family: 'Pretendard';
         background-color: ${theme.colors.gray05};
-        overflow-y: auto;
+        overflow: hidden;
+        /* overflow: scroll; */
       }
 
       &::-webkit-scrollbar {

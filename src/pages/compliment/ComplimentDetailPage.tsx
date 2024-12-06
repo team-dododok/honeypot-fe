@@ -151,22 +151,26 @@ export default ComplimentDetailPage;
 
 const CenterLayout = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: relative;
-  box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const Content = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 14px;
+  padding: 20px 33px;
+
+  overflow-y: auto;
 `;
 
 const LogoImage = styled.img`

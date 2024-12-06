@@ -50,6 +50,7 @@ const Letter = (props: LetterProps) => {
           lineCount={9}
           lineHeight={26}
           lineColor={lineColor}
+          readOnly={readOnly}
         />
       </Content>
       <BottomWrapper>
