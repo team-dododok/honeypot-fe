@@ -40,7 +40,7 @@ export const saveImageFromRef = async (
     //    if (img.src) {
     //      const url = new URL(img.src);
     //      const fileNameFromSrc = url.pathname.split('/').pop();
-    //      img.src = `https://dodok-s3-bucket.s3.ap-northeast-2.amazonaws.com/${fileNameFromSrc}`;
+    //      img.src = `https://dodok-s3-bucket.s3.ap-northeast-2.amazonaws.com/${fileNameFromSrc}?${new Date().getTime()}`;
     //    }
     // });
 
@@ -51,8 +51,8 @@ export const saveImageFromRef = async (
     /* html2canvas로 가상 컨테이너 캡처 */
     const canvas = await html2canvas(virtualContainer, {
       scale: 2,
-      useCORS: false,
-      // allowTaint: true,
+      useCORS: true,
+      allowTaint: true,
       logging: true,
       backgroundColor: 'transparent',
     });
