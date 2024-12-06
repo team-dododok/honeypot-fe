@@ -92,12 +92,9 @@ const GroupDetailPage = () => {
   useEffect(() => {
     if (groupInfo?.groupName) {
       setGroupName(groupInfo.groupName);
+      setEditGroupName(groupInfo.groupName);
     }
   }, [groupInfo]);
-
-  useEffect(() => {
-    setEditGroupName(groupName);
-  }, [groupName]);
 
   useEffect(() => {
     setIsSelectMode(false);
@@ -256,6 +253,7 @@ const GroupDetailPage = () => {
 
   const handleShowEditModal = () => {
     setShowEditGroupNameModal(true);
+    setEditGroupName(groupName);
   };
 
   const { mutate } = usePatchGroup();
