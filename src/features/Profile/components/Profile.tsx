@@ -1,14 +1,41 @@
 import Info from '@/components/Info/Info';
-import { useMemberInfo } from '@/hooks/user/useMemberInfo';
+import { marginFadeIn, marginFadeOut } from '@/styles/Animation';
 import { theme } from '@/styles/theme';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BEST_STAMP_COMMENT } from '../constants/profile';
+import {
+  BEST_STAMP_COMMENT,
+  BEST_STAMP_COMMENT_DETAIL,
+} from '../constants/profile';
+import { useMemberInfo } from '@/hooks/user/useMemberInfo';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { data: member } = useMemberInfo();
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const handleToggleTooltip = () => {
+    setShowTooltip((prev) => !prev);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      tooltipRef.current &&
+      !tooltipRef.current.contains(event.target as Node)
+    ) {
+      setShowTooltip(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <Container>
@@ -44,12 +71,13 @@ const Profile = () => {
         <Divider />
         <Section>
           <Label>Best 꿀도장</Label>
-          <Icon>
+          <Icon ref={tooltipRef}>
             {member && member.bestStamp ? (
               <img
                 className="bestStamp"
                 src={`${member.bestStamp}`}
                 alt="bestStamp"
+                onClick={handleToggleTooltip}
               />
             ) : (
               <Info className="infoImg">
@@ -60,6 +88,16 @@ const Profile = () => {
                   </Fragment>
                 ))}
               </Info>
+            )}
+            {showTooltip && (
+              <Tooltip $visible={showTooltip}>
+                {BEST_STAMP_COMMENT_DETAIL.map((line, index) => (
+                  <Fragment key={index}>
+                    {line}
+                    {index < BEST_STAMP_COMMENT_DETAIL.length - 1 && <br />}
+                  </Fragment>
+                ))}
+              </Tooltip>
             )}
           </Icon>
         </Section>
@@ -174,6 +212,43 @@ const Icon = styled.div`
   .infoImg {
     width: 16px;
     height: 16px;
+  }
+`;
+
+const Tooltip = styled.div<{ $visible: boolean }>`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: ${theme.colors.gray80};
+  color: ${theme.colors.gray00};
+  ${theme.typography.detail5};
+  text-align: left;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+  animation: ${(props) =>
+    props.$visible
+      ? css`
+          ${marginFadeIn} 0.3s ease-in-out forwards
+        `
+      : css`
+          ${marginFadeOut} 0.3s ease-in-out forwards
+        `};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5.5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid ${theme.colors.gray80};
   }
 `;
 
