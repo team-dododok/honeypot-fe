@@ -446,7 +446,7 @@ const GroupDetailPage = () => {
       <ButtonWrapper>
         <Button
           variant="normal"
-          text="해당 그룹에게 꿀 보내기"
+          text="이 그룹에 꿀 보내기"
           onClick={handleSendHoney}
         />
       </ButtonWrapper>

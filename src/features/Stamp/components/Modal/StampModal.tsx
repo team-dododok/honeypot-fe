@@ -22,7 +22,7 @@ const StampModal = (props: StampModalProps) => {
   return (
     <CenterModal
       title="보내고 싶은 꿀도장을 선택하세요."
-      confirmText="도장찍기"
+      confirmText="도장 찍기"
       onConfirm={onClose}
       disabled={honeyStampId === null}
       isVisible={showModal}
