@@ -47,11 +47,11 @@ export const getUpdateEmail = () => {
 };
 
 export const removeAccessToken = () => {
-  return localStorage.removeItem('AccessToken');
+  return localStorage.removeItem('accessToken');
 };
 
 export const removeRefreshToken = () => {
-  return localStorage.removeItem('kakaoRefreshToken');
+  return localStorage.removeItem('refreshToken');
 };
 
 export const removeKakaoAccessToken = () => {
