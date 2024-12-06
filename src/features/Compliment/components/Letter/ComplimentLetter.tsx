@@ -67,6 +67,7 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
   return (
     <Container $readOnly={readOnly}>
       <Stamp>
+        {!readOnly && !stampName && <Essential>*</Essential>}
         {stampImageToRender && (
           <Image
             data={stampImageToRender}
@@ -79,7 +80,9 @@ const ComplimentLetter = (props: ComplimentLetterProps) => {
           </TooltipBubble>
         )}
       </Stamp>
-      <Guide>꿀도장 이미지를 누르면 도장 이름을 알 수 있어요!</Guide>
+      {readOnly && stampName && (
+        <Guide>꿀도장 이미지를 누르면 도장 이름을 알 수 있어요!</Guide>
+      )}
       <ProjectLabel>
         {groupName || <Span>{'그룹명을 찾을 수 없어요.'}</Span>}
       </ProjectLabel>
@@ -122,6 +125,14 @@ const Stamp = styled.button`
   align-items: center;
   margin-bottom: 10px;
   position: relative;
+`;
+
+const Essential = styled.div`
+  position: absolute;
+  top: 15px;
+  left: 90px;
+  color: ${theme.colors.error60};
+  ${theme.typography.subtitle};
 `;
 
 const Image = styled.div<{ data: string }>`
