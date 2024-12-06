@@ -14,7 +14,7 @@ const StampCard = (props: StampCardProps) => {
 
   return (
     <StampCardBox $isVisible={count !== 0}>
-      <StampImage src={imgUrl} width={58} height={58} alt={stampName} />
+      <StampImage data={imgUrl} />
       <StampLabel>
         <StampName>{stampName}</StampName>
         {count}회 / {totalCount}회
@@ -41,7 +41,15 @@ const StampCardBox = styled.div<{ $isVisible: boolean }>`
   margin-bottom: 5px;
 `;
 
-const StampImage = styled.img``;
+const StampImage = styled.div<{ data: string }>`
+  width: 58px;
+  height: 58px;
+  background-image: url(${(props) => props.data});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+`;
 
 const StampLabel = styled.div`
   display: flex;

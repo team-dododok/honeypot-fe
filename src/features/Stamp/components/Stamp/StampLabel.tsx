@@ -18,7 +18,7 @@ const StampLabel = (props: StampLabel) => {
 
   return (
     <StampLabelBox $selected={id === selected} onClick={handleStampClick}>
-      <StampImage src={image} alt="꿀도장" />
+      <StampImage data={image} onClick={handleStampClick} />
       {stampName}
     </StampLabelBox>
   );
@@ -41,7 +41,13 @@ const StampLabelBox = styled.button<{ $selected: boolean }>`
     ${({ $selected }) => ($selected ? theme.colors.brand60 : 'transparent')};
 `;
 
-const StampImage = styled.img`
+const StampImage = styled.div<{ data: string }>`
   width: 41px;
   height: 41px;
+  background-image: url(${(props) => props.data});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-bottom: 5px;
 `;

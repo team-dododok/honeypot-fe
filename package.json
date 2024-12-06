@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "https://dodok-s3-bucket.s3.ap-northeast-2.amazonaws.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

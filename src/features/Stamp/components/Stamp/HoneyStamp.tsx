@@ -72,7 +72,7 @@ const HoneyStamp = (props: HoneyStamp) => {
         />
         <HoneyStampContent $isSelectMode={!readOnly}>
           <Date>{formatDate(date)}</Date>
-          <StampImage src={imgUrl} />
+          <StampImage data={imgUrl} onClick={handleClickStamp} />
           <Sender>{name}</Sender>
         </HoneyStampContent>
       </HoneyStampBox>
@@ -133,9 +133,15 @@ const Date = styled.div`
   ${theme.typography.body5};
 `;
 
-const StampImage = styled.img`
+const StampImage = styled.div<{ data: string }>`
   width: 55px;
   height: 55px;
+  background-image: url(${(props) => props.data});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-bottom: 5px;
 `;
 
 const Sender = styled.div`
