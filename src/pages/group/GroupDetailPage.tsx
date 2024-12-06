@@ -555,17 +555,17 @@ const GroupDetailPage = () => {
           groupId={Number(id)}
           selectedCount={selectedIds.length}
         />
-        {showCancelModal && (
-          <WarningModal
-            title="꿀 선택을 취소하시겠어요?"
-            description="지금 나가면 선택한 데이터가 저장되지 않아요."
-            cancelText="이전"
-            confirmText="나가기"
-            onCancel={() => setShowCancelModal(false)}
-            onConfirm={handleCandleHoneyMove}
-          />
-        )}
       </BottomSheet>
+      {showCancelModal && (
+        <WarningModal
+          title="꿀 선택을 취소하시겠어요?"
+          description="지금 나가면 선택한 데이터가 저장되지 않아요."
+          cancelText="이전"
+          confirmText="나가기"
+          onCancel={() => setShowCancelModal(false)}
+          onConfirm={handleCandleHoneyMove}
+        />
+      )}
       {/* 꿀 삭제 경고 */}
       {showDeleteWarningModal && (
         <WarningModal
