@@ -40,7 +40,7 @@ const GroupDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = useLocation();
-  const { showMoveToast } = useToast();
+  const { showMoveToast, showToast } = useToast();
   /* 그룹 ID, 페이지 크기 */
   const { id } = useParams();
   const groupId = Number(id) || 0;
@@ -340,8 +340,14 @@ const GroupDetailPage = () => {
 
   /* 꿀 삭제하기 관련 함수*/
   const handleWarningDelete = () => {
-    setShowDeleteWarningModal(true);
-    closeDetailModal();
+    if (tabValue !== 'send') {
+      setShowDeleteWarningModal(true);
+      closeDetailModal();
+    } else {
+      showToast('보낸 꿀 삭제 기능은 준비 중이에요!', 3000, {
+        bottom: '80px',
+      });
+    }
   };
 
   const handleCancelWarningDelete = (isDetail: boolean) => {
@@ -509,28 +515,26 @@ const GroupDetailPage = () => {
               color={theme.colors.gray00}
               border={selectedIds.length > 0 ? 'none' : ''}
             />
-            {tabValue === 'receive' && (
-              <Button
-                text=""
-                variant="warning"
-                icon={
-                  <img
-                    src={`/assets/icons/trash-${selectedIds.length > 0 ? 'orange' : 'gray'}.svg`}
-                    width={28}
-                    height={28}
-                    alt="삭제"
-                  />
-                }
-                width="54px"
-                height="54px"
-                disabledColor={theme.colors.gray10}
-                disabled={selectedIds.length === 0}
-                onClick={() => {
-                  setIsDetail(false);
-                  handleWarningDelete();
-                }}
-              />
-            )}
+            <Button
+              text=""
+              variant="warning"
+              icon={
+                <img
+                  src={`/assets/icons/trash-${selectedIds.length > 0 ? 'orange' : 'gray'}.svg`}
+                  width={28}
+                  height={28}
+                  alt="삭제"
+                />
+              }
+              width="54px"
+              height="54px"
+              disabledColor={theme.colors.gray10}
+              disabled={selectedIds.length === 0}
+              onClick={() => {
+                setIsDetail(false);
+                handleWarningDelete();
+              }}
+            />
           </SelectActionButtonWrapper>
         )}
         {/* 꿀 옮기기 그룹 선택 모달 */}

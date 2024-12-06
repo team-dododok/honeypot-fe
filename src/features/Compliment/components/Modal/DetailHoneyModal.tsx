@@ -7,6 +7,7 @@ import { theme } from '@/styles/theme';
 import styled from '@emotion/styled';
 import { saveImageFromRef } from '@/utils/saveImage';
 import { useMemberProfileImage } from '@/hooks/user/useMemberProfileImage';
+import { useToast } from '@/store/useToast';
 // import { useStampImage } from '@/hooks/stamp/useStampImage';
 
 interface DetailHoneyModalProps {
@@ -36,6 +37,7 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
     onHoneyDelete,
   } = props;
 
+  const { showToast } = useToast();
   const complimentRef = useRef<HTMLDivElement>(null);
   const searchParams = new URLSearchParams(location.search);
   const tabValue = searchParams.get('tab') || 'receive';
@@ -83,6 +85,16 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
     onClose();
   };
 
+  const handleHoneyDelete = () => {
+    if (tabValue !== 'send') {
+      if (onHoneyDelete) onHoneyDelete();
+    } else {
+      showToast('보낸 꿀 삭제 기능은 준비 중이에요!', 3000, {
+        bottom: '160px',
+      });
+    }
+  };
+
   return (
     <>
       <CloseModal
@@ -108,15 +120,13 @@ const DetailHoneyModal = (props: DetailHoneyModalProps) => {
           variant="default"
           onClick={onHoneyMove}
         />
-        {tabValue !== 'send' && (
-          <Button
-            text="삭제"
-            variant="warning"
-            color={theme.colors.error60}
-            background={theme.colors.gray00}
-            onClick={onHoneyDelete}
-          />
-        )}
+        <Button
+          text="삭제"
+          variant="danger"
+          color={theme.colors.error60}
+          background={theme.colors.gray00}
+          onClick={handleHoneyDelete}
+        />
       </ButtonWrapper>
     </>
   );
