@@ -210,4 +210,5 @@ const Message = styled.div`
 const ButtonWrapper = styled.div`
   width: 100%;
   max-width: 480px;
+  margin-bottom: 150px;
 `;
